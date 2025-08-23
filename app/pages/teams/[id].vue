@@ -28,7 +28,7 @@
                     <span class="font-semibold text-sm md:text-base">На главную</span>
                 </NuxtLink>
                 <NuxtLink
-                    to="/teams"
+                    to="/teamsPage"
                     class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all duration-300 hover:scale-105 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl md:rounded-2xl px-4 py-2 md:px-6 md:py-3 shadow-lg border border-blue-200 dark:border-blue-800 w-full sm:w-auto justify-center"
                     :class="{
                         'opacity-100 translate-x-0': isVisible,
@@ -97,7 +97,7 @@
                         ></div>
                     </div>
 
-                    <div class="text-center text-white relative z-10 px-4">
+                    <div class="text-center text-white relative z-10 px-4 pb-4 md:pb-0">
                         <div
                             class="text-6xl md:text-8xl lg:text-[12rem] mb-4 md:mb-6 animate-bounce"
                             style="animation-duration: 3s"
@@ -858,6 +858,32 @@
                         </p>
                     </div>
                 </div>
+            </div>
+
+            <!-- Навигация (дубликат) -->
+            <div class="flex flex-col sm:flex-row justify-between items-center gap-3 mt-8 md:mt-12">
+                <NuxtLink
+                    to="/"
+                    class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all duration-300 hover:scale-105 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl md:rounded-2xl px-4 py-2 md:px-6 md:py-3 shadow-lg border border-blue-200 dark:border-blue-800 w-full sm:w-auto justify-center"
+                    :class="{
+                        'opacity-100 translate-x-0': isVisible,
+                        'opacity-0 -translate-x-10': !isVisible,
+                    }"
+                >
+                    <span class="mr-2 text-lg md:text-xl">←</span>
+                    <span class="font-semibold text-sm md:text-base">На главную</span>
+                </NuxtLink>
+                <NuxtLink
+                    to="/teamsPage"
+                    class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all duration-300 hover:scale-105 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl md:rounded-2xl px-4 py-2 md:px-6 md:py-3 shadow-lg border border-blue-200 dark:border-blue-800 w-full sm:w-auto justify-center"
+                    :class="{
+                        'opacity-100 translate-x-0': isVisible,
+                        'opacity-0 -translate-x-10': !isVisible,
+                    }"
+                >
+                    <span class="font-semibold text-sm md:text-base">К списку команд</span>
+                    <span class="ml-2 text-lg md:text-xl">→</span>
+                </NuxtLink>
             </div>
 
             <!-- Footer с социальными сетями -->

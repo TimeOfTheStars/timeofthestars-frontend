@@ -5,10 +5,12 @@
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center h-16">
                 <!-- Лого -->
-                <div class="flex-1 mr-20">
+                <div class="flex-1 md:mr-20">
                     <NuxtLink to="/" class="flex items-center space-x-2">
                         <div class="text-2xl">🏒</div>
-                        <div class="text-xl font-bold text-gradient">
+                        <div
+                            class="text-xl font-bold text-gradient whitespace-nowrap"
+                        >
                             ВРЕМЯ ЗВЁЗД
                         </div>
                     </NuxtLink>
@@ -265,7 +267,7 @@
                 </div>
 
                 <NuxtLink
-                    to="/teams"
+                    to="/teamsPage"
                     class="block text-gray-300 hover:text-white transition-colors"
                     @click="closeMobileMenu"
                 >

@@ -1,36 +1,48 @@
 <template>
-    <div class="flex items-center justify-between mb-4">
+    <div
+        class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-2"
+    >
         <div
-            class="bg-primary-blue px-3 py-1 rounded-full text-white text-sm font-medium"
+            class="bg-primary-blue px-3 py-1 rounded-full text-white text-xs sm:text-sm font-medium self-start"
         >
             {{ match.tournaments[0].name }}
         </div>
-        <div class="text-gray-400 text-sm">
+        <div class="text-gray-400 text-xs sm:text-sm">
             {{ match.date }} • {{ match.time }}
         </div>
     </div>
 
-    <div class="flex items-center justify-between">
-        <div class="flex items-center gap-3">
-            <div class="w-12 h-12 relative">
+    <div class="flex items-center justify-around gap-2">
+        <div
+            class="w-1/3 flex flex-col items-center text-center gap-2 md:flex-row md:gap-3 md:justify-start"
+        >
+            <div class="w-12 h-12 relative flex-shrink-0">
                 <img
                     :src="getTeamLogo(match.team_a_id)"
-                    :alt="match.team1"
+                    :alt="match.team_a.name"
                     class="w-full h-full object-contain rounded-full"
                 />
             </div>
-            <span class="font-medium">{{ match.team_a.name }}</span>
+            <span class="font-medium text-sm md:text-base">{{
+                match.team_a.name
+            }}</span>
         </div>
-        <div class="text-2xl font-bold text-gray-400">VS</div>
-        <div class="flex items-center gap-3">
-            <span class="font-medium">{{ match.team_b.name }}</span>
-            <div class="w-12 h-12 relative">
+
+        <div class="text-xl md:text-2xl font-bold text-gray-400">VS</div>
+
+        <div
+            class="w-1/3 flex flex-col items-center text-center gap-2 md:flex-row-reverse md:gap-3"
+        >
+            <div class="w-12 h-12 relative flex-shrink-0">
                 <img
                     :src="getTeamLogo(match.team_b_id)"
-                    :alt="match.team2"
+                    :alt="match.team_b.name"
                     class="w-full h-full object-contain rounded-full"
                 />
             </div>
+            <span class="font-medium text-sm md:text-base">{{
+                match.team_b.name
+            }}</span>
         </div>
     </div>
 </template>

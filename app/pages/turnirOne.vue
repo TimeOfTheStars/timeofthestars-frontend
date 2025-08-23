@@ -77,9 +77,9 @@
             <div class="max-w-6xl mx-auto">
                 <div class="flex flex-wrap justify-center gap-4">
                     <button
-                        class="bg-primary-blue text-white px-6 py-3 rounded-xl font-semibold shadow-lg"
+                        class="w-48 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold shadow-lg"
                         :class="{
-                            'bg-primary-blue': activeTab === 'participants',
+                            'bg-primary-blue text-white': activeTab === 'participants',
                             'bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors':
                                 activeTab !== 'participants',
                         }"
@@ -88,7 +88,7 @@
                         👥 Участники
                     </button>
                     <button
-                        class="px-6 py-3 rounded-xl font-semibold"
+                        class="w-48 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold shadow-lg"
                         :class="{
                             'bg-primary-blue text-white':
                                 activeTab === 'calendar',
@@ -100,7 +100,7 @@
                         📅 Календарь
                     </button>
                     <button
-                        class="px-6 py-3 rounded-xl font-semibold"
+                        class="w-48 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold shadow-lg"
                         :class="{
                             'bg-primary-blue text-white': activeTab === 'table',
                             'bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors':
@@ -111,7 +111,7 @@
                         📊 Таблица
                     </button>
                     <button
-                        class="px-6 py-3 rounded-xl font-semibold"
+                        class="w-48 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold shadow-lg"
                         :class="{
                             'bg-primary-blue text-white':
                                 activeTab === 'results',

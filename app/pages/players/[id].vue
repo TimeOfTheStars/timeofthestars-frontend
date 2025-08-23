@@ -45,12 +45,12 @@
                     <p class="text-gray-600 dark:text-gray-400 mb-6 text-sm md:text-base">
                         Возможно, вы перешли по неверной ссылке
                     </p>
-                    <router-link
-                        to="/"
+                    <button
+                        @click="goBackToTeam()"
                         class="bg-gradient-to-r from-blue-600 to-red-600 text-white px-6 py-2 md:px-8 md:py-3 rounded-xl md:rounded-2xl font-semibold hover:scale-105 transition-transform duration-200 inline-block text-sm md:text-base"
                     >
                         🏒 Вернуться к команде
-                    </router-link>
+                </button>
                 </div>
             </div>
 
@@ -522,8 +522,8 @@
 
                         <!-- Кнопка действия -->
                         <div class="text-center">
-                            <router-link to="/">
-                                <button
+                            
+                                <button @click="goBackToTeam()"
                                     class="group bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 hover:from-blue-700 hover:via-purple-700 hover:to-red-700 text-white font-bold py-4 px-8 md:py-6 md:px-12 rounded-xl md:rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl relative overflow-hidden w-full sm:w-auto"
                                 >
                                     <div
@@ -540,7 +540,7 @@
                                         >
                                     </span>
                                 </button>
-                            </router-link>
+                            
                         </div>
                     </div>
                 </div>
@@ -598,7 +598,7 @@ const quickStats = computed(() => [
     { label: '💰 Стоимость', value: player.marketValue, color: 'yellow' },
     {
         label: '📄 Контракт',
-        value: `до ${player.contract}`,
+        value: `до ${player.birth_date}`,
         color: 'indigo',
     },
 ])

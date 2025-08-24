@@ -114,7 +114,6 @@
             </div>
         </section>
 
-     
         <!-- <section
             class="py-6 sm:py-8 px-4 bg-red-900/20 border-y border-red-500/30"
         >
@@ -200,16 +199,28 @@
         <section class="py-8 px-4 bg-gray-800 border-b border-gray-700">
             <div class="max-w-6xl mx-auto">
                 <div class="flex flex-wrap justify-center gap-4">
-                    <button @click="scrollTo('participants')" class="bg-primary-blue text-white px-6 py-3 rounded-xl font-semibold shadow-lg">
+                    <button
+                        @click="scrollTo('participants')"
+                        class="bg-primary-blue text-white px-6 py-3 rounded-xl font-semibold shadow-lg"
+                    >
                         👥 Участники
                     </button>
-                    <button @click="scrollTo('playoff')" class="bg-gray-700 text-gray-300 px-6 py-3 rounded-xl font-semibold hover:bg-gray-600 transition-colors">
+                    <button
+                        @click="scrollTo('playoff')"
+                        class="bg-gray-700 text-gray-300 px-6 py-3 rounded-xl font-semibold hover:bg-gray-600 transition-colors"
+                    >
                         🏆 Плей-офф
                     </button>
-                    <button @click="scrollTo('standings')" class="bg-gray-700 text-gray-300 px-6 py-3 rounded-xl font-semibold hover:bg-gray-600 transition-colors">
+                    <button
+                        @click="scrollTo('standings')"
+                        class="bg-gray-700 text-gray-300 px-6 py-3 rounded-xl font-semibold hover:bg-gray-600 transition-colors"
+                    >
                         📊 Таблица
                     </button>
-                    <button @click="scrollTo('matches')" class="bg-gray-700 text-gray-300 px-6 py-3 rounded-xl font-semibold hover:bg-gray-600 transition-colors">
+                    <button
+                        @click="scrollTo('matches')"
+                        class="bg-gray-700 text-gray-300 px-6 py-3 rounded-xl font-semibold hover:bg-gray-600 transition-colors"
+                    >
                         🏒 Матчи
                     </button>
                 </div>
@@ -230,13 +241,15 @@
                         class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700"
                     >
                         <TurnirParticipants :team="team" />
-
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="playoff" class="py-8 sm:py-12 md:py-16 px-3 sm:px-4 bg-gray-800">
+        <section
+            id="playoff"
+            class="py-8 sm:py-12 md:py-16 px-3 sm:px-4 bg-gray-800"
+        >
             <div class="max-w-6xl mx-auto">
                 <h2
                     class="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-center"
@@ -245,7 +258,6 @@
                 </h2>
 
                 <div class="space-y-8 sm:space-y-12">
-                    
                     <div class="text-center">
                         <h3
                             class="text-xl sm:text-2xl font-semibold mb-4 sm:mb-6 text-gradient"
@@ -261,11 +273,9 @@
                                 18.04.2025 • 20:00
                             </div>
 
-                            
                             <div
                                 class="flex flex-col items-center gap-3 sm:flex-row sm:justify-between sm:gap-4"
                             >
-
                                 <div
                                     class="flex flex-col items-center sm:items-start sm:flex-row sm:gap-3"
                                 >
@@ -292,14 +302,12 @@
                                     </div>
                                 </div>
 
-
                                 <div
                                     class="bg-yellow-600 px-4 py-2 rounded-lg text-white font-bold text-lg sm:text-xl my-2 sm:my-0"
                                 >
                                     VS
                                 </div>
 
-                                
                                 <div
                                     class="flex flex-col items-center sm:items-end sm:flex-row-reverse sm:gap-3"
                                 >
@@ -329,7 +337,6 @@
                         </div>
                     </div>
 
-                    
                     <div class="text-center">
                         <h3
                             class="text-lg sm:text-xl font-semibold mb-4 sm:mb-6 text-accent-red"
@@ -348,7 +355,6 @@
                             <div
                                 class="flex flex-col items-center gap-3 sm:flex-row sm:justify-between"
                             >
-                                
                                 <div
                                     class="flex flex-col items-center sm:flex-row sm:gap-3"
                                 >
@@ -366,13 +372,11 @@
                                     </div>
                                 </div>
 
-
                                 <div
                                     class="bg-green-600 px-4 py-2 rounded text-white font-bold text-lg my-2 sm:my-0"
                                 >
                                     6-4
                                 </div>
-
 
                                 <div
                                     class="flex flex-col items-center sm:flex-row-reverse sm:gap-3"
@@ -394,7 +398,6 @@
                         </div>
                     </div>
 
-
                     <div class="text-center">
                         <h3
                             class="text-lg sm:text-xl font-semibold mb-4 sm:mb-6"
@@ -404,7 +407,6 @@
                         <div
                             class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6 max-w-4xl mx-auto"
                         >
-                            
                             <div
                                 class="bg-gray-700 rounded-lg sm:rounded-xl p-4 sm:p-6"
                             >
@@ -417,7 +419,6 @@
                                 <div
                                     class="flex flex-col items-center gap-3 sm:flex-row sm:justify-between"
                                 >
-
                                     <div
                                         class="flex flex-col items-center sm:flex-row sm:gap-2"
                                     >
@@ -443,7 +444,6 @@
                                         3-2(б)
                                     </div>
 
-
                                     <div
                                         class="flex flex-col items-center sm:flex-row-reverse sm:gap-2"
                                     >
@@ -465,7 +465,6 @@
                                 </div>
                             </div>
 
-                            
                             <div
                                 class="bg-gray-700 rounded-lg sm:rounded-xl p-4 sm:p-6"
                             >
@@ -478,7 +477,6 @@
                                 <div
                                     class="flex flex-col items-center gap-3 sm:flex-row sm:justify-between"
                                 >
-                                    
                                     <div
                                         class="flex flex-col items-center sm:flex-row sm:gap-2"
                                     >
@@ -498,14 +496,12 @@
                                         </div>
                                     </div>
 
-
                                     <div
                                         class="bg-green-600 px-3 py-1 rounded text-white font-bold text-base my-2 sm:my-0"
                                     >
                                         4-3
                                     </div>
 
-                                    
                                     <div
                                         class="flex flex-col items-center sm:flex-row-reverse sm:gap-2"
                                     >
@@ -533,7 +529,7 @@
         </section>
         <!-- Standings -->
         <section id="standings">
-            <Table/>
+            <Table />
         </section>
 
         <!-- Recent Matches -->
@@ -552,7 +548,6 @@
                         class="bg-gray-700 rounded-lg sm:rounded-xl p-4 sm:p-6 card-hover"
                     >
                         <Matches :match="match" />
-
                     </div>
                 </div>
             </div>
@@ -604,30 +599,29 @@
 <script setup>
 import { ref, computed } from 'vue'
 
-const { data: turnirdata } = useFetch('https://api.timeofthestars.ru/api/tournaments');
+const { data: turnirdata } = useFetch(
+    'https://api.timeofthestars.ru/api/tournaments'
+)
 
-console.log(turnirdata.value); 
 const teams = computed(() => {
-  if (!turnirdata.value || turnirdata.value.length === 0) {
-    return [];
-  }
-  return turnirdata.value[0].teams || [];
-});
+    if (!turnirdata.value || turnirdata.value.length === 0) {
+        return []
+    }
+    return turnirdata.value[0].teams || []
+})
 const matches = computed(() => {
-  if (!turnirdata.value || turnirdata.value.length === 0) {
-    return [];
-  }
-  return turnirdata.value[0].games || [];
-});
+    if (!turnirdata.value || turnirdata.value.length === 0) {
+        return []
+    }
+    return turnirdata.value[0].games || []
+})
 
-const scrollTo = (id) => {
-  const element = document.getElementById(id);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
-};
-
-console.log(turnirdata.value); 
+const scrollTo = id => {
+    const element = document.getElementById(id)
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+    }
+}
 </script>
 
 <style scoped>

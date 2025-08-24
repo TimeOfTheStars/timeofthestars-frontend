@@ -74,16 +74,28 @@
         <section class="py-8 px-4 bg-gray-800 border-b border-gray-700">
             <div class="max-w-6xl mx-auto">
                 <div class="flex flex-wrap justify-center gap-4">
-                    <button @click="scrollTo('participants')" class="bg-primary-blue text-white px-6 py-3 rounded-xl font-semibold shadow-lg">
+                    <button
+                        @click="scrollTo('participants')"
+                        class="bg-primary-blue text-white px-6 py-3 rounded-xl font-semibold shadow-lg"
+                    >
                         👥 Участники
                     </button>
-                    <button @click="scrollTo('calendar')" class="bg-gray-700 text-gray-300 px-6 py-3 rounded-xl font-semibold hover:bg-gray-600 transition-colors">
+                    <button
+                        @click="scrollTo('calendar')"
+                        class="bg-gray-700 text-gray-300 px-6 py-3 rounded-xl font-semibold hover:bg-gray-600 transition-colors"
+                    >
                         📅 Календарь
                     </button>
-                    <button @click="scrollTo('standings')" class="bg-gray-700 text-gray-300 px-6 py-3 rounded-xl font-semibold hover:bg-gray-600 transition-colors">
+                    <button
+                        @click="scrollTo('standings')"
+                        class="bg-gray-700 text-gray-300 px-6 py-3 rounded-xl font-semibold hover:bg-gray-600 transition-colors"
+                    >
                         📊 Таблица
                     </button>
-                    <button @click="scrollTo('results')" class="bg-gray-700 text-gray-300 px-6 py-3 rounded-xl font-semibold hover:bg-gray-600 transition-colors">
+                    <button
+                        @click="scrollTo('results')"
+                        class="bg-gray-700 text-gray-300 px-6 py-3 rounded-xl font-semibold hover:bg-gray-600 transition-colors"
+                    >
                         🏆 Результаты
                     </button>
                 </div>
@@ -112,21 +124,21 @@
         <!-- Calendar -->
         <section id="calendar" class="py-16 px-4 bg-gray-800">
             <div class="max-w-6xl mx-auto">
-             <div class="max-w-6xl mx-auto">
-                <h2 class="text-3xl font-bold mb-8 text-center">
-                    📅 Календарь турнира
-                </h2>
-                <div class="bg-gray-800 rounded-xl p-8 text-center">
-                    <div class="text-6xl mb-4">📅</div>
-                    <p class="text-gray-300">
-                        Календарь турнира будет доступен здесь
-                    </p>
+                <div class="max-w-6xl mx-auto">
+                    <h2 class="text-3xl font-bold mb-8 text-center">
+                        📅 Календарь турнира
+                    </h2>
+                    <div class="bg-gray-800 rounded-xl p-8 text-center">
+                        <div class="text-6xl mb-4">📅</div>
+                        <p class="text-gray-300">
+                            Календарь турнира будет доступен здесь
+                        </p>
+                    </div>
                 </div>
-            </div>
             </div>
         </section>
 
-         <section id="results" class="py-16 px-4">
+        <section id="results" class="py-16 px-4">
             <div class="max-w-6xl mx-auto">
                 <h2 class="text-3xl font-bold mb-8 text-center">
                     🏆 Результаты матчей
@@ -145,7 +157,7 @@
 
         <!-- Standings -->
         <section id="standings">
-            <Table/>
+            <Table />
         </section>
 
         <!-- Winner -->
@@ -271,28 +283,27 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-const { data: turnirdata } = useFetch('https://api.timeofthestars.ru/api/tournaments');
+const { data: turnirdata } = useFetch(
+    'https://api.timeofthestars.ru/api/tournaments'
+)
 
-console.log(turnirdata.value); 
 const teams = computed(() => {
-  if (!turnirdata.value || turnirdata.value.length === 0) {
-    return [];
-  }
-  return turnirdata.value[0].teams || [];
-});
+    if (!turnirdata.value || turnirdata.value.length === 0) {
+        return []
+    }
+    return turnirdata.value[0].teams || []
+})
 const matches = computed(() => {
-  if (!turnirdata.value || turnirdata.value.length === 0) {
-    return [];
-  }
-  return turnirdata.value[0].games || [];
-});
+    if (!turnirdata.value || turnirdata.value.length === 0) {
+        return []
+    }
+    return turnirdata.value[0].games || []
+})
 
-const scrollTo = (id) => {
-  const element = document.getElementById(id);
-  if (element) {
-    element.scrollIntoView({ behavior: 'smooth' });
-  }
-};
-
-console.log(matches.value); 
+const scrollTo = id => {
+    const element = document.getElementById(id)
+    if (element) {
+        element.scrollIntoView({ behavior: 'smooth' })
+    }
+}
 </script>

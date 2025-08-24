@@ -15,7 +15,9 @@
 
         <div class="max-w-7xl mx-auto relative z-10">
             <!-- Навигация -->
-            <div class="flex flex-col sm:flex-row justify-between items-center gap-3 mb-6 md:mb-8">
+            <div
+                class="flex flex-col sm:flex-row justify-between items-center gap-3 mb-6 md:mb-8"
+            >
                 <NuxtLink
                     to="/"
                     class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all duration-300 hover:scale-105 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl md:rounded-2xl px-4 py-2 md:px-6 md:py-3 shadow-lg border border-blue-200 dark:border-blue-800 w-full sm:w-auto justify-center"
@@ -25,7 +27,9 @@
                     }"
                 >
                     <span class="mr-2 text-lg md:text-xl">←</span>
-                    <span class="font-semibold text-sm md:text-base">На главную</span>
+                    <span class="font-semibold text-sm md:text-base"
+                        >На главную</span
+                    >
                 </NuxtLink>
                 <NuxtLink
                     to="/teamsPage"
@@ -35,7 +39,9 @@
                         'opacity-0 -translate-x-10': !isVisible,
                     }"
                 >
-                    <span class="font-semibold text-sm md:text-base">К списку команд</span>
+                    <span class="font-semibold text-sm md:text-base"
+                        >К списку команд</span
+                    >
                     <span class="ml-2 text-lg md:text-xl">→</span>
                 </NuxtLink>
             </div>
@@ -53,7 +59,7 @@
                     <h1
                         class="text-3xl md:text-5xl lg:text-7xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 bg-clip-text text-transparent mb-4 md:mb-6 tracking-tight"
                     >
-                        🏒 {{teamData.name}} ⭐
+                        🏒 {{ teamData.name }} ⭐
                     </h1>
                     <div
                         class="flex flex-col sm:flex-row items-center justify-center gap-2 md:gap-4 text-sm md:text-lg lg:text-xl text-gray-600 dark:text-gray-300"
@@ -80,7 +86,7 @@
             >
                 <!-- Team Photo Section с параллакс эффектом -->
                 <div
-                    class="relative h-48 md:h-72 lg:h-96 bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 flex items-center justify-center overflow-hidden"
+                    class="relative h-57 md:h-72 lg:h-96 bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 flex items-center justify-center overflow-hidden"
                 >
                     <!-- Анимированные частицы -->
                     <div class="absolute inset-0">
@@ -97,7 +103,9 @@
                         ></div>
                     </div>
 
-                    <div class="text-center text-white relative z-10 px-4 pb-4 md:pb-0">
+                    <div
+                        class="text-center text-white relative z-10 px-4 pb-4 md:pb-0"
+                    >
                         <div
                             class="text-6xl md:text-8xl lg:text-[12rem] mb-4 md:mb-6 animate-bounce"
                             style="animation-duration: 3s"
@@ -107,10 +115,12 @@
                         <h2
                             class="text-2xl md:text-4xl lg:text-6xl font-black mb-2 md:mb-3 tracking-wider"
                         >
-                            {{teamData.name}}
+                            {{ teamData.name }}
                         </h2>
-                        <p class="text-sm md:text-xl lg:text-2xl opacity-90 font-light">
-                            г. {{teamData.city}}
+                        <p
+                            class="text-sm md:text-xl lg:text-2xl opacity-90 font-light"
+                        >
+                            г. {{ teamData.city }}
                         </p>
                     </div>
 
@@ -120,7 +130,9 @@
                         <span
                             class="text-white font-bold flex items-center space-x-1 md:space-x-2 text-xs md:text-base"
                         >
-                            <span class="animate-pulse text-xs md:text-base"> 🏆 </span>
+                            <span class="animate-pulse text-xs md:text-base">
+                                🏆
+                            </span>
                             <span>Сезон 2024/25</span>
                         </span>
                     </div>
@@ -129,7 +141,9 @@
                     <div
                         class="absolute bottom-3 left-3 md:bottom-6 md:left-6 bg-white/20 backdrop-blur-md rounded-xl md:rounded-2xl px-2 py-1 md:px-4 md:py-2 border border-white/30"
                     >
-                        <span class="text-white text-xs md:text-sm font-semibold">
+                        <span
+                            class="text-white text-xs md:text-sm font-semibold"
+                        >
                             🔥 Серия: 5 побед подряд
                         </span>
                     </div>
@@ -137,7 +151,9 @@
 
                 <!-- Team Stats с улучшенной анимацией -->
                 <div class="p-4 md:p-8 lg:p-12">
-                    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-8 md:mb-12">
+                    <div
+                        class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-8 md:mb-12"
+                    >
                         <div
                             v-for="(stat, index) in teamStats"
                             :key="`stat-${index}`"
@@ -177,7 +193,9 @@
                         <div
                             class="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-inner"
                         >
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8">
+                            <div
+                                class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"
+                            >
                                 <div class="group">
                                     <h4
                                         class="font-bold mb-3 md:mb-4 text-blue-600 text-base md:text-lg flex items-center space-x-2"
@@ -185,7 +203,9 @@
                                         <span>🏠</span>
                                         <span>Домашняя форма</span>
                                     </h4>
-                                    <div class="flex items-center space-x-4 md:space-x-6">
+                                    <div
+                                        class="flex items-center space-x-4 md:space-x-6"
+                                    >
                                         <div class="relative">
                                             <div
                                                 class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-red-500 to-red-700 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-shadow duration-300 group-hover:rotate-12 transition-transform"
@@ -199,13 +219,17 @@
                                             <div
                                                 class="absolute -top-1 -right-1 md:-top-2 md:-right-2 w-4 h-4 md:w-6 md:h-6 bg-yellow-400 rounded-full flex items-center justify-center"
                                             >
-                                                <span class="text-[8px] md:text-xs">
+                                                <span
+                                                    class="text-[8px] md:text-xs"
+                                                >
                                                     ⭐
                                                 </span>
                                             </div>
                                         </div>
                                         <div>
-                                            <p class="font-bold text-base md:text-lg mb-1">
+                                            <p
+                                                class="font-bold text-base md:text-lg mb-1"
+                                            >
                                                 Красно-белая
                                             </p>
                                             <p
@@ -231,7 +255,9 @@
                                         <span>✈️</span>
                                         <span>Гостевая форма</span>
                                     </h4>
-                                    <div class="flex items-center space-x-4 md:space-x-6">
+                                    <div
+                                        class="flex items-center space-x-4 md:space-x-6"
+                                    >
                                         <div class="relative">
                                             <div
                                                 class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-shadow duration-300 group-hover:rotate-12 transition-transform"
@@ -245,13 +271,17 @@
                                             <div
                                                 class="absolute -top-1 -right-1 md:-top-2 md:-right-2 w-4 h-4 md:w-6 md:h-6 bg-green-400 rounded-full flex items-center justify-center"
                                             >
-                                                <span class="text-[8px] md:text-xs">
+                                                <span
+                                                    class="text-[8px] md:text-xs"
+                                                >
                                                     🔥
                                                 </span>
                                             </div>
                                         </div>
                                         <div>
-                                            <p class="font-bold text-base md:text-lg mb-1">
+                                            <p
+                                                class="font-bold text-base md:text-lg mb-1"
+                                            >
                                                 Сине-белая
                                             </p>
                                             <p
@@ -286,7 +316,9 @@
                             </span>
                             <span>Лучшие игроки</span>
                         </h3>
-                        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
+                        <div
+                            class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6"
+                        >
                             <NuxtLink to="/playersinfopage">
                                 <div
                                     class="group bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 rounded-2xl md:rounded-3xl p-4 md:p-8 cursor-pointer hover:scale-105 transition-all duration-300 border-2 border-blue-200 dark:border-blue-700 hover:border-blue-400 dark:hover:border-blue-500 relative overflow-hidden"
@@ -302,10 +334,14 @@
                                         >
                                             🥇
                                         </div>
-                                        <h4 class="font-black text-lg md:text-xl mb-2">
+                                        <h4
+                                            class="font-black text-lg md:text-xl mb-2"
+                                        >
                                             Александров И.
                                         </h4>
-                                        <p class="text-blue-600 font-bold mb-3 md:mb-4 text-sm md:text-base">
+                                        <p
+                                            class="text-blue-600 font-bold mb-3 md:mb-4 text-sm md:text-base"
+                                        >
                                             Нападающий
                                         </p>
                                         <div
@@ -319,7 +355,9 @@
                                                 >
                                                     23
                                                 </span>
-                                                <span class="text-gray-600 text-[10px] md:text-xs">
+                                                <span
+                                                    class="text-gray-600 text-[10px] md:text-xs"
+                                                >
                                                     🏒 гола
                                                 </span>
                                             </div>
@@ -331,7 +369,9 @@
                                                 >
                                                     15
                                                 </span>
-                                                <span class="text-gray-600 text-[10px] md:text-xs">
+                                                <span
+                                                    class="text-gray-600 text-[10px] md:text-xs"
+                                                >
                                                     🎯 передач
                                                 </span>
                                             </div>
@@ -349,31 +389,49 @@
                                     TOP
                                 </div>
                                 <div class="text-center">
-                                    <div class="text-4xl md:text-5xl mb-3 md:mb-4">🥈</div>
-                                    <h4 class="font-black text-lg md:text-xl mb-2">
+                                    <div
+                                        class="text-4xl md:text-5xl mb-3 md:mb-4"
+                                    >
+                                        🥈
+                                    </div>
+                                    <h4
+                                        class="font-black text-lg md:text-xl mb-2"
+                                    >
                                         Петров В.
                                     </h4>
-                                    <p class="text-red-600 font-bold mb-3 md:mb-4 text-sm md:text-base">
+                                    <p
+                                        class="text-red-600 font-bold mb-3 md:mb-4 text-sm md:text-base"
+                                    >
                                         Защитник
                                     </p>
-                                    <div class="grid grid-cols-2 gap-2 md:gap-4 text-xs md:text-sm">
-                                        <div class="bg-white/50 rounded-lg p-1 md:p-2">
+                                    <div
+                                        class="grid grid-cols-2 gap-2 md:gap-4 text-xs md:text-sm"
+                                    >
+                                        <div
+                                            class="bg-white/50 rounded-lg p-1 md:p-2"
+                                        >
                                             <span
                                                 class="block font-bold text-blue-600"
                                             >
                                                 8
                                             </span>
-                                            <span class="text-gray-600 text-[10px] md:text-xs">
+                                            <span
+                                                class="text-gray-600 text-[10px] md:text-xs"
+                                            >
                                                 🏒 голов
                                             </span>
                                         </div>
-                                        <div class="bg-white/50 rounded-lg p-1 md:p-2">
+                                        <div
+                                            class="bg-white/50 rounded-lg p-1 md:p-2"
+                                        >
                                             <span
                                                 class="block font-bold text-red-600"
                                             >
                                                 22
                                             </span>
-                                            <span class="text-gray-600 text-[10px] md:text-xs">
+                                            <span
+                                                class="text-gray-600 text-[10px] md:text-xs"
+                                            >
                                                 🎯 передачи
                                             </span>
                                         </div>
@@ -390,31 +448,49 @@
                                     WALL
                                 </div>
                                 <div class="text-center">
-                                    <div class="text-4xl md:text-5xl mb-3 md:mb-4">🥉</div>
-                                    <h4 class="font-black text-lg md:text-xl mb-2">
+                                    <div
+                                        class="text-4xl md:text-5xl mb-3 md:mb-4"
+                                    >
+                                        🥉
+                                    </div>
+                                    <h4
+                                        class="font-black text-lg md:text-xl mb-2"
+                                    >
                                         Сидоров М.
                                     </h4>
-                                    <p class="text-purple-600 font-bold mb-3 md:mb-4 text-sm md:text-base">
+                                    <p
+                                        class="text-purple-600 font-bold mb-3 md:mb-4 text-sm md:text-base"
+                                    >
                                         Вратарь
                                     </p>
-                                    <div class="grid grid-cols-2 gap-2 md:gap-4 text-xs md:text-sm">
-                                        <div class="bg-white/50 rounded-lg p-1 md:p-2">
+                                    <div
+                                        class="grid grid-cols-2 gap-2 md:gap-4 text-xs md:text-sm"
+                                    >
+                                        <div
+                                            class="bg-white/50 rounded-lg p-1 md:p-2"
+                                        >
                                             <span
                                                 class="block font-bold text-green-600"
                                             >
                                                 87%
                                             </span>
-                                            <span class="text-gray-600 text-[10px] md:text-xs">
+                                            <span
+                                                class="text-gray-600 text-[10px] md:text-xs"
+                                            >
                                                 🛡️ сейвов
                                             </span>
                                         </div>
-                                        <div class="bg-white/50 rounded-lg p-1 md:p-2">
+                                        <div
+                                            class="bg-white/50 rounded-lg p-1 md:p-2"
+                                        >
                                             <span
                                                 class="block font-bold text-blue-600"
                                             >
                                                 12
                                             </span>
-                                            <span class="text-gray-600 text-[10px] md:text-xs">
+                                            <span
+                                                class="text-gray-600 text-[10px] md:text-xs"
+                                            >
                                                 🚫 "сухих"
                                             </span>
                                         </div>
@@ -426,7 +502,9 @@
 
                     <!-- Team Composition с улучшенными табами -->
                     <div class="mb-8 md:mb-12">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 gap-3">
+                        <div
+                            class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 gap-3"
+                        >
                             <h3
                                 class="text-xl md:text-3xl font-black text-gray-800 dark:text-gray-200 flex items-center space-x-2 md:space-x-3"
                             >
@@ -458,8 +536,12 @@
                                 <span
                                     class="relative z-10 flex items-center justify-center space-x-1 md:space-x-2"
                                 >
-                                    <span class="hidden sm:inline">{{ tab.label }}</span>
-                                    <span class="sm:hidden">{{ tab.label.slice(0, 3) }}</span>
+                                    <span class="hidden sm:inline">{{
+                                        tab.label
+                                    }}</span>
+                                    <span class="sm:hidden">{{
+                                        tab.label.slice(0, 3)
+                                    }}</span>
                                     <span
                                         class="px-1.5 py-0.5 md:px-2 md:py-1 rounded-full text-[10px] md:text-xs"
                                         :class="
@@ -534,7 +616,10 @@
                                                 <span
                                                     class="bg-gradient-to-r from-blue-600 to-red-600 text-white rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center text-xs md:text-sm font-bold shadow-lg group-hover:shadow-xl transition-shadow duration-200"
                                                 >
-                                                    {{ player.pivot?.number || 'N/A' }}
+                                                    {{
+                                                        player.pivot?.number ||
+                                                        'N/A'
+                                                    }}
                                                 </span>
                                             </div>
                                         </div>
@@ -542,7 +627,11 @@
                                         <p
                                             class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-2 md:mb-3 font-medium"
                                         >
-                                            {{ player.pivot?.position || player.position || 'N/A' }}
+                                            {{
+                                                player.pivot?.position ||
+                                                player.position ||
+                                                'N/A'
+                                            }}
                                         </p>
 
                                         <div
@@ -559,7 +648,8 @@
                                                     <span>🛡️</span>
                                                     <span class="font-semibold"
                                                         >{{
-                                                            player.saves || 'N/A'
+                                                            player.saves ||
+                                                            'N/A'
                                                         }}%</span
                                                     >
                                                 </span>
@@ -570,7 +660,8 @@
                                                     <span
                                                         class="font-semibold"
                                                         >{{
-                                                            player.shutouts || 'N/A'
+                                                            player.shutouts ||
+                                                            'N/A'
                                                         }}</span
                                                     >
                                                 </span>
@@ -583,7 +674,12 @@
                                                     <span
                                                         class="font-semibold text-blue-600"
                                                     >
-                                                        {{ player.pivot?.goals || player.goals || 0 }}
+                                                        {{
+                                                            player.pivot
+                                                                ?.goals ||
+                                                            player.goals ||
+                                                            0
+                                                        }}
                                                     </span>
                                                 </span>
                                                 <span
@@ -593,7 +689,12 @@
                                                     <span
                                                         class="font-semibold text-red-600"
                                                     >
-                                                        {{ player.pivot?.assists || player.assists || 0 }}
+                                                        {{
+                                                            player.pivot
+                                                                ?.assists ||
+                                                            player.assists ||
+                                                            0
+                                                        }}
                                                     </span>
                                                 </span>
                                             </template>
@@ -603,13 +704,17 @@
                                         <div
                                             class="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-gray-700"
                                         >
-                                            <span class="text-[10px] md:text-xs text-gray-500">
+                                            <span
+                                                class="text-[10px] md:text-xs text-gray-500"
+                                            >
                                                 Рейтинг
                                             </span>
                                             <div
                                                 class="flex items-center space-x-1"
                                             >
-                                                <span class="text-yellow-500 text-sm md:text-base">
+                                                <span
+                                                    class="text-yellow-500 text-sm md:text-base"
+                                                >
                                                     ⭐
                                                 </span>
                                                 <span
@@ -627,7 +732,9 @@
 
                     <!-- Recent Matches с timeline дизайном -->
                     <div class="mb-8 md:mb-12">
-                        <div class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 gap-3">
+                        <div
+                            class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 gap-3"
+                        >
                             <h3
                                 class="text-xl md:text-3xl font-black text-gray-800 dark:text-gray-200 flex items-center space-x-2 md:space-x-3"
                             >
@@ -666,13 +773,17 @@
                                     "
                                 ></div>
 
-                                <div class="flex flex-col md:flex-row md:justify-between md:items-start gap-2">
+                                <div
+                                    class="flex flex-col md:flex-row md:justify-between md:items-start gap-2"
+                                >
                                     <div class="flex-1">
                                         <div
                                             class="flex flex-col md:flex-row md:items-center gap-2 mb-1 md:mb-2"
                                         >
-                                            <h4 class="font-bold text-base md:text-lg">
-                                                {{teamData.name}} vs
+                                            <h4
+                                                class="font-bold text-base md:text-lg"
+                                            >
+                                                {{ teamData.name }} vs
                                                 {{ match.opponent }}
                                             </h4>
                                             <span
@@ -691,7 +802,9 @@
                                         >
                                             {{ match.date }}
                                         </p>
-                                        <p class="text-[10px] md:text-xs text-gray-500">
+                                        <p
+                                            class="text-[10px] md:text-xs text-gray-500"
+                                        >
                                             👥 Зрителей: {{ match.attendance }}
                                         </p>
                                     </div>
@@ -736,7 +849,9 @@
                     </div>
 
                     <!-- Action Buttons с улучшенным дизайном -->
-                    <div class="flex flex-col md:flex-row gap-4 md:gap-6 mb-8 md:mb-12">
+                    <div
+                        class="flex flex-col md:flex-row gap-4 md:gap-6 mb-8 md:mb-12"
+                    >
                         <button
                             class="group flex-1 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 hover:from-blue-700 hover:via-blue-800 hover:to-blue-900 text-white font-bold py-4 md:py-6 px-6 md:px-8 rounded-xl md:rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl relative overflow-hidden"
                         >
@@ -847,13 +962,17 @@
                         class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 text-center hover:scale-105 transition-all duration-300 border border-yellow-300 dark:border-yellow-700"
                     >
                         <div class="text-3xl md:text-4xl mb-2 md:mb-3">🏆</div>
-                        <div class="text-xl md:text-2xl font-bold text-yellow-600 mb-1 md:mb-2">
+                        <div
+                            class="text-xl md:text-2xl font-bold text-yellow-600 mb-1 md:mb-2"
+                        >
                             {{ achievement.year }}
                         </div>
                         <h4 class="font-bold text-base md:text-lg mb-1 md:mb-2">
                             {{ achievement.title }}
                         </h4>
-                        <p class="text-xs md:text-sm text-gray-600 dark:text-gray-400">
+                        <p
+                            class="text-xs md:text-sm text-gray-600 dark:text-gray-400"
+                        >
                             {{ achievement.description }}
                         </p>
                     </div>
@@ -861,7 +980,9 @@
             </div>
 
             <!-- Навигация (дубликат) -->
-            <div class="flex flex-col sm:flex-row justify-between items-center gap-3 mt-8 md:mt-12">
+            <div
+                class="flex flex-col sm:flex-row justify-between items-center gap-3 mt-8 md:mt-12"
+            >
                 <NuxtLink
                     to="/"
                     class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all duration-300 hover:scale-105 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl md:rounded-2xl px-4 py-2 md:px-6 md:py-3 shadow-lg border border-blue-200 dark:border-blue-800 w-full sm:w-auto justify-center"
@@ -871,7 +992,9 @@
                     }"
                 >
                     <span class="mr-2 text-lg md:text-xl">←</span>
-                    <span class="font-semibold text-sm md:text-base">На главную</span>
+                    <span class="font-semibold text-sm md:text-base"
+                        >На главную</span
+                    >
                 </NuxtLink>
                 <NuxtLink
                     to="/teamsPage"
@@ -881,7 +1004,9 @@
                         'opacity-0 -translate-x-10': !isVisible,
                     }"
                 >
-                    <span class="font-semibold text-sm md:text-base">К списку команд</span>
+                    <span class="font-semibold text-sm md:text-base"
+                        >К списку команд</span
+                    >
                     <span class="ml-2 text-lg md:text-xl">→</span>
                 </NuxtLink>
             </div>
@@ -897,12 +1022,14 @@
                         class="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1"
                         :class="`bg-${social.color}-100 dark:bg-${social.color}-900/30 hover:bg-${social.color}-200 dark:hover:bg-${social.color}-800/50`"
                     >
-                        <span class="text-lg md:text-xl">{{ social.icon }}</span>
+                        <span class="text-lg md:text-xl">{{
+                            social.icon
+                        }}</span>
                     </button>
                 </div>
                 <p class="text-gray-600 dark:text-gray-400 text-xs md:text-sm">
-                    © 2024 {{teamData.name}} • Все права защищены • Сделано с ❤️ для
-                    болельщиков
+                    © 2024 {{ teamData.name }} • Все права защищены • Сделано с
+                    ❤️ для болельщиков
                 </p>
             </div>
         </div>
@@ -910,77 +1037,86 @@
 </template>
 
 <script setup>
-import { NuxtLink } from '#components';
-import { ref, computed, onMounted, onUnmounted } from 'vue';
+import { NuxtLink } from '#components'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 
-const route = useRoute();
-const teamId = route.params.id;
+const route = useRoute()
+const teamId = route.params.id
 
-const { data: teamData, error } = await useAsyncData(
-  `team-${teamId}`,
-  () => $fetch(`https://api.timeofthestars.ru/api/teams/${teamId}`)
-);
+const { data: teamData, error } = await useAsyncData(`team-${teamId}`, () =>
+    $fetch(`https://api.timeofthestars.ru/api/teams/${teamId}`)
+)
 
 if (error.value || !teamData.value) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: `Команда не найдена`,
-    fatal: true
-  });
+    throw createError({
+        statusCode: 404,
+        statusMessage: `Команда не найдена`,
+        fatal: true,
+    })
 }
 
 // --- Интегрированная логика ---
 
-const activeTab = ref('forwards');
-const isVisible = ref(false);
-const currentTime = ref(new Date());
-let timer = null;
+const activeTab = ref('forwards')
+const isVisible = ref(false)
+const currentTime = ref(new Date())
+let timer = null
 
 onMounted(() => {
-  isVisible.value = true;
-  timer = setInterval(() => {
-    currentTime.value = new Date();
-  }, 1000);
-});
+    isVisible.value = true
+    timer = setInterval(() => {
+        currentTime.value = new Date()
+    }, 1000)
+})
 
 onUnmounted(() => {
-    if(timer) {
-        clearInterval(timer);
+    if (timer) {
+        clearInterval(timer)
     }
-});
+})
 
 const formattedTime = computed(() => {
-    return currentTime.value.toLocaleTimeString('ru-RU');
-});
+    return currentTime.value.toLocaleTimeString('ru-RU')
+})
 
-const getTrendIcon = (trend) => {
-    return '➡️';
-};
+const getTrendIcon = trend => {
+    return '➡️'
+}
 
-const getTrendColor = (trend) => {
-    return 'text-gray-500';
-};
+const getTrendColor = trend => {
+    return 'text-gray-500'
+}
 
 const teamStats = computed(() => [
     { label: 'Победы', value: teamData.value.wins, color: 'green', trend: '' },
-    { label: 'Поражения', value: teamData.value.losses, color: 'red', trend: '' },
-    { label: 'Игроки', value: teamData.value.players_count, color: 'blue', trend: '' },
-    { label: 'Рейтинг', value: 'N/A', color: 'yellow', trend: 'default' }
-]);
+    {
+        label: 'Поражения',
+        value: teamData.value.losses,
+        color: 'red',
+        trend: '',
+    },
+    {
+        label: 'Игроки',
+        value: teamData.value.players_count,
+        color: 'blue',
+        trend: '',
+    },
+    { label: 'Рейтинг', value: 'N/A', color: 'yellow', trend: 'default' },
+])
 
 // Объединяем игроков из двух массивов
 const allPlayers = computed(() => {
     const players = [
         ...(teamData.value.championship_players || []),
-        ...(teamData.value.tournament_players || [])
-    ];
+        ...(teamData.value.tournament_players || []),
+    ]
     // Убираем дубликаты по ID, если они есть
-    const uniquePlayers = new Map();
-    players.forEach(p => uniquePlayers.set(p.id, p));
-    return Array.from(uniquePlayers.values());
-});
+    const uniquePlayers = new Map()
+    players.forEach(p => uniquePlayers.set(p.id, p))
+    return Array.from(uniquePlayers.values())
+})
 
-const totalPlayers = computed(() => allPlayers.value.length);
+
 
 // Группируем игроков по позиции
 const playersByPosition = computed(() => {
@@ -988,62 +1124,140 @@ const playersByPosition = computed(() => {
         forwards: [],
         defenders: [],
         goalkeepers: [],
-        other: []
-    };
+        other: [],
+    }
 
     allPlayers.value.forEach(player => {
-        const pos = (player.position || 'other').toLowerCase();
+        const pos = (player.position || 'other').toLowerCase()
         if (pos.includes('нападающий') || pos.includes('форвард')) {
-            groups.forwards.push(player);
+            groups.forwards.push(player)
         } else if (pos.includes('защитник')) {
-            groups.defenders.push(player);
+            groups.defenders.push(player)
         } else if (pos.includes('вратарь')) {
-            groups.goalkeepers.push(player);
+            groups.goalkeepers.push(player)
         } else {
-            groups.other.push(player);
-        }  
-    });
-    return groups;
-});
+            groups.other.push(player)
+        }
+    })
+    return groups
+})
 
-const tabs = computed(() => [
-    { key: 'forwards', label: 'Нападающие', count: playersByPosition.value.forwards.length, color: 'red' },
-    { key: 'defenders', label: 'Защитники', count: playersByPosition.value.defenders.length, color: 'blue' },
-    { key: 'goalkeepers', label: 'Вратари', count: playersByPosition.value.goalkeepers.length, color: 'green' },
-    { key: 'other', label: 'Другие', count: playersByPosition.value.other.length, color: 'gray' }
-].filter(tab => tab.count > 0));
+const tabs = computed(() =>
+    [
+        {
+            key: 'forwards',
+            label: 'Нападающие',
+            count: playersByPosition.value.forwards.length,
+            color: 'red',
+        },
+        {
+            key: 'defenders',
+            label: 'Защитники',
+            count: playersByPosition.value.defenders.length,
+            color: 'blue',
+        },
+        {
+            key: 'goalkeepers',
+            label: 'Вратари',
+            count: playersByPosition.value.goalkeepers.length,
+            color: 'green',
+        },
+        {
+            key: 'other',
+            label: 'Другие',
+            count: playersByPosition.value.other.length,
+            color: 'gray',
+        },
+    ].filter(tab => tab.count > 0)
+)
 
 const currentPlayers = computed(() => {
-    return playersByPosition.value[activeTab.value] || [];
-});
+    return playersByPosition.value[activeTab.value] || []
+})
 
 // Статические данные для демонстрации
 const recentMatches = [
-    { opponent: 'СКА', date: '15.12.2024', result: '4:2', status: 'win', venue: 'Дома', attendance: '12,450' },
-    { opponent: 'ЦСКА', date: '12.12.2024', result: '1:3', status: 'loss', venue: 'В гостях', attendance: '8,200' },
-    { opponent: 'Локомотив', date: '08.12.2024', result: '5:1', status: 'win', venue: 'Дома', attendance: '11,800' }
-];
+    {
+        opponent: 'СКА',
+        date: '15.12.2024',
+        result: '4:2',
+        status: 'win',
+        venue: 'Дома',
+        attendance: '12,450',
+    },
+    {
+        opponent: 'ЦСКА',
+        date: '12.12.2024',
+        result: '1:3',
+        status: 'loss',
+        venue: 'В гостях',
+        attendance: '8,200',
+    },
+    {
+        opponent: 'Локомотив',
+        date: '08.12.2024',
+        result: '5:1',
+        status: 'win',
+        venue: 'Дома',
+        attendance: '11,800',
+    },
+]
 
 const additionalStats = [
-    { icon: '⚡', value: '85%', label: 'Владение шайбой', color: 'blue', description: 'Средний показатель за сезон' },
-    { icon: '🎯', value: '32', label: 'Броски в створ', color: 'red', description: 'За последнюю игру' },
-    { icon: '🛡️', value: '92%', label: 'Силовая игра', color: 'green', description: 'Эффективность в большинстве' },
-    { icon: '🔥', value: '15', label: 'Хет-трики', color: 'yellow', description: 'За всю историю клуба' }
-];
+    {
+        icon: '⚡',
+        value: '85%',
+        label: 'Владение шайбой',
+        color: 'blue',
+        description: 'Средний показатель за сезон',
+    },
+    {
+        icon: '🎯',
+        value: '32',
+        label: 'Броски в створ',
+        color: 'red',
+        description: 'За последнюю игру',
+    },
+    {
+        icon: '🛡️',
+        value: '92%',
+        label: 'Силовая игра',
+        color: 'green',
+        description: 'Эффективность в большинстве',
+    },
+    {
+        icon: '🔥',
+        value: '15',
+        label: 'Хет-трики',
+        color: 'yellow',
+        description: 'За всю историю клуба',
+    },
+]
 
 const achievements = [
-    { year: '2023', title: 'Чемпионы Лиги', description: 'Победа в финальной серии' },
-    { year: '2021', title: 'Кубок Победителей', description: 'Лучший клуб сезона' },
-    { year: '2019', title: 'Золотой Шлем', description: 'Рекордная серия побед' }
-];
+    {
+        year: '2023',
+        title: 'Чемпионы Лиги',
+        description: 'Победа в финальной серии',
+    },
+    {
+        year: '2021',
+        title: 'Кубок Победителей',
+        description: 'Лучший клуб сезона',
+    },
+    {
+        year: '2019',
+        title: 'Золотой Шлем',
+        description: 'Рекордная серия побед',
+    },
+]
 
 const socials = [
     { icon: '📘', color: 'blue' },
     { icon: '📷', color: 'pink' },
     { icon: '🐦', color: 'blue' },
-    { icon: '📺', color: 'red' }
-];
-
+    { icon: '📺', color: 'red' },
+]
 </script>
 
 <style>
@@ -1079,12 +1293,12 @@ const socials = [
         font-size: 1.5rem;
         line-height: 2rem;
     }
-    
+
     .text-xl {
         font-size: 1.25rem;
         line-height: 1.75rem;
     }
-    
+
     .text-lg {
         font-size: 1.125rem;
         line-height: 1.75rem;

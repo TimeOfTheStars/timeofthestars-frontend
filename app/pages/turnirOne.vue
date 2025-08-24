@@ -79,7 +79,8 @@
                     <button
                         class="w-48 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold shadow-lg"
                         :class="{
-                            'bg-primary-blue text-white': activeTab === 'participants',
+                            'bg-primary-blue text-white':
+                                activeTab === 'participants',
                             'bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors':
                                 activeTab !== 'participants',
                         }"
@@ -131,7 +132,7 @@
             <div class="max-w-6xl mx-auto">
                 <h2 class="text-3xl font-bold mb-8 text-center">
                     👥 Участники турнира
-                </h2>   
+                </h2>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div
@@ -162,7 +163,7 @@
 
         <!-- Table Tab -->
         <section v-if="activeTab === 'table'" class="py-16 px-4">
-            <Table/>
+            <Table />
         </section>
 
         <!-- Results Tab -->
@@ -287,24 +288,22 @@ import { ref, computed } from 'vue'
 // Активная вкладка
 const activeTab = ref('participants')
 
-const { data: turnirdata } = useFetch('https://api.timeofthestars.ru/api/tournaments');
+const { data: turnirdata } = useFetch(
+    'https://api.timeofthestars.ru/api/tournaments'
+)
 
-console.log(turnirdata.value); 
 const teams = computed(() => {
-  if (!turnirdata.value || turnirdata.value.length === 0) {
-    return [];
-  }
-  return turnirdata.value[0].teams || [];
-});
+    if (!turnirdata.value || turnirdata.value.length === 0) {
+        return []
+    }
+    return turnirdata.value[0].teams || []
+})
 const matches = computed(() => {
-  if (!turnirdata.value || turnirdata.value.length === 0) {
-    return [];
-  }
-  return turnirdata.value[0].games || [];
-});
-
-console.log(matches.value); 
-
+    if (!turnirdata.value || turnirdata.value.length === 0) {
+        return []
+    }
+    return turnirdata.value[0].games || []
+})
 
 // Сортированные команды по очкам для таблицы
 const sortedTeams = computed(() => {

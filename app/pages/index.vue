@@ -87,8 +87,6 @@
             </div>
         </section>
 
-   
-
         <!-- Stats Section -->
         <section class="py-16 px-4">
             <div class="max-w-6xl mx-auto">
@@ -174,7 +172,9 @@
                         <PlayerCard :player="player" />
                     </div>
                 </div> -->
-                <p class="text-center text-gray-400 mt-8">здесь будет информация о лучших игроках</p>
+                <p class="text-center text-gray-400 mt-8">
+                    здесь будет информация о лучших игроках
+                </p>
             </div>
         </section>
 
@@ -564,8 +564,6 @@
                         </div>
                     </router-link>
                 </div>
-
-               
             </div>
         </section>
         <MapInfo />
@@ -717,123 +715,11 @@
 <script setup>
 import { ref } from 'vue'
 import MapInfo from '@/components/MapInfo.vue'
-import { getTeamLogo } from '@/utils/PicturesAdmin.ts'
 
-const {data: teamsdata, error} = useFetch('https://api.timeofthestars.ru/api/teams')
-
-// Данные для прямых трансляций
-const liveMatches = ref([
-    {
-        team1: 'Локомотив',
-        team2: 'Зубр',
-        logo1: '/photo_53844715688281.png (1).webp',
-        logo2: '/photo_53844715688281.png (1).webp',
-        score: '2:1',
-        time: '18:30',
-    },
-    {
-        team1: 'Переславль',
-        team2: 'Ярославль',
-        logo1: '/logo3.png',
-        logo2: '/logo4.png',
-        score: '0:3',
-        time: '20:00',
-    },
-])
-
-const {data: upcomingMatches} = useFetch('https://api.timeofthestars.ru/api/games')
-console.log(upcomingMatches.value)
-
-// Данные для лучших игроков
-const topPlayers = ref([
-    // {
-    //     // name: player.full_name,
-    //     // team: player.team_id.full_name,
-    //     // logo: '/logo1.png',
-    //     // goals: player.goals,
-    //     // assists: player.assists,
-    // },
-    // {
-    //     name: 'Дмитрий Сидоров',
-    //     team: 'ХК "Зубр"',
-    //     logo: '/logo2.png',
-    //     goals: 10,
-    //     assists: 11,
-    // },
-    // {
-    //     name: 'Михаил Иванов',
-    //     team: 'ХК "Переславль"',
-    //     logo: '/logo3.png',
-    //     goals: 9,
-    //     assists: 7,
-    // },
-])
-
-// Данные для команд
-const teams = ref([
-    {
-        name: 'Локомотив',
-        city: 'Ярославль',
-        logo: '/logo1.png',
-        wins: 8,
-        losses: 2,
-        players: 20,
-    },
-    {
-        name: 'Зубр',
-        city: 'Переславль',
-        logo: '/logo2.png',
-        wins: 7,
-        losses: 3,
-        players: 18,
-    },
-    {
-        name: 'Переславль',
-        city: 'Переславль-Залесский',
-        logo: '/logo3.png',
-        wins: 6,
-        losses: 4,
-        players: 19,
-    },
-    {
-        name: 'Ярославль',
-        city: 'Ярославль',
-        logo: '/logo4.png',
-        wins: 5,
-        losses: 5,
-        players: 17,
-    },
-    {
-        name: 'Динамо',
-        city: 'Рыбинск',
-        logo: '/logo5.png',
-        wins: 4,
-        losses: 6,
-        players: 16,
-    },
-    {
-        name: 'Спартак',
-        city: 'Тутаев',
-        logo: '/logo6.png',
-        wins: 3,
-        losses: 7,
-        players: 15,
-    },
-    {
-        name: 'Торпедо',
-        city: 'Углич',
-        logo: '/logo7.png',
-        wins: 2,
-        losses: 8,
-        players: 18,
-    },
-    {
-        name: 'Металлург',
-        city: 'Любим',
-        logo: '/logo8.png',
-        wins: 1,
-        losses: 9,
-        players: 14,
-    },
-])
+const { data: teamsdata, error } = useFetch(
+    'https://api.timeofthestars.ru/api/teams'
+)
+const { data: upcomingMatches } = useFetch(
+    'https://api.timeofthestars.ru/api/games'
+)
 </script>

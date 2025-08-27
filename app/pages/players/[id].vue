@@ -25,7 +25,9 @@
                 }"
             >
                 <span class="mr-2 text-lg md:text-xl">←</span>
-                <span class="font-semibold text-sm md:text-base">Назад к команде</span>
+                <span class="font-semibold text-sm md:text-base"
+                    >Назад к команде</span
+                >
             </button>
 
             <!-- Если игрок не найден -->
@@ -42,7 +44,9 @@
                     >
                         Игрок не найден
                     </h1>
-                    <p class="text-gray-600 dark:text-gray-400 mb-6 text-sm md:text-base">
+                    <p
+                        class="text-gray-600 dark:text-gray-400 mb-6 text-sm md:text-base"
+                    >
                         Возможно, вы перешли по неверной ссылке
                     </p>
                     <button
@@ -50,7 +54,7 @@
                         class="bg-gradient-to-r from-blue-600 to-red-600 text-white px-6 py-2 md:px-8 md:py-3 rounded-xl md:rounded-2xl font-semibold hover:scale-105 transition-transform duration-200 inline-block text-sm md:text-base"
                     >
                         🏒 Вернуться к команде
-                </button>
+                    </button>
                 </div>
             </div>
 
@@ -105,7 +109,9 @@
                                     >#{{ player.number }}</span
                                 >
                                 <span class="hidden md:inline">•</span>
-                                <span class="md:ml-2">{{ player.position }}</span>
+                                <span class="md:ml-2">{{
+                                    player.position
+                                }}</span>
                             </div>
                         </div>
 
@@ -116,7 +122,9 @@
                             <span
                                 class="text-white font-bold flex items-center space-x-1 md:space-x-2 text-xs md:text-base"
                             >
-                                <span class="animate-pulse text-xs md:text-base">⭐</span>
+                                <span class="animate-pulse text-xs md:text-base"
+                                    >⭐</span
+                                >
                                 <span>Рейтинг: {{ player.rating }}</span>
                             </span>
                         </div>
@@ -125,7 +133,9 @@
                         <div
                             class="absolute bottom-3 left-3 md:bottom-6 md:left-6 bg-white/20 backdrop-blur-md rounded-xl md:rounded-2xl px-2 py-1 md:px-4 md:py-2 border border-white/30"
                         >
-                            <span class="text-white text-xs md:text-sm font-semibold">
+                            <span
+                                class="text-white text-xs md:text-sm font-semibold"
+                            >
                                 🔥 {{ player.goals + player.assists }} очков
                             </span>
                         </div>
@@ -181,9 +191,15 @@
                                     <span
                                         class="flex items-center justify-center space-x-1 md:space-x-2"
                                     >
-                                        <span class="text-xs md:text-base">{{ tab.icon }}</span>
-                                        <span class="hidden sm:inline">{{ tab.label }}</span>
-                                        <span class="sm:hidden">{{ tab.label.split(' ')[0] }}</span>
+                                        <span class="text-xs md:text-base">{{
+                                            tab.icon
+                                        }}</span>
+                                        <span class="hidden sm:inline">{{
+                                            tab.label
+                                        }}</span>
+                                        <span class="sm:hidden">{{
+                                            tab.label.split(' ')[0]
+                                        }}</span>
                                     </span>
                                 </button>
                             </div>
@@ -272,7 +288,9 @@
                                                 >
                                                     {{ game.date }}
                                                 </div>
-                                                <div class="font-bold text-sm md:text-base">
+                                                <div
+                                                    class="font-bold text-sm md:text-base"
+                                                >
                                                     vs {{ game.opponent }}
                                                 </div>
                                             </div>
@@ -384,7 +402,9 @@
                                 <span class="animate-pulse">🏆</span>
                                 <span>Достижения</span>
                             </h3>
-                            <div class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6">
+                            <div
+                                class="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-6"
+                            >
                                 <div
                                     v-for="(
                                         achievement, index
@@ -392,7 +412,9 @@
                                     :key="index"
                                     class="bg-gradient-to-br from-yellow-50 to-orange-50 dark:from-yellow-900/30 dark:to-orange-900/30 rounded-xl md:rounded-2xl p-4 md:p-6 border-2 border-yellow-200 dark:border-yellow-800 hover:scale-105 transition-all duration-300 group"
                                 >
-                                    <div class="flex items-center space-x-3 md:space-x-4">
+                                    <div
+                                        class="flex items-center space-x-3 md:space-x-4"
+                                    >
                                         <div
                                             class="text-2xl md:text-4xl group-hover:animate-bounce"
                                         >
@@ -404,7 +426,9 @@
                                             >
                                                 {{ achievement }}
                                             </p>
-                                            <p class="text-xs md:text-sm text-yellow-600">
+                                            <p
+                                                class="text-xs md:text-sm text-yellow-600"
+                                            >
                                                 Престижная награда
                                             </p>
                                         </div>
@@ -482,7 +506,9 @@
                                             >
                                                 1
                                             </td>
-                                            <td class="px-3 py-2 md:px-6 md:py-4 font-semibold text-xs md:text-base">
+                                            <td
+                                                class="px-3 py-2 md:px-6 md:py-4 font-semibold text-xs md:text-base"
+                                            >
                                                 {{ player.team }}
                                             </td>
                                             <td
@@ -510,7 +536,8 @@
                                             >
                                                 {{
                                                     (
-                                                        player.goals / player.games
+                                                        player.goals /
+                                                        player.games
                                                     ).toFixed(2)
                                                 }}
                                             </td>
@@ -522,25 +549,24 @@
 
                         <!-- Кнопка действия -->
                         <div class="text-center">
-                            
-                                <button @click="goBackToTeam()"
-                                    class="group bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 hover:from-blue-700 hover:via-purple-700 hover:to-red-700 text-white font-bold py-4 px-8 md:py-6 md:px-12 rounded-xl md:rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl relative overflow-hidden w-full sm:w-auto"
+                            <button
+                                @click="goBackToTeam()"
+                                class="group bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 hover:from-blue-700 hover:via-purple-700 hover:to-red-700 text-white font-bold py-4 px-8 md:py-6 md:px-12 rounded-xl md:rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl relative overflow-hidden w-full sm:w-auto"
+                            >
+                                <div
+                                    class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"
+                                ></div>
+                                <span
+                                    class="relative z-10 flex items-center justify-center space-x-2 md:space-x-3 text-sm md:text-lg"
                                 >
-                                    <div
-                                        class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"
-                                    ></div>
+                                    <span>🏒</span>
+                                    <span>Вернуться к команде</span>
                                     <span
-                                        class="relative z-10 flex items-center justify-center space-x-2 md:space-x-3 text-sm md:text-lg"
+                                        class="group-hover:translate-x-1 transition-transform duration-200"
+                                        >→</span
                                     >
-                                        <span>🏒</span>
-                                        <span>Вернуться к команде</span>
-                                        <span
-                                            class="group-hover:translate-x-1 transition-transform duration-200"
-                                            >→</span
-                                        >
-                                    </span>
-                                </button>
-                            
+                                </span>
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -553,41 +579,40 @@
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 
-const route = useRoute();
-const router = useRouter();
+const route = useRoute()
+const router = useRouter()
 const isVisible = ref(false)
 const activeStatTab = ref('current')
 
 const goBackToTeam = () => {
-  const fromPath = route.query.from
-  if (fromPath) {
-    router.push(fromPath)
-  } else {
-    // Fallback если параметр отсутствует
-    router.push('/teams')
-  }
+    const fromPath = route.query.from
+    if (fromPath) {
+        router.push(fromPath)
+    } else {
+        // Fallback если параметр отсутствует
+        router.push('/teams')
+    }
 }
 
 onMounted(() => {
     isVisible.value = true
 })
-const playerId = route.params.id;
+const playerId = route.params.id
 
 const { data: playerData, error } = await useAsyncData(
-  `player-${playerId}`,
-  () => $fetch(`https://api.timeofthestars.ru/api/players/${playerId}`)
-);
+    `player-${playerId}`,
+    () => $fetch(`https://api.timeofthestars.ru/api/players/${playerId}`)
+)
 
 if (error.value || !playerData.value) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: `Игрок не найден`,
-    fatal: true
-  });
+    throw createError({
+        statusCode: 404,
+        statusMessage: `Игрок не найден`,
+        fatal: true,
+    })
 }
 
-const player =  playerData.value
-
+const player = playerData.value
 
 // Вычисляемые свойства для статистики
 const quickStats = computed(() => [
@@ -711,12 +736,12 @@ const advancedStats = computed(() => [
         font-size: 1.5rem;
         line-height: 2rem;
     }
-    
+
     .text-xl {
         font-size: 1.25rem;
         line-height: 1.75rem;
     }
-    
+
     .text-lg {
         font-size: 1.125rem;
         line-height: 1.75rem;
@@ -727,4 +752,4 @@ const advancedStats = computed(() => [
 .overflow-x-auto {
     -webkit-overflow-scrolling: touch;
 }
-</style>    
+</style>

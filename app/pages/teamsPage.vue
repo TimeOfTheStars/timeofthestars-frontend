@@ -12,7 +12,10 @@
                     </p>
                 </div>
 
-                <div v-if="teamsdata" class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div
+                    v-if="teamsdata"
+                    class="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
+                >
                     <div
                         v-for="team in teamsdata"
                         :key="team.id"
@@ -21,17 +24,18 @@
                         <TeamCard :team="team" />
                     </div>
                 </div>
-                 <div v-else-if="error" class="text-center text-red-500">
+                <div v-else-if="error" class="text-center text-red-500">
                     Ошибка загрузки команд.
                 </div>
-                <div v-else class="text-center">
-                    Загрузка команд...
-                </div>
+                <div v-else class="text-center">Загрузка команд...</div>
             </div>
         </section>
+        <Footer />
     </div>
 </template>
 
 <script setup>
-const { data: teamsdata, error } = useFetch('https://api.timeofthestars.ru/api/teams');
+const { data: teamsdata, error } = useFetch(
+    'https://api.timeofthestars.ru/api/teams'
+)
 </script>

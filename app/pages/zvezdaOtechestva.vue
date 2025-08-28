@@ -3,7 +3,7 @@
         <Header />
 
         <!-- Tournament Header -->
-        <section class="relative overflow-hidden">
+        <section class="relative overflow-hidden mt-16">
             <div
                 class="absolute inset-0 bg-gradient-to-br from-primary-blue/20 to-primary-red/20"
             ></div>

@@ -1,5 +1,5 @@
 <template>
-    <div class="min-h-screen bg-gray-900 text-white overflow-x-hidden">
+    <div class="min-h-screen bg-gray-900 text-white overflow-x-hidden mt-16">
         <Header />
         <section class="py-16 px-4 bg-gray-800">
             <div class="max-w-6xl mx-auto">

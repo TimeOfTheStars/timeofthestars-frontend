@@ -1,6 +1,6 @@
 <template>
     <header
-        class="bg-gray-900/95 backdrop-blur-md border-b border-gray-800 fixed w-full top-0 z-50"
+        class="bg-gray-900/95 backdrop-blur-md border-b border-gray-800 fixed w-full top-0 z-51"
     >
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center h-16">
@@ -21,8 +21,9 @@
                     class="hidden md:flex items-center justify-center space-x-8"
                 >
                     <NuxtLink
+                        data-glow-magnetic
                         to="/"
-                        class="text-gray-300 hover:text-white transition-colors"
+                        class="text-gray-300 hover:text-white glow-effect active-text-gradient transition-colors"
                     >
                         Главная
                     </NuxtLink>
@@ -30,7 +31,8 @@
                     <!-- Dropdown: Товарищеские турниры -->
                     <div class="relative group">
                         <button
-                            class="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors"
+                            data-glow-magnetic
+                            class="flex items-center space-x-1 text-gray-300 glow-effect hover:text-white active-text-gradient transition-colors"
                         >
                             <span>Товарищеские турниры</span>
                             <svg
@@ -78,7 +80,8 @@
                     <!-- Dropdown: Чемпионаты -->
                     <div class="relative group">
                         <button
-                            class="flex items-center space-x-1 text-gray-300 hover:text-white transition-colors"
+                            data-glow-magnetic
+                            class="flex items-center space-x-1 text-gray-300 hover:text-white glow-effect active-text-gradient transition-colors"
                         >
                             <span>Чемпионаты</span>
                             <svg
@@ -122,18 +125,21 @@
                     </div>
 
                     <NuxtLink
+                        data-glow-magnetic
                         to="/teamsPage"
-                        class="text-gray-300 hover:text-white transition-colors"
+                        class="text-gray-300 hover:text-white glow-effect active-text-gradient transition-colors"
                         >Команды</NuxtLink
                     >
                     <NuxtLink
+                        data-glow-magnetic
                         to="/schedule"
-                        class="text-gray-300 hover:text-white transition-colors"
+                        class="text-gray-300 hover:text-white glow-effect active-text-gradient transition-colors"
                         >Расписание</NuxtLink
                     >
                     <NuxtLink
+                        data-glow-magnetic
                         to="/gallery"
-                        class="text-gray-300 hover:text-white transition-colors"
+                        class="text-gray-300 hover:text-white glow-effect active-text-gradient transition-colors"
                         >Галерея</NuxtLink
                     >
                 </nav>
@@ -178,7 +184,7 @@
             >
                 <NuxtLink
                     to="/"
-                    class="block text-gray-300 hover:text-white transition-colors"
+                    class="block text-gray-300 hover:text-white active-text-gradient transition-colors"
                     @click="closeMobileMenu"
                 >
                     Главная
@@ -186,7 +192,7 @@
 
                 <div>
                     <button
-                        class="flex items-center justify-between w-full text-gray-300 hover:text-white transition-colors"
+                        class="flex items-center justify-between w-full text-gray-300 hover:text-white active-text-gradient transition-colors"
                         @click="toggleDropdown('friendly')"
                     >
                         <span class="text-gray-400 text-sm font-medium"
@@ -228,7 +234,7 @@
 
                 <div>
                     <button
-                        class="flex items-center justify-between w-full text-gray-300 hover:text-white transition-colors"
+                        class="flex items-center justify-between w-full text-gray-300 hover:text-white active-text-gradient transition-colors"
                         @click="toggleDropdown('championships')"
                     >
                         <span class="text-gray-400 text-sm font-medium"
@@ -270,21 +276,21 @@
 
                 <NuxtLink
                     to="/teamsPage"
-                    class="block text-gray-300 hover:text-white transition-colors"
+                    class="block text-gray-300 hover:text-white active-text-gradient transition-colors"
                     @click="closeMobileMenu"
                 >
                     Команды
                 </NuxtLink>
                 <NuxtLink
                     to="/schedule"
-                    class="block text-gray-300 hover:text-white transition-colors"
+                    class="block text-gray-300 hover:text-white active-text-gradient transition-colors"
                     @click="closeMobileMenu"
                 >
                     Расписание
                 </NuxtLink>
                 <NuxtLink
                     to="/gallery"
-                    class="block text-gray-300 hover:text-white transition-colors"
+                    class="block text-gray-300 hover:text-white active-text-gradient transition-colors"
                     @click="closeMobileMenu"
                 >
                     Галерея

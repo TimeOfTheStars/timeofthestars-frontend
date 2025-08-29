@@ -63,7 +63,7 @@ export default defineNuxtConfig({
                 // Цвет темы для мобильных устройств
                 {
                     name: 'theme-color',
-                    content: '#ffffff', // или другой цвет, если указан в manifest
+                    content: '#0f0f0f', // или другой цвет, если указан в manifest
                 },
                 // Для Windows Metro
                 {

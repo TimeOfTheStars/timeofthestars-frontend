@@ -203,7 +203,7 @@
         </section>
 
         <!-- Stadium Map Section -->
-        <StadiumMap />
+        <MapInfo />
 
         <!-- Features Section -->
         <section class="py-16 px-4">

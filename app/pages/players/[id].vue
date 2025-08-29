@@ -44,9 +44,7 @@
                     >
                         Игрок не найден
                     </h1>
-                    <p
-                        class="text-gray-400 mb-6 text-sm md:text-base"
-                    >
+                    <p class="text-gray-400 mb-6 text-sm md:text-base">
                         Возможно, вы перешли по неверной ссылке
                     </p>
                     <button
@@ -150,7 +148,7 @@
                             <div
                                 v-for="(stat, index) in quickStats"
                                 :key="index"
-                                class="text-center group cursor-pointer p-2 md:p-0"
+                                class="text-center group cursor-pointer p-2 md:p-0 text-gray-200"
                                 :style="{
                                     animationDelay: `${index * 100}ms`,
                                     animation: isVisible
@@ -212,7 +210,7 @@
                                 <div
                                     v-for="(stat, index) in currentSeasonStats"
                                     :key="index"
-                                    :class="`bg-${stat.color}-900/30 rounded-xl md:rounded-2xl p-3 md:p-6 text-center hover:scale-105 transition-all duration-300 border border-${stat.color}-800`"
+                                    :class="`bg-${stat.color}-900/30 text-gray-200 rounded-xl md:rounded-2xl p-3 md:p-6 text-center hover:scale-105 transition-all duration-300 border border-${stat.color}-800`"
                                 >
                                     <div
                                         :class="`text-xl md:text-3xl font-black text-${stat.color}-600 mb-1 md:mb-2`"
@@ -383,7 +381,7 @@
                                         {{ player.birthPlace }}
                                     </div>
                                     <div
-                                        class="bg-gray-800/50 rounded-xl md:rounded-2xl p-3 md:p-4"
+                                        class="bg-gray-800/50 rounded-xl md:rounded-2xl text-gray-200 p-3 md:p-4"
                                     >
                                         <strong class="text-red-600"
                                             >Позиция:</strong
@@ -493,10 +491,8 @@
                                     <tbody>
                                         <tr
                                             :class="{
-                                                'bg-gray-700':
-                                                    index % 2 === 0,
-                                                'bg-gray-800':
-                                                    index % 2 !== 0,
+                                                'bg-gray-700': index % 2 === 0,
+                                                'bg-gray-800': index % 2 !== 0,
                                                 'hover:bg-blue-900/30': true,
                                             }"
                                             class="transition-colors duration-200"

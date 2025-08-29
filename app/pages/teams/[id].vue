@@ -228,7 +228,7 @@
                                         </div>
                                         <div>
                                             <p
-                                                class="font-bold text-base md:text-lg mb-1"
+                                                class="font-bold text-gray-200 text-base md:text-lg mb-1"
                                             >
                                                 Красно-белая
                                             </p>
@@ -280,7 +280,7 @@
                                         </div>
                                         <div>
                                             <p
-                                                class="font-bold text-base md:text-lg mb-1"
+                                                class="font-bold text-base text-gray-200 md:text-lg mb-1"
                                             >
                                                 Сине-белая
                                             </p>
@@ -319,7 +319,7 @@
                         <div
                             class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6"
                         >
-                            <NuxtLink to="/playersinfopage">
+                            <NuxtLink>
                                 <div
                                     class="group bg-gradient-to-br from-blue-900 to-blue-800 rounded-2xl md:rounded-3xl p-4 md:p-8 cursor-pointer hover:scale-105 transition-all duration-300 border-2 border-blue-700 hover:border-blue-500 relative overflow-hidden"
                                 >
@@ -335,7 +335,7 @@
                                             🥇
                                         </div>
                                         <h4
-                                            class="font-black text-lg md:text-xl mb-2"
+                                            class="font-black text-gray-200 text-lg md:text-xl mb-2"
                                         >
                                             Александров И.
                                         </h4>
@@ -395,7 +395,7 @@
                                         🥈
                                     </div>
                                     <h4
-                                        class="font-black text-lg md:text-xl mb-2"
+                                        class="font-black text-gray-200 text-lg md:text-xl mb-2"
                                     >
                                         Петров В.
                                     </h4>
@@ -454,7 +454,7 @@
                                         🥉
                                     </div>
                                     <h4
-                                        class="font-black text-lg md:text-xl mb-2"
+                                        class="font-black text-gray-200 text-lg md:text-xl mb-2"
                                     >
                                         Сидоров М.
                                     </h4>
@@ -591,7 +591,7 @@
                                                 class="flex items-center space-x-2 md:space-x-3"
                                             >
                                                 <h5
-                                                    class="font-bold text-base md:text-lg group-hover:text-blue-600 transition-colors duration-200"
+                                                    class="font-bold text-gray-200 text-base md:text-lg group-hover:text-blue-600 transition-colors duration-200"
                                                 >
                                                     {{ player.full_name }}
                                                 </h5>
@@ -781,7 +781,7 @@
                                             class="flex flex-col md:flex-row md:items-center gap-2 mb-1 md:mb-2"
                                         >
                                             <h4
-                                                class="font-bold text-base md:text-lg"
+                                                class="font-bold text-base text-gray-200 md:text-lg"
                                             >
                                                 {{ teamData.name }} vs
                                                 {{ match.opponent }}
@@ -967,12 +967,12 @@
                         >
                             {{ achievement.year }}
                         </div>
-                        <h4 class="font-bold text-base md:text-lg mb-1 md:mb-2">
+                        <h4
+                            class="font-bold text-gray-200 text-base md:text-lg mb-1 md:mb-2"
+                        >
                             {{ achievement.title }}
                         </h4>
-                        <p
-                            class="text-xs md:text-sm text-gray-400"
-                        >
+                        <p class="text-xs md:text-sm text-gray-400">
                             {{ achievement.description }}
                         </p>
                     </div>
@@ -1012,9 +1012,7 @@
             </div>
 
             <!-- Footer с социальными сетями -->
-            <div
-                class="text-center py-6 md:py-8 border-t border-gray-700"
-            >
+            <div class="text-center py-6 md:py-8 border-t border-gray-700">
                 <div class="flex justify-center gap-4 md:gap-6 mb-4 md:mb-6">
                     <button
                         v-for="(social, index) in socials"
@@ -1115,8 +1113,6 @@ const allPlayers = computed(() => {
     players.forEach(p => uniquePlayers.set(p.id, p))
     return Array.from(uniquePlayers.values())
 })
-
-
 
 // Группируем игроков по позиции
 const playersByPosition = computed(() => {

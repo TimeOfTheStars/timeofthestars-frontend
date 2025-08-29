@@ -1,6 +1,6 @@
 <template>
     <div
-        class="w-full min-h-screen bg-gradient-to-br from-blue-50 via-white to-red-50 dark:from-blue-950 dark:via-gray-900 dark:to-red-950 p-3 md:p-8 relative overflow-hidden"
+        class="w-full min-h-screen bg-gradient-to-br from-blue-950 via-gray-900 to-red-950 p-3 md:p-8 relative overflow-hidden"
     >
         <!-- Анимированный фон -->
         <div class="absolute inset-0 overflow-hidden pointer-events-none">
@@ -20,7 +20,7 @@
             >
                 <NuxtLink
                     to="/"
-                    class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all duration-300 hover:scale-105 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl md:rounded-2xl px-4 py-2 md:px-6 md:py-3 shadow-lg border border-blue-200 dark:border-blue-800 w-full sm:w-auto justify-center"
+                    class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all duration-300 hover:scale-105 bg-gray-900/80 backdrop-blur-sm rounded-xl md:rounded-2xl px-4 py-2 md:px-6 md:py-3 shadow-lg border border-blue-800 w-full sm:w-auto justify-center"
                     :class="{
                         'opacity-100 translate-x-0': isVisible,
                         'opacity-0 -translate-x-10': !isVisible,
@@ -33,7 +33,7 @@
                 </NuxtLink>
                 <NuxtLink
                     to="/teamsPage"
-                    class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all duration-300 hover:scale-105 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl md:rounded-2xl px-4 py-2 md:px-6 md:py-3 shadow-lg border border-blue-200 dark:border-blue-800 w-full sm:w-auto justify-center"
+                    class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all duration-300 hover:scale-105 bg-gray-900/80 backdrop-blur-sm rounded-xl md:rounded-2xl px-4 py-2 md:px-6 md:py-3 shadow-lg border border-blue-800 w-full sm:w-auto justify-center"
                     :class="{
                         'opacity-100 translate-x-0': isVisible,
                         'opacity-0 -translate-x-10': !isVisible,
@@ -62,12 +62,12 @@
                         🏒 {{ teamData.name }} ⭐
                     </h1>
                     <div
-                        class="flex flex-col sm:flex-row items-center justify-center gap-2 md:gap-4 text-sm md:text-lg lg:text-xl text-gray-600 dark:text-gray-300"
+                        class="flex flex-col sm:flex-row items-center justify-center gap-2 md:gap-4 text-sm md:text-lg lg:text-xl text-gray-300"
                     >
                         <span> 🚀 Легендарная команда российского хоккея </span>
                         <span class="hidden md:inline"> • </span>
                         <span
-                            class="text-xs md:text-sm bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-3 py-1 rounded-full"
+                            class="text-xs md:text-sm bg-green-900/30 text-green-300 px-3 py-1 rounded-full"
                         >
                             🔴 LIVE {{ formattedTime }}
                         </span>
@@ -77,7 +77,7 @@
 
             <!-- Main Team Card с улучшенным дизайном -->
             <div
-                class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden mb-8 md:mb-12 border border-white/20 transition-all duration-1000"
+                class="bg-gray-900/80 backdrop-blur-xl rounded-2xl md:rounded-3xl shadow-2xl overflow-hidden mb-8 md:mb-12 border border-white/20 transition-all duration-1000"
                 :class="
                     isVisible
                         ? 'opacity-100 translate-y-0'
@@ -172,7 +172,7 @@
                                 {{ stat.value }}
                             </div>
                             <div
-                                class="text-xs md:text-sm text-gray-600 dark:text-gray-400 font-medium mb-1"
+                                class="text-xs md:text-sm text-gray-400 font-medium mb-1"
                             >
                                 {{ stat.label }}
                             </div>
@@ -185,13 +185,13 @@
                     <!-- Team Form с 3D эффектом -->
                     <div class="mb-8 md:mb-12">
                         <h3
-                            class="text-xl md:text-3xl font-black mb-6 md:mb-8 text-gray-800 dark:text-gray-200 flex items-center space-x-2 md:space-x-3"
+                            class="text-xl md:text-3xl font-black mb-6 md:mb-8 text-gray-200 flex items-center space-x-2 md:space-x-3"
                         >
                             <span class="animate-pulse"> 🔥 </span>
                             <span>Форма команды</span>
                         </h3>
                         <div
-                            class="bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-inner"
+                            class="bg-gradient-to-r from-gray-800 to-gray-700 rounded-2xl md:rounded-3xl p-4 md:p-8 shadow-inner"
                         >
                             <div
                                 class="grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8"
@@ -233,7 +233,7 @@
                                                 Красно-белая
                                             </p>
                                             <p
-                                                class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-2"
+                                                class="text-xs md:text-sm text-gray-400 mb-2"
                                             >
                                                 Основная форма
                                             </p>
@@ -285,7 +285,7 @@
                                                 Сине-белая
                                             </p>
                                             <p
-                                                class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-2"
+                                                class="text-xs md:text-sm text-gray-400 mb-2"
                                             >
                                                 Выездная форма
                                             </p>
@@ -306,7 +306,7 @@
                     <!-- Top Players с улучшенным дизайном -->
                     <div class="mb-8 md:mb-12">
                         <h3
-                            class="text-xl md:text-3xl font-black mb-6 md:mb-8 text-gray-800 dark:text-gray-200 flex items-center space-x-2 md:space-x-3"
+                            class="text-xl md:text-3xl font-black mb-6 md:mb-8 text-gray-200 flex items-center space-x-2 md:space-x-3"
                         >
                             <span
                                 style="animation-duration: 3s"
@@ -321,7 +321,7 @@
                         >
                             <NuxtLink to="/playersinfopage">
                                 <div
-                                    class="group bg-gradient-to-br from-blue-50 to-blue-100 dark:from-blue-900 dark:to-blue-800 rounded-2xl md:rounded-3xl p-4 md:p-8 cursor-pointer hover:scale-105 transition-all duration-300 border-2 border-blue-200 dark:border-blue-700 hover:border-blue-400 dark:hover:border-blue-500 relative overflow-hidden"
+                                    class="group bg-gradient-to-br from-blue-900 to-blue-800 rounded-2xl md:rounded-3xl p-4 md:p-8 cursor-pointer hover:scale-105 transition-all duration-300 border-2 border-blue-700 hover:border-blue-500 relative overflow-hidden"
                                 >
                                     <div
                                         class="absolute top-2 right-2 md:top-4 md:right-4 bg-yellow-400 text-yellow-900 rounded-full px-2 py-0.5 md:px-3 md:py-1 text-[10px] md:text-xs font-bold"
@@ -381,7 +381,7 @@
                             </NuxtLink>
 
                             <div
-                                class="bg-gradient-to-br from-red-50 to-red-100 dark:from-red-900 dark:to-red-800 rounded-2xl md:rounded-3xl p-4 md:p-8 border-2 border-red-200 dark:border-red-700 relative overflow-hidden"
+                                class="bg-gradient-to-br from-red-900 to-red-800 rounded-2xl md:rounded-3xl p-4 md:p-8 border-2 border-red-700 relative overflow-hidden"
                             >
                                 <div
                                     class="absolute top-2 right-2 md:top-4 md:right-4 bg-red-400 text-white rounded-full px-2 py-0.5 md:px-3 md:py-1 text-[10px] md:text-xs font-bold"
@@ -440,7 +440,7 @@
                             </div>
 
                             <div
-                                class="bg-gradient-to-br from-purple-50 to-purple-100 dark:from-purple-900 dark:to-purple-800 rounded-2xl md:rounded-3xl p-4 md:p-8 border-2 border-purple-200 dark:border-purple-700 relative overflow-hidden"
+                                class="bg-gradient-to-br from-purple-900 to-purple-800 rounded-2xl md:rounded-3xl p-4 md:p-8 border-2 border-purple-700 relative overflow-hidden"
                             >
                                 <div
                                     class="absolute top-2 right-2 md:top-4 md:right-4 bg-purple-400 text-white rounded-full px-2 py-0.5 md:px-3 md:py-1 text-[10px] md:text-xs font-bold"
@@ -506,13 +506,13 @@
                             class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 gap-3"
                         >
                             <h3
-                                class="text-xl md:text-3xl font-black text-gray-800 dark:text-gray-200 flex items-center space-x-2 md:space-x-3"
+                                class="text-xl md:text-3xl font-black text-gray-200 flex items-center space-x-2 md:space-x-3"
                             >
                                 <span>👥</span>
                                 <span>Состав команды</span>
                             </h3>
                             <div
-                                class="text-sm bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-300 px-3 py-1 md:px-4 md:py-2 rounded-full self-start md:self-auto"
+                                class="text-sm bg-blue-900/30 text-blue-300 px-3 py-1 md:px-4 md:py-2 rounded-full self-start md:self-auto"
                             >
                                 Всего: {{ teamData.players_count }} игроков
                             </div>
@@ -520,7 +520,7 @@
 
                         <!-- Улучшенная навигация по табам -->
                         <div
-                            class="flex flex-wrap gap-2 md:gap-3 mb-6 md:mb-8 p-1 md:p-2 bg-gray-100 dark:bg-gray-800 rounded-xl md:rounded-2xl"
+                            class="flex flex-wrap gap-2 md:gap-3 mb-6 md:mb-8 p-1 md:p-2 bg-gray-800 rounded-xl md:rounded-2xl"
                         >
                             <button
                                 v-for="tab in tabs"
@@ -530,7 +530,7 @@
                                 :class="
                                     activeTab === tab.key
                                         ? `bg-${tab.color}-600 text-white shadow-lg transform scale-105`
-                                        : 'bg-white dark:bg-gray-700 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-600'
+                                        : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
                                 "
                             >
                                 <span
@@ -570,7 +570,7 @@
                                 :to="`/players/${player.id}?from=${$route.fullPath}`"
                             >
                                 <div
-                                    class="group bg-white dark:bg-gray-800 rounded-xl md:rounded-2xl p-3 md:p-5 hover:shadow-2xl transition-all duration-300 cursor-pointer hover:scale-105 border border-gray-200 dark:border-gray-700 hover:border-blue-300 dark:hover:border-blue-600 relative overflow-hidden"
+                                    class="group bg-gray-800 rounded-xl md:rounded-2xl p-3 md:p-5 hover:shadow-2xl transition-all duration-300 cursor-pointer hover:scale-105 border border-gray-700 hover:border-blue-600 relative overflow-hidden"
                                     :style="{
                                         animationDelay: `${index * 100}ms`,
                                         animation: isVisible
@@ -580,7 +580,7 @@
                                 >
                                     <!-- Градиентный фон при ховере -->
                                     <div
-                                        class="absolute inset-0 bg-gradient-to-br from-blue-50 to-red-50 dark:from-blue-900/20 dark:to-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                                        class="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                                     ></div>
 
                                     <div class="relative z-10">
@@ -625,7 +625,7 @@
                                         </div>
 
                                         <p
-                                            class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-2 md:mb-3 font-medium"
+                                            class="text-xs md:text-sm text-gray-400 mb-2 md:mb-3 font-medium"
                                         >
                                             {{
                                                 player.pivot?.position ||
@@ -702,7 +702,7 @@
 
                                         <!-- Рейтинг игрока -->
                                         <div
-                                            class="flex items-center justify-between pt-2 border-t border-gray-200 dark:border-gray-700"
+                                            class="flex items-center justify-between pt-2 border-t border-gray-700"
                                         >
                                             <span
                                                 class="text-[10px] md:text-xs text-gray-500"
@@ -736,13 +736,13 @@
                             class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 gap-3"
                         >
                             <h3
-                                class="text-xl md:text-3xl font-black text-gray-800 dark:text-gray-200 flex items-center space-x-2 md:space-x-3"
+                                class="text-xl md:text-3xl font-black text-gray-200 flex items-center space-x-2 md:space-x-3"
                             >
                                 <span>📅</span>
                                 <span>Последние матчи</span>
                             </h3>
                             <div
-                                class="text-sm bg-green-100 dark:bg-green-900/30 text-green-700 dark:text-green-300 px-3 py-1 md:px-4 md:py-2 rounded-full self-start md:self-auto"
+                                class="text-sm bg-green-900/30 text-green-300 px-3 py-1 md:px-4 md:py-2 rounded-full self-start md:self-auto"
                             >
                                 Серия: 2 победы
                             </div>
@@ -759,8 +759,8 @@
                                 class="relative pl-12 md:pl-20 pr-4 md:pr-6 py-4 md:py-6 rounded-xl md:rounded-2xl border-2 transition-all duration-300 hover:scale-102 cursor-pointer"
                                 :class="
                                     match.status === 'win'
-                                        ? 'bg-green-50 dark:bg-green-900/20 border-green-200 dark:border-green-800 hover:border-green-400'
-                                        : 'bg-red-50 dark:bg-red-900/20 border-red-200 dark:border-red-800 hover:border-red-400'
+                                        ? 'bg-green-900/20 border-green-800 hover:border-green-400'
+                                        : 'bg-red-900/20 border-red-800 hover:border-red-400'
                                 "
                             >
                                 <!-- Timeline dot -->
@@ -798,7 +798,7 @@
                                             </span>
                                         </div>
                                         <p
-                                            class="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-1"
+                                            class="text-xs md:text-sm text-gray-400 mb-1"
                                         >
                                             {{ match.date }}
                                         </p>
@@ -899,7 +899,7 @@
                 <div
                     v-for="(stat, index) in additionalStats"
                     :key="`add-stat-${index}`"
-                    class="group bg-white/80 dark:bg-gray-900/80 backdrop-blur-xl rounded-2xl md:rounded-3xl p-4 md:p-8 text-center shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-rotate-1 border border-white/20 relative overflow-hidden"
+                    class="group bg-gray-900/80 backdrop-blur-xl rounded-2xl md:rounded-3xl p-4 md:p-8 text-center shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-rotate-1 border border-white/20 relative overflow-hidden"
                     :style="{
                         animationDelay: `${index * 150}ms`,
                         animation: isVisible
@@ -910,7 +910,7 @@
                     <!-- Floating background effect -->
                     <div
                         class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        :class="`bg-gradient-to-br from-${stat.color}-50 to-${stat.color}-100 dark:from-${stat.color}-900/20 dark:to-${stat.color}-800/20`"
+                        :class="`bg-gradient-to-br from-${stat.color}-900/20 to-${stat.color}-800/20`"
                     ></div>
 
                     <div class="relative z-10">
@@ -926,7 +926,7 @@
                             {{ stat.value }}
                         </div>
                         <div
-                            class="text-xs md:text-sm text-gray-600 dark:text-gray-400 font-bold mb-1 md:mb-2"
+                            class="text-xs md:text-sm text-gray-400 font-bold mb-1 md:mb-2"
                         >
                             {{ stat.label }}
                         </div>
@@ -941,7 +941,7 @@
 
             <!-- Новая секция - Достижения команды -->
             <div
-                class="bg-gradient-to-r from-yellow-50 to-orange-50 dark:from-yellow-900/20 dark:to-orange-900/20 rounded-2xl md:rounded-3xl p-4 md:p-8 lg:p-12 mb-8 md:mb-12 border-2 border-yellow-200 dark:border-yellow-800 transition-all duration-1000"
+                class="bg-gradient-to-r from-yellow-900/20 to-orange-900/20 rounded-2xl md:rounded-3xl p-4 md:p-8 lg:p-12 mb-8 md:mb-12 border-2 border-yellow-800 transition-all duration-1000"
                 :class="
                     isVisible
                         ? 'opacity-100 translate-y-0'
@@ -949,7 +949,7 @@
                 "
             >
                 <h3
-                    class="text-xl md:text-3xl font-black mb-6 md:mb-8 text-center text-gray-800 dark:text-gray-200 flex items-center justify-center space-x-2 md:space-x-3"
+                    class="text-xl md:text-3xl font-black mb-6 md:mb-8 text-center text-gray-200 flex items-center justify-center space-x-2 md:space-x-3"
                 >
                     <span class="animate-pulse"> 🏆 </span>
                     <span>Зал славы</span>
@@ -959,7 +959,7 @@
                     <div
                         v-for="(achievement, index) in achievements"
                         :key="`achievement-${index}`"
-                        class="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 text-center hover:scale-105 transition-all duration-300 border border-yellow-300 dark:border-yellow-700"
+                        class="bg-gray-800/80 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 text-center hover:scale-105 transition-all duration-300 border border-yellow-700"
                     >
                         <div class="text-3xl md:text-4xl mb-2 md:mb-3">🏆</div>
                         <div
@@ -971,7 +971,7 @@
                             {{ achievement.title }}
                         </h4>
                         <p
-                            class="text-xs md:text-sm text-gray-600 dark:text-gray-400"
+                            class="text-xs md:text-sm text-gray-400"
                         >
                             {{ achievement.description }}
                         </p>
@@ -985,7 +985,7 @@
             >
                 <NuxtLink
                     to="/"
-                    class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all duration-300 hover:scale-105 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl md:rounded-2xl px-4 py-2 md:px-6 md:py-3 shadow-lg border border-blue-200 dark:border-blue-800 w-full sm:w-auto justify-center"
+                    class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all duration-300 hover:scale-105 bg-gray-900/80 backdrop-blur-sm rounded-xl md:rounded-2xl px-4 py-2 md:px-6 md:py-3 shadow-lg border border-blue-800 w-full sm:w-auto justify-center"
                     :class="{
                         'opacity-100 translate-x-0': isVisible,
                         'opacity-0 -translate-x-10': !isVisible,
@@ -998,7 +998,7 @@
                 </NuxtLink>
                 <NuxtLink
                     to="/teamsPage"
-                    class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all duration-300 hover:scale-105 bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm rounded-xl md:rounded-2xl px-4 py-2 md:px-6 md:py-3 shadow-lg border border-blue-200 dark:border-blue-800 w-full sm:w-auto justify-center"
+                    class="inline-flex items-center text-blue-600 hover:text-blue-800 transition-all duration-300 hover:scale-105 bg-gray-900/80 backdrop-blur-sm rounded-xl md:rounded-2xl px-4 py-2 md:px-6 md:py-3 shadow-lg border border-blue-800 w-full sm:w-auto justify-center"
                     :class="{
                         'opacity-100 translate-x-0': isVisible,
                         'opacity-0 -translate-x-10': !isVisible,
@@ -1013,21 +1013,21 @@
 
             <!-- Footer с социальными сетями -->
             <div
-                class="text-center py-6 md:py-8 border-t border-gray-200 dark:border-gray-700"
+                class="text-center py-6 md:py-8 border-t border-gray-700"
             >
                 <div class="flex justify-center gap-4 md:gap-6 mb-4 md:mb-6">
                     <button
                         v-for="(social, index) in socials"
                         :key="`social-${index}`"
                         class="w-10 h-10 md:w-12 md:h-12 rounded-full flex items-center justify-center transition-all duration-300 hover:scale-110 hover:-translate-y-1"
-                        :class="`bg-${social.color}-100 dark:bg-${social.color}-900/30 hover:bg-${social.color}-200 dark:hover:bg-${social.color}-800/50`"
+                        :class="`bg-${social.color}-900/30 hover:bg-${social.color}-800/50`"
                     >
                         <span class="text-lg md:text-xl">{{
                             social.icon
                         }}</span>
                     </button>
                 </div>
-                <p class="text-gray-600 dark:text-gray-400 text-xs md:text-sm">
+                <p class="text-gray-400 text-xs md:text-sm">
                     © 2024 {{ teamData.name }} • Все права защищены • Сделано с
                     ❤️ для болельщиков
                 </p>

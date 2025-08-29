@@ -1,4 +1,5 @@
 <template>
+    <cursor-follower />
     <header
         class="bg-gray-900/95 backdrop-blur-md border-b border-gray-800 fixed w-full top-0 z-51"
     >

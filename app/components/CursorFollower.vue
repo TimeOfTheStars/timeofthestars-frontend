@@ -18,8 +18,8 @@ const glowStyle = ref({
 })
 
 const LERP_FACTOR = 0.1
-const MAGNETIC_RADIUS = 80
-const DISSOLVE_RADIUS = 60
+const MAGNETIC_RADIUS = 40
+const DISSOLVE_RADIUS = 40
 const RELEASE_RADIUS_MULTIPLIER = 1.1
 const ATTRACTION_CURVE = 3
 const PULSE_SPEED = 0.03

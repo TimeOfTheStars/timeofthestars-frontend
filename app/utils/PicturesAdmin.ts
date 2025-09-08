@@ -1,5 +1,5 @@
 const teamLogos: Record<number, string> = {
-    1: '/photo_53844715688281.png.webp',
+    1: '/newPereslavl.webp',
     2: '/photo_53844715688281.png (1).webp',
     3: '/photo_53844715688281.png (2).webp',
     4: '/photo_53844715688281.png (3).webp',
@@ -7,7 +7,8 @@ const teamLogos: Record<number, string> = {
     6: '/FGFGF (1).png',
     7: '/photo.png.webp',
     8: '/photo.png',
-    99: '/photo.png', // запасной логотип
+    9: '/BGV.webp',
+    99: '/photo.png',
 }
 
 export function getTeamLogo(id: number): string {

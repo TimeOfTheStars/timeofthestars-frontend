@@ -14,14 +14,6 @@
                         КУБОК ПОБЕДЫ
                     </h1>
                     <p class="text-xl text-white/90 mb-8">Хоккейный турнир</p>
-                    <div
-                        class="inline-flex items-center gap-2 bg-green-600/20 backdrop-blur-sm px-6 py-3 rounded-full border border-green-500/30"
-                    >
-                        <span class="text-green-400">✅</span>
-                        <span class="text-white font-semibold">
-                            Турнир завершен
-                        </span>
-                    </div>
                 </div>
             </div>
         </section>

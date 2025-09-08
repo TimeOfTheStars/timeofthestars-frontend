@@ -80,14 +80,14 @@
                                 Расписание
                             </NuxtLink>
                         </li>
-                        <li>
+                        <!-- <li>
                             <NuxtLink
                                 to="/gallery"
                                 class="hover:text-white transition-colors"
                             >
                                 Галерея
                             </NuxtLink>
-                        </li>
+                        </li> -->
                         <!-- <li>
                                 <NuxtLink
                                     to="/regPage"
@@ -112,7 +112,7 @@
             <div
                 class="border-t border-gray-700 mt-8 pt-8 text-center text-gray-400"
             >
-                <p>&copy; 2024 ВРЕМЯ ЗВЁЗД. Все права защищены.</p>
+                <p>&copy; 2025 ВРЕМЯ ЗВЁЗД. Все права защищены.</p>
             </div>
         </div>
     </footer>

@@ -112,31 +112,6 @@
                                 }}</span>
                             </div>
                         </div>
-
-                        <!-- Рейтинг игрока -->
-                        <div
-                            class="absolute top-3 right-3 md:top-6 md:right-6 bg-white/20 backdrop-blur-md rounded-xl md:rounded-2xl px-3 py-1 md:px-6 md:py-3 border border-white/30"
-                        >
-                            <span
-                                class="text-white font-bold flex items-center space-x-1 md:space-x-2 text-xs md:text-base"
-                            >
-                                <span class="animate-pulse text-xs md:text-base"
-                                    >⭐</span
-                                >
-                                <span>Рейтинг: {{ player.rating }}</span>
-                            </span>
-                        </div>
-
-                        <!-- Статистика -->
-                        <div
-                            class="absolute bottom-3 left-3 md:bottom-6 md:left-6 bg-white/20 backdrop-blur-md rounded-xl md:rounded-2xl px-2 py-1 md:px-4 md:py-2 border border-white/30"
-                        >
-                            <span
-                                class="text-white text-xs md:text-sm font-semibold"
-                            >
-                                🔥 {{ player.goals + player.assists }} очков
-                            </span>
-                        </div>
                     </div>
 
                     <!-- Информация об игроке -->

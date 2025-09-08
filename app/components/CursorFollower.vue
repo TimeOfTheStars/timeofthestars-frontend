@@ -31,16 +31,33 @@ const glowProps = ref({
     y: 0,
     width: 40,
     height: 40,
-    opacity: 1,
+    opacity: 0,
     scale: 1,
 })
+const hasMoved = ref(false)
 const attractedElement = ref(null)
 let animationFrameId = null
 let magneticElements = []
 let pulseTime = 0
 
 const updateMousePosition = e => {
+    if (!hasMoved.value) {
+        hasMoved.value = true
+        glowProps.value.x = e.clientX
+        glowProps.value.y = e.clientY
+        gsap.to(glowProps.value, { opacity: 1, duration: 0.3 })
+    }
     mouse.value = { x: e.clientX, y: e.clientY }
+}
+
+const handleMouseLeave = () => {
+    gsap.to(glowProps.value, { opacity: 0, duration: 0.3, ease: 'power2.out' })
+}
+
+const handleMouseEnter = () => {
+    if (hasMoved.value) {
+        gsap.to(glowProps.value, { opacity: 1, duration: 0.3, ease: 'power2.in' })
+    }
 }
 
 const tick = () => {
@@ -155,21 +172,23 @@ const tick = () => {
 }
 
 onMounted(() => {
-    glowProps.value = {
-        x: window.innerWidth / 2,
-        y: window.innerHeight / 2,
-        width: 40,
-        height: 40,
-        opacity: 1,
-        scale: 1,
-    }
     window.addEventListener('mousemove', updateMousePosition)
+    document.documentElement.addEventListener('mouseleave', handleMouseLeave)
+    document.documentElement.addEventListener('mouseenter', handleMouseEnter)
     magneticElements = document.querySelectorAll('[data-glow-magnetic]')
     animationFrameId = requestAnimationFrame(tick)
 })
 
 onUnmounted(() => {
     window.removeEventListener('mousemove', updateMousePosition)
+    document.documentElement.removeEventListener(
+        'mouseleave',
+        handleMouseLeave
+    )
+    document.documentElement.removeEventListener(
+        'mouseenter',
+        handleMouseEnter
+    )
     if (animationFrameId) {
         cancelAnimationFrame(animationFrameId)
     }

@@ -10,17 +10,6 @@
             <div class="gradient-bg py-24 px-4 relative">
                 <div class="max-w-6xl mx-auto text-center">
                     <div
-                        class="hidden sm:inline-flex items-center gap-2 bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full mb-6"
-                    >
-                        <div
-                            class="w-2 h-2 bg-red-500 rounded-full animate-pulse"
-                        ></div>
-                        <span class="text-white/90 text-sm">
-                            Прямой эфир: Финал "Звезда Отечества"
-                        </span>
-                    </div>
-
-                    <div
                         class="sm:mt-6 mb-6 flex justify-center w-full md:w-[600px] h-80 relative mx-auto mt-20"
                     >
                         <img
@@ -455,7 +444,7 @@
                         🏆 Турниры
                     </h2>
                     <p class="text-xl text-gray-300">
-                        📊 Текущие и завершенные турниры лиги ⚡
+                        📊 Текущие турниры лиги ⚡
                     </p>
                 </div>
 
@@ -478,10 +467,7 @@
                                 среди любительских спорткоманд
                             </p>
                             <div class="space-y-2 text-sm">
-                                <div class="flex items-center gap-2">
-                                    <span class="text-green-400">✅</span>
-                                    <span>Завершен</span>
-                                </div>
+                                <div class="flex items-center gap-2"></div>
                                 <div class="flex items-center gap-2">
                                     <span>👥</span>
                                     <span>5 команд участвовали</span>
@@ -510,10 +496,7 @@
                             </h3>
                             <p class="text-gray-400 mb-4">Хоккейный турнир</p>
                             <div class="space-y-2 text-sm">
-                                <div class="flex items-center gap-2">
-                                    <span class="text-green-400">✅</span>
-                                    <span>Завершен</span>
-                                </div>
+                                <div class="flex items-center gap-2"></div>
                                 <div class="flex items-center gap-2">
                                     <span>👥</span>
                                     <span>5 команд участвовали</span>
@@ -569,7 +552,7 @@
         <MapInfo />
 
         <!-- CTA Section -->
-        <section class="py-20 px-4 bg-gray-800">
+        <!-- <section class="py-20 px-4 bg-gray-800">
             <div class="max-w-4xl mx-auto text-center">
                 <div
                     class="bg-gradient-to-br from-primary-blue/10 to-primary-red/10 rounded-2xl p-12 border border-gray-700"
@@ -584,13 +567,13 @@
                         с нами для участия в турнирах. 🏒
                     </p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                        <!-- <router-link to="/register">
+                        <router-link to="/register">
                             <button
                                 class="btn-primary-professional text-white px-8 py-4 rounded-xl font-semibold hover:opacity-90 transition-all transform hover:scale-105 shadow-lg"
                             >
                                 🏒 Подать заявку на участие
                             </button>
-                        </router-link> -->
+                        </router-link>
                         <button
                             class="border-2 border-gray-600 text-white px-8 py-4 rounded-xl font-semibold hover:bg-gray-700 transition-all transform hover:scale-105"
                         >
@@ -599,7 +582,7 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
 
         <!-- Footer -->
         <Footer />

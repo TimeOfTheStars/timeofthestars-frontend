@@ -56,22 +56,9 @@
                 "
             >
                 <div class="mb-4 md:mb-6">
-                    <h1
-                        class="text-3xl md:text-5xl lg:text-7xl font-black bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 bg-clip-text text-transparent mb-4 md:mb-6 tracking-tight"
-                    >
-                        🏒 {{ teamData.name }} ⭐
-                    </h1>
                     <div
                         class="flex flex-col sm:flex-row items-center justify-center gap-2 md:gap-4 text-sm md:text-lg lg:text-xl text-gray-300"
-                    >
-                        <span> 🚀 Легендарная команда российского хоккея </span>
-                        <span class="hidden md:inline"> • </span>
-                        <span
-                            class="text-xs md:text-sm bg-green-900/30 text-green-300 px-3 py-1 rounded-full"
-                        >
-                            🔴 LIVE {{ formattedTime }}
-                        </span>
-                    </div>
+                    ></div>
                 </div>
             </div>
 
@@ -659,9 +646,9 @@
                                                     <span>🚫</span>
                                                     <span
                                                         class="font-semibold"
-                                                        >{{
+                                                        >                                                        {{
                                                             player.shutouts ||
-                                                            'N/A'
+                                                            0
                                                         }}</span
                                                     >
                                                 </span>
@@ -935,46 +922,6 @@
                         >
                             {{ stat.description }}
                         </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Новая секция - Достижения команды -->
-            <div
-                class="bg-gradient-to-r from-yellow-900/20 to-orange-900/20 rounded-2xl md:rounded-3xl p-4 md:p-8 lg:p-12 mb-8 md:mb-12 border-2 border-yellow-800 transition-all duration-1000"
-                :class="
-                    isVisible
-                        ? 'opacity-100 translate-y-0'
-                        : 'opacity-0 translate-y-20'
-                "
-            >
-                <h3
-                    class="text-xl md:text-3xl font-black mb-6 md:mb-8 text-center text-gray-200 flex items-center justify-center space-x-2 md:space-x-3"
-                >
-                    <span class="animate-pulse"> 🏆 </span>
-                    <span>Зал славы</span>
-                    <span class="animate-pulse"> 🏆 </span>
-                </h3>
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6">
-                    <div
-                        v-for="(achievement, index) in achievements"
-                        :key="`achievement-${index}`"
-                        class="bg-gray-800/80 backdrop-blur-sm rounded-xl md:rounded-2xl p-4 md:p-6 text-center hover:scale-105 transition-all duration-300 border border-yellow-700"
-                    >
-                        <div class="text-3xl md:text-4xl mb-2 md:mb-3">🏆</div>
-                        <div
-                            class="text-xl md:text-2xl font-bold text-yellow-600 mb-1 md:mb-2"
-                        >
-                            {{ achievement.year }}
-                        </div>
-                        <h4
-                            class="font-bold text-gray-200 text-base md:text-lg mb-1 md:mb-2"
-                        >
-                            {{ achievement.title }}
-                        </h4>
-                        <p class="text-xs md:text-sm text-gray-400">
-                            {{ achievement.description }}
-                        </p>
                     </div>
                 </div>
             </div>

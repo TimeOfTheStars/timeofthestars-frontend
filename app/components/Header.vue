@@ -137,12 +137,12 @@
                         class="text-gray-300 hover:text-white glow-effect active-text-gradient transition-colors"
                         >Расписание</NuxtLink
                     >
-                    <NuxtLink
+                    <!-- <NuxtLink
                         data-glow-magnetic
                         to="/gallery"
                         class="text-gray-300 hover:text-white glow-effect active-text-gradient transition-colors"
                         >Галерея</NuxtLink
-                    >
+                    > -->
                 </nav>
 
                 <!-- Кнопка CTA -->
@@ -339,13 +339,13 @@ const friendlyTournaments = [
     {
         name: 'Товарищеский турнир',
         emoji: '🌸',
-        status: 'Завершён',
+
         href: '/turnirOne',
     },
     {
         name: 'Кубок Победы',
         emoji: '☀️',
-        status: 'Идёт',
+
         href: '/turnirVictory',
     },
 ]
@@ -353,7 +353,7 @@ const championships = [
     {
         name: 'Звезда Отечества',
         emoji: '🥇',
-        status: 'Идёт',
+
         href: '/zvezdaOtechestva',
     },
 ]

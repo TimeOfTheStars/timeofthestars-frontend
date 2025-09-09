@@ -4,7 +4,7 @@ const teamLogos: Record<number, string> = {
     3: '/photo_53844715688281.png (2).webp',
     4: '/photo_53844715688281.png (3).webp',
     5: '/photo_53844715688281.png (4).webp',
-    6: '/FGFGF (1).png',
+    6: '/BGV.webp',
     7: '/photo.png.webp',
     8: '/photo.png',
     9: '/BGV.webp',

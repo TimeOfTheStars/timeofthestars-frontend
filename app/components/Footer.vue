@@ -29,25 +29,25 @@
                                 to="/turnirOne"
                                 class="hover:text-white transition-colors"
                             >
-                                Товарищеский турнир
+                                Предсезонный турнир
                             </NuxtLink>
                         </li>
-                        <li>
+                        <!-- <li>
                             <NuxtLink
                                 to="/turnirVictory"
                                 class="hover:text-white transition-colors"
                             >
                                 Кубок Победы
                             </NuxtLink>
-                        </li>
-                        <li>
+                        </li> -->
+                        <!-- <li>
                             <NuxtLink
                                 to="/zvezdaOtechestva"
                                 class="hover:text-white transition-colors"
                             >
                                 Звезда Отечества
                             </NuxtLink>
-                        </li>
+                        </li> -->
                         <li>
                             <a
                                 href="https://timeofthestars.tilda.ws/"
@@ -121,3 +121,5 @@
 <script lang="ts" setup></script>
 
 <style></style>
+
+

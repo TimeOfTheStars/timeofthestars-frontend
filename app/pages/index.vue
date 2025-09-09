@@ -448,7 +448,7 @@
                     </p>
                 </div>
 
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="flex items-center">
                     <router-link to="/turnirOne" class="block group">
                         <div
                             class="bg-gray-800 rounded-xl p-6 card-hover border-l-4 border-secondary-blue group-hover:border-accent-blue transition-colors"
@@ -461,7 +461,7 @@
                             <h3
                                 class="text-xl font-semibold mb-2 group-hover:text-accent-blue transition-colors"
                             >
-                                Товарищеский турнир
+                                Предсезонный урнир
                             </h3>
                             <p class="text-gray-400 mb-4">
                                 среди любительских спорткоманд
@@ -470,17 +470,17 @@
                                 <div class="flex items-center gap-2"></div>
                                 <div class="flex items-center gap-2">
                                     <span>👥</span>
-                                    <span>5 команд участвовали</span>
+                                    <span>5 команд участвуют</span>
                                 </div>
                                 <div class="flex items-center gap-2">
                                     <span>🏆</span>
-                                    <span>Победитель: ХК "Переславль"</span>
+                                    <span>Победитель: не определен</span>
                                 </div>
                             </div>
                         </div>
                     </router-link>
 
-                    <router-link to="/turnirVictory" class="block group">
+                    <!-- <router-link to="/turnirVictory" class="block group">
                         <div
                             class="bg-gray-800 rounded-xl p-6 card-hover border-l-4 border-secondary-red group-hover:border-accent-red transition-colors"
                         >
@@ -545,7 +545,7 @@
                                 </div>
                             </div>
                         </div>
-                    </router-link>
+                    </router-link> -->
                 </div>
             </div>
         </section>

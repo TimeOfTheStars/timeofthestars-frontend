@@ -11,7 +11,7 @@
                 <div class="max-w-6xl mx-auto text-center">
                     <div class="text-7xl mb-6">🏆</div>
                     <h1 class="text-4xl md:text-6xl font-bold mb-4 text-white">
-                        Товарищеский турнир
+                        Предсезонный турнир
                     </h1>
                     <p class="text-xl text-white/90 mb-8">
                         среди любительских спорткоманд
@@ -30,7 +30,7 @@
                         >
                             👥
                         </div>
-                        <div class="text-4xl font-bold text-gradient">5</div>
+                        <div class="text-4xl font-bold text-gradient">{{teamData.teamCount}}</div>
                         <div class="text-gray-300">Команд</div>
                     </div>
                     <div class="space-y-2 group">
@@ -39,17 +39,17 @@
                         >
                             🏒
                         </div>
-                        <div class="text-4xl font-bold text-gradient">10</div>
+                        <div class="text-4xl font-bold text-gradient">{{teamData.gamesCount}}</div>
                         <div class="text-gray-300">Матчей</div>
                     </div>
                     <div class="space-y-2 group">
                         <div
                             class="text-5xl group-hover:scale-110 transition-transform"
                         >
-                            ⚽
+                            📅
                         </div>
-                        <div class="text-4xl font-bold text-gradient">89</div>
-                        <div class="text-gray-300">Голов</div>
+                        <div class="text-4xl font-bold text-gradient">{{teamData.start_date}}</div>
+                        <div class="text-gray-300">Дата начала турнира</div>
                     </div>
                     <div class="space-y-2 group">
                         <div
@@ -103,7 +103,7 @@
                     >
                         📊 Таблица
                     </button>
-                    <button
+                    <!-- <button
                         class="w-48 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold shadow-lg"
                         :class="{
                             'bg-primary-blue text-white':
@@ -114,7 +114,7 @@
                         @click="activeTab = 'results'"
                     >
                         🏆 Результаты
-                    </button>
+                    </button> -->
                 </div>
             </div>
         </section>
@@ -145,10 +145,7 @@
                     📅 Календарь турнира
                 </h2>
                 <div class="bg-gray-800 rounded-xl p-8 text-center">
-                    <div class="text-6xl mb-4">📅</div>
-                    <p class="text-gray-300">
-                        Календарь турнира будет доступен здесь
-                    </p>
+                    <Kalendar :turnirData ="turnirdata"/>
                 </div>
             </div>
         </section>
@@ -159,7 +156,7 @@
         </section>
 
         <!-- Results Tab -->
-        <section v-if="activeTab === 'results'" class="py-16 px-4">
+        <!-- <section v-if="activeTab === 'results'" class="py-16 px-4">
             <div class="max-w-6xl mx-auto">
                 <h2 class="text-3xl font-bold mb-8 text-center">
                     🏆 Результаты матчей
@@ -174,13 +171,13 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
 
         <!-- Winner Section -->
         <section class="py-20 px-4">
             <div class="max-w-4xl mx-auto text-center">
                 <h2 class="text-4xl font-bold mb-12">
-                    🏆 Победители товарищеского турнира
+                    🏆 Победитель товарищеского турнира
                 </h2>
 
                 <div class="relative">
@@ -193,7 +190,7 @@
                         <div
                             class="bg-white/10 backdrop-blur-sm rounded-xl p-8"
                         >
-                            <div class="w-32 h-32 relative mx-auto mb-6">
+                            <!-- <div class="w-32 h-32 relative mx-auto mb-6">
                                 <img
                                     src="/photo_53844715688281.png.webp"
                                     alt="ХК Переславль"
@@ -227,7 +224,8 @@
                                     Безупречная игра на протяжении всего
                                     турнира!
                                 </div>
-                            </div>
+                            </div> -->
+                            Информация о победителе отобразиться здесь по окончании турнира
                         </div>
                     </div>
                 </div>
@@ -235,7 +233,7 @@
         </section>
 
         <!-- Tournament Gallery -->
-        <section class="py-16 px-4 bg-gray-800">
+        <!-- <section class="py-16 px-4 bg-gray-800">
             <div class="max-w-6xl mx-auto">
                 <h2 class="text-3xl font-bold mb-8 text-center">
                     📸 Фотогалерея турнира
@@ -271,7 +269,7 @@
                     </button>
                 </div>
             </div>
-        </section>
+        </section> -->
         <Footer />
     </div>
 </template>
@@ -302,4 +300,21 @@ const matches = computed(() => {
 const sortedTeams = computed(() => {
     return [...teams.value].sort((a, b) => b.points - a.points)
 })
+
+const { data: tournamentsdata, error } = useFetch('https://api.timeofthestars.ru/api/tournaments')
+
+
+const teamData = computed(() => {
+    if (!tournamentsdata.value || tournamentsdata.value.length === 0) {
+        return {teamCount:0, gamesCount:0,start_date:0}
+    }
+    else{
+        return{
+            teamCount:tournamentsdata.value[0].teams.length,
+            gamesCount:tournamentsdata.value[0].games.length,
+            start_date:tournamentsdata.value[0].start_date,
+        }
+    }
+})
+
 </script>

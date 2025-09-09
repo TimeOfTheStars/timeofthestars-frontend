@@ -55,24 +55,18 @@
                             class="absolute top-full left-0 mt-2 w-64 bg-gray-800 rounded-lg shadow-xl border border-gray-700 py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
                         >
                             <NuxtLink
-                                v-for="(
-                                    tournament, index
-                                ) in friendlyTournaments"
-                                :key="index"
-                                :to="tournament.href"
+                                v-for="tournament in tournamentsdata"
+                                :key="tournament.id"
+                                to="/turnirOne"
                                 class="flex items-center px-4 py-3 hover:bg-gray-700 transition-colors"
                                 @click="closeAllDropdowns"
                             >
-                                <span class="text-2xl mr-3">{{
-                                    tournament.emoji
-                                }}</span>
+                                
                                 <div>
                                     <div class="text-white font-medium">
                                         {{ tournament.name }}
                                     </div>
-                                    <div class="text-sm text-gray-400">
-                                        {{ tournament.status }}
-                                    </div>
+                                
                                 </div>
                             </NuxtLink>
                         </div>
@@ -219,14 +213,14 @@
                     </button>
                     <div v-if="activeDropdown === 'friendly'" class="pl-4">
                         <NuxtLink
-                            v-for="(tournament, index) in friendlyTournaments"
-                            :key="index"
-                            :to="tournament.href"
+                            v-for="tournament in tournamentsdata"
+                            :key="tournament.index"
+                            to="/turnirOne"
                             class="flex items-center py-2 text-gray-300 hover:text-white transition-colors"
                             @click="closeMobileMenu"
                         >
                             <span class="text-lg mr-2">{{
-                                tournament.emoji
+                                
                             }}</span>
                             <span>{{ tournament.name }}</span>
                         </NuxtLink>
@@ -335,20 +329,10 @@ const closeAllDropdowns = () => {
     activeDropdown.value = ''
 }
 
-const friendlyTournaments = [
-    {
-        name: 'Товарищеский турнир',
-        emoji: '🌸',
 
-        href: '/turnirOne',
-    },
-    {
-        name: 'Кубок Победы',
-        emoji: '☀️',
+    const { data: tournamentsdata, error } = useFetch(
+    'https://api.timeofthestars.ru/api/tournaments')
 
-        href: '/turnirVictory',
-    },
-]
 const championships = [
     {
         name: 'Звезда Отечества',

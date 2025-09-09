@@ -102,8 +102,7 @@
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Контакты</h3>
                     <div class="space-y-2 text-gray-400">
-                        <p>📧 info@timeofstars.ru</p>
-                        <p>📱 +7 (4852) 123-45-67</p>
+                        
                         <p>📍 Ярославль, Россия</p>
                     </div>
                 </div>

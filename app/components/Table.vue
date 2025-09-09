@@ -32,7 +32,7 @@
                                 <th
                                     class="px-6 py-4 text-center font-semibold"
                                 >
-                                    П
+                                    Пб
                                 </th>
                                 <th
                                     class="px-6 py-4 text-center font-semibold"
@@ -42,7 +42,7 @@
                                 <th
                                     class="px-6 py-4 text-center font-semibold"
                                 >
-                                    П
+                                    Пр
                                 </th>
                                 <th
                                     class="px-6 py-4 text-center font-semibold"
@@ -152,7 +152,7 @@ const standings = ref([
     {
         // place: '2',
         team: 'ХК "Переславль"',
-        logo: '/photo_53844715688281.png.webp',
+        logo: '/newPereslavl.webp',
         games: 0,
         wins: 0,
         draws: 0,
@@ -185,18 +185,7 @@ const standings = ref([
         points: 0,
         status: '',
     },
-    {
-        // place: '5',
-        team: 'ХК "Локомотив СЖД"',
-        logo: '/photo.png',
-        games: 0,
-        wins: 0,
-        draws: 0,
-        losses: 0,
-        goals: '0-0',
-        points: 0,
-        status: '',
-    },
+    
     {
         // place: '6',
         team: 'ХК "Ярославич"',
@@ -209,22 +198,11 @@ const standings = ref([
         points: 0,
         status: '',
     },
-    {
-        // place: '7',
-        team: 'ХК "Вымпел-к"',
-        logo: '/FGFGF (1).png',
-        games: 0,
-        wins: 0,
-        draws: 0,
-        losses: 0,
-        goals: '0-0',
-        points: 0,
-        status: '',
-    },
+    
     {
         // place: '8',
-        team: 'ХК "Искра"',
-        logo: '/photo.png.webp',
+        team: 'ХК "БГВ"',
+        logo: '/BGV.webp',
         games: 0,
         wins: 0,
         draws: 0,

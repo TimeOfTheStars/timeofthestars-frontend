@@ -594,7 +594,7 @@ const quickStats = computed(() => [
     { label: '💰 Стоимость', value: player.marketValue, color: 'yellow' },
     {
         label: '📄 Контракт',
-        value: `до ${player.birth_date}`,
+        value: '0',
         color: 'indigo',
     },
 ])
@@ -606,48 +606,38 @@ const statTabs = computed(() => [
 ])
 
 const currentSeasonStats = computed(() => [
-    { label: '🏒 Голы', value: player.goals, color: 'blue', trend: '+5' },
+    { label: '🏒 Голы', value: player.goals, color: 'blue', trend: '' },
     {
         label: '🎯 Передачи',
         value: player.assists,
         color: 'red',
-        trend: '+3',
+        trend: '',
     },
-    {
-        label: '🏆 Очки',
-        value: player.points,
-        color: 'green',
-        trend: '+8',
-    },
+    
     {
         label: '🎮 Игры',
         value: player.gamesPlayed,
         color: 'purple',
-        trend: '25/30',
+        trend: '',
     },
-    {
-        label: '📈 +/-',
-        value: player.plusMinus,
-        color: 'yellow',
-        trend: '↗️',
-    },
+   
     {
         label: '⏱️ Штраф',
-        value: `${player.penaltyMinutes} мин`,
+        value: '0 мин',
         color: 'orange',
-        trend: '-2',
+        trend: '',
     },
     {
         label: '🔥 ПП голы',
         value: player.powerPlayGoals,
         color: 'indigo',
-        trend: '+2',
+        trend: '',
     },
     {
         label: '⚡ МН голы',
         value: player.shortHandedGoals,
         color: 'pink',
-        trend: '+1',
+        trend: '',
     },
 ])
 

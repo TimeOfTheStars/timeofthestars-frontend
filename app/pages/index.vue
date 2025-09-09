@@ -120,6 +120,120 @@
             </div>
         </section>
 
+         <!-- Tournaments Section -->
+        <section class="py-16 px-4">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                        🏆 Турниры
+                    </h2>
+                    <p class="text-xl text-gray-300">
+                        📊 Текущие турниры лиги ⚡
+                    </p>
+                </div>
+
+                <div class="flex items-center">
+                    <router-link to="/turnirOne" class="block group">
+                        <div
+                            class="bg-gray-800 rounded-xl p-6 card-hover border-l-4 border-secondary-blue group-hover:border-accent-blue transition-colors"
+                        >
+                            <div
+                                class="text-5xl mb-4 group-hover:scale-110 transition-transform"
+                            >
+                                🏆
+                            </div>
+                            <h3
+                                class="text-xl font-semibold mb-2 group-hover:text-accent-blue transition-colors"
+                            >
+                                Предсезонный урнир
+                            </h3>
+                            <p class="text-gray-400 mb-4">
+                                среди любительских спорткоманд
+                            </p>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex items-center gap-2"></div>
+                                <div class="flex items-center gap-2">
+                                    <span>👥</span>
+                                    <span>5 команд участвуют</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span>🏆</span>
+                                    <span>Победитель: не определен</span>
+                                </div>
+                            </div>
+                        </div>
+                    </router-link>
+
+                    <!-- <router-link to="/turnirVictory" class="block group">
+                        <div
+                            class="bg-gray-800 rounded-xl p-6 card-hover border-l-4 border-secondary-red group-hover:border-accent-red transition-colors"
+                        >
+                            <div
+                                class="text-5xl mb-4 group-hover:scale-110 transition-transform"
+                            >
+                                🥇
+                            </div>
+                            <h3
+                                class="text-xl font-semibold mb-2 group-hover:text-accent-red transition-colors"
+                            >
+                                Кубок Победы
+                            </h3>
+                            <p class="text-gray-400 mb-4">Хоккейный турнир</p>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex items-center gap-2"></div>
+                                <div class="flex items-center gap-2">
+                                    <span>👥</span>
+                                    <span>5 команд участвовали</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span>🏆</span>
+                                    <span>Победитель: ХК "Зубр"</span>
+                                </div>
+                            </div>
+                        </div>
+                    </router-link>
+
+                    <router-link to="/zvezdaOtechestva" class="block group">
+                        <div
+                            class="bg-gray-800 rounded-xl p-6 card-hover border-l-4 border-accent-blue group-hover:border-accent-red transition-colors"
+                        >
+                            <div
+                                class="w-16 h-16 relative mx-auto mb-4 group-hover:scale-110 transition-transform"
+                            >
+                                <img
+                                    src="/zvezdalogo.webp"
+                                    alt="Звезда Отечества"
+                                    class="w-full h-full object-contain"
+                                />
+                            </div>
+                            <h3
+                                class="text-xl font-semibold mb-2 group-hover:text-accent-blue transition-colors"
+                            >
+                                Звезда Отечества
+                            </h3>
+                            <p class="text-gray-400 mb-4">
+                                Чемпионат среди любительских спорткоманд
+                            </p>
+                            <div class="space-y-2 text-sm">
+                                <div class="flex items-center gap-2">
+                                    <span class="text-blue-400">🔵</span>
+                                    <span>Плей-офф в процессе</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span>👥</span>
+                                    <span>8 команд участвуют</span>
+                                </div>
+                                <div class="flex items-center gap-2">
+                                    <span>⚡</span>
+                                    <span>Следующий матч: 18.04.2025</span>
+                                </div>
+                            </div>
+                        </div>
+                    </router-link> -->
+                </div>
+            </div>
+        </section>
+
         <!-- Upcoming Matches -->
         <section class="py-16 px-4 bg-gray-800">
             <div class="max-w-6xl mx-auto">
@@ -133,13 +247,12 @@
                     </router-link>
                 </div>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-6">
+                <div>
                     <div
-                        v-for="match in upcomingMatches"
-                        :key="match.id"
+                       
                         class="bg-gray-700 rounded-xl p-4 md:p-6 card-hover"
                     >
-                        <UpcomingMatch :match="match" />
+                        <Kalendar :turnirData="turnirdata" />
                     </div>
                 </div>
             </div>
@@ -191,8 +304,7 @@
             </div>
         </section>
 
-        <!-- Stadium Map Section -->
-        <MapInfo />
+        
 
         <!-- Features Section -->
         <section class="py-16 px-4">
@@ -259,7 +371,7 @@
         </section>
 
         <!-- News Section -->
-        <section class="py-16 px-4 bg-gray-800">
+        <!-- <section class="py-16 px-4 bg-gray-800">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-12">
                     <h2 class="text-3xl md:text-4xl font-bold mb-4">
@@ -434,121 +546,8 @@
                     </button>
                 </div>
             </div>
-        </section>
+        </section> -->
 
-        <!-- Tournaments Section -->
-        <section class="py-16 px-4">
-            <div class="max-w-6xl mx-auto">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                        🏆 Турниры
-                    </h2>
-                    <p class="text-xl text-gray-300">
-                        📊 Текущие турниры лиги ⚡
-                    </p>
-                </div>
-
-                <div class="flex items-center">
-                    <router-link to="/turnirOne" class="block group">
-                        <div
-                            class="bg-gray-800 rounded-xl p-6 card-hover border-l-4 border-secondary-blue group-hover:border-accent-blue transition-colors"
-                        >
-                            <div
-                                class="text-5xl mb-4 group-hover:scale-110 transition-transform"
-                            >
-                                🏆
-                            </div>
-                            <h3
-                                class="text-xl font-semibold mb-2 group-hover:text-accent-blue transition-colors"
-                            >
-                                Предсезонный урнир
-                            </h3>
-                            <p class="text-gray-400 mb-4">
-                                среди любительских спорткоманд
-                            </p>
-                            <div class="space-y-2 text-sm">
-                                <div class="flex items-center gap-2"></div>
-                                <div class="flex items-center gap-2">
-                                    <span>👥</span>
-                                    <span>5 команд участвуют</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <span>🏆</span>
-                                    <span>Победитель: не определен</span>
-                                </div>
-                            </div>
-                        </div>
-                    </router-link>
-
-                    <!-- <router-link to="/turnirVictory" class="block group">
-                        <div
-                            class="bg-gray-800 rounded-xl p-6 card-hover border-l-4 border-secondary-red group-hover:border-accent-red transition-colors"
-                        >
-                            <div
-                                class="text-5xl mb-4 group-hover:scale-110 transition-transform"
-                            >
-                                🥇
-                            </div>
-                            <h3
-                                class="text-xl font-semibold mb-2 group-hover:text-accent-red transition-colors"
-                            >
-                                Кубок Победы
-                            </h3>
-                            <p class="text-gray-400 mb-4">Хоккейный турнир</p>
-                            <div class="space-y-2 text-sm">
-                                <div class="flex items-center gap-2"></div>
-                                <div class="flex items-center gap-2">
-                                    <span>👥</span>
-                                    <span>5 команд участвовали</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <span>🏆</span>
-                                    <span>Победитель: ХК "Зубр"</span>
-                                </div>
-                            </div>
-                        </div>
-                    </router-link>
-
-                    <router-link to="/zvezdaOtechestva" class="block group">
-                        <div
-                            class="bg-gray-800 rounded-xl p-6 card-hover border-l-4 border-accent-blue group-hover:border-accent-red transition-colors"
-                        >
-                            <div
-                                class="w-16 h-16 relative mx-auto mb-4 group-hover:scale-110 transition-transform"
-                            >
-                                <img
-                                    src="/zvezdalogo.webp"
-                                    alt="Звезда Отечества"
-                                    class="w-full h-full object-contain"
-                                />
-                            </div>
-                            <h3
-                                class="text-xl font-semibold mb-2 group-hover:text-accent-blue transition-colors"
-                            >
-                                Звезда Отечества
-                            </h3>
-                            <p class="text-gray-400 mb-4">
-                                Чемпионат среди любительских спорткоманд
-                            </p>
-                            <div class="space-y-2 text-sm">
-                                <div class="flex items-center gap-2">
-                                    <span class="text-blue-400">🔵</span>
-                                    <span>Плей-офф в процессе</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <span>👥</span>
-                                    <span>8 команд участвуют</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <span>⚡</span>
-                                    <span>Следующий матч: 18.04.2025</span>
-                                </div>
-                            </div>
-                        </div>
-                    </router-link> -->
-                </div>
-            </div>
-        </section>
         <MapInfo />
 
         <!-- CTA Section -->
@@ -598,5 +597,9 @@ const { data: teamsdata, error } = useFetch(
 )
 const { data: upcomingMatches } = useFetch(
     'https://api.timeofthestars.ru/api/games'
+)
+
+const { data: turnirdata } = useFetch(
+    'https://api.timeofthestars.ru/api/tournaments'
 )
 </script>

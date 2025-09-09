@@ -120,7 +120,7 @@
                             <span class="animate-pulse text-xs md:text-base">
                                 🏆
                             </span>
-                            <span>Сезон 2024/25</span>
+                            <span>Сезон 2025/26</span>
                         </span>
                     </div>
 
@@ -131,7 +131,7 @@
                         <span
                             class="text-white text-xs md:text-sm font-semibold"
                         >
-                            🔥 Серия: 5 побед подряд
+                            🔥 Серия: 0 побед подряд
                         </span>
                     </div>
                 </div>
@@ -144,7 +144,7 @@
                         <div
                             v-for="(stat, index) in teamStats"
                             :key="`stat-${index}`"
-                            class="text-center group cursor-pointer p-2 md:p-0"
+                            class="text-center group cursor-pointer p-2 md:p-0 flex flex-col items-center justify-center"
                             :style="{
                                 animationDelay: `${index * 200}ms`,
                                 animation: isVisible
@@ -164,7 +164,7 @@
                                 {{ stat.label }}
                             </div>
                             <div class="text-xs text-green-500 font-semibold">
-                                {{ stat.trend }} за месяц
+                                {{ stat.trend }} 
                             </div>
                         </div>
                     </div>
@@ -291,7 +291,7 @@
                     </div>
 
                     <!-- Top Players с улучшенным дизайном -->
-                    <div class="mb-8 md:mb-12">
+                    <!-- <div class="mb-8 md:mb-12">
                         <h3
                             class="text-xl md:text-3xl font-black mb-6 md:mb-8 text-gray-200 flex items-center space-x-2 md:space-x-3"
                         >
@@ -485,7 +485,7 @@
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- Team Composition с улучшенными табами -->
                     <div class="mb-8 md:mb-12">
@@ -554,7 +554,6 @@
                             <NuxtLink
                                 v-for="(player, index) in currentPlayers"
                                 :key="player.id"
-                                :to="`/players/${player.id}?from=${$route.fullPath}`"
                             >
                                 <div
                                     class="group bg-gray-800 rounded-xl md:rounded-2xl p-3 md:p-5 hover:shadow-2xl transition-all duration-300 cursor-pointer hover:scale-105 border border-gray-700 hover:border-blue-600 relative overflow-hidden"
@@ -605,7 +604,7 @@
                                                 >
                                                     {{
                                                         player.pivot?.number ||
-                                                        'N/A'
+                                                        '0'
                                                     }}
                                                 </span>
                                             </div>
@@ -617,7 +616,7 @@
                                             {{
                                                 player.pivot?.position ||
                                                 player.position ||
-                                                'N/A'
+                                                '0'
                                             }}
                                         </p>
 
@@ -636,7 +635,7 @@
                                                     <span class="font-semibold"
                                                         >{{
                                                             player.saves ||
-                                                            'N/A'
+                                                            '0'
                                                         }}%</span
                                                     >
                                                 </span>
@@ -707,7 +706,7 @@
                                                 <span
                                                     class="font-bold text-yellow-600 text-xs md:text-sm"
                                                 >
-                                                    {{ player.rating || 'N/A' }}
+                                                    {{ player.rating || 0 }}
                                                 </span>
                                             </div>
                                         </div>
@@ -718,128 +717,12 @@
                     </div>
 
                     <!-- Recent Matches с timeline дизайном -->
-                    <div class="mb-8 md:mb-12">
-                        <div
-                            class="flex flex-col md:flex-row md:items-center md:justify-between mb-6 md:mb-8 gap-3"
-                        >
-                            <h3
-                                class="text-xl md:text-3xl font-black text-gray-200 flex items-center space-x-2 md:space-x-3"
-                            >
-                                <span>📅</span>
-                                <span>Последние матчи</span>
-                            </h3>
-                            <div
-                                class="text-sm bg-green-900/30 text-green-300 px-3 py-1 md:px-4 md:py-2 rounded-full self-start md:self-auto"
-                            >
-                                Серия: 2 победы
-                            </div>
-                        </div>
-                        <div class="space-y-4 md:space-y-6 relative">
-                            <!-- Timeline line -->
-                            <div
-                                class="absolute left-4 md:left-8 top-0 bottom-0 w-0.5 bg-gradient-to-b from-green-500 via-green-400 to-red-500"
-                            ></div>
-
-                            <div
-                                v-for="(match, index) in recentMatches"
-                                :key="`match-${index}`"
-                                class="relative pl-12 md:pl-20 pr-4 md:pr-6 py-4 md:py-6 rounded-xl md:rounded-2xl border-2 transition-all duration-300 hover:scale-102 cursor-pointer"
-                                :class="
-                                    match.status === 'win'
-                                        ? 'bg-green-900/20 border-green-800 hover:border-green-400'
-                                        : 'bg-red-900/20 border-red-800 hover:border-red-400'
-                                "
-                            >
-                                <!-- Timeline dot -->
-                                <div
-                                    class="absolute left-3 md:left-6 top-1/2 transform -translate-y-1/2 w-3 h-3 md:w-4 md:h-4 rounded-full border-2 md:border-4 border-white shadow-lg"
-                                    :class="
-                                        match.status === 'win'
-                                            ? 'bg-green-500'
-                                            : 'bg-red-500'
-                                    "
-                                ></div>
-
-                                <div
-                                    class="flex flex-col md:flex-row md:justify-between md:items-start gap-2"
-                                >
-                                    <div class="flex-1">
-                                        <div
-                                            class="flex flex-col md:flex-row md:items-center gap-2 mb-1 md:mb-2"
-                                        >
-                                            <h4
-                                                class="font-bold text-base text-gray-200 md:text-lg"
-                                            >
-                                                {{ teamData.name }} vs
-                                                {{ match.opponent }}
-                                            </h4>
-                                            <span
-                                                class="px-2 py-0.5 md:px-3 md:py-1 rounded-full text-[10px] md:text-xs font-bold self-start md:self-auto"
-                                                :class="
-                                                    match.venue === 'Дома'
-                                                        ? 'bg-blue-100 text-blue-700'
-                                                        : 'bg-purple-100 text-purple-700'
-                                                "
-                                            >
-                                                {{ match.venue }}
-                                            </span>
-                                        </div>
-                                        <p
-                                            class="text-xs md:text-sm text-gray-400 mb-1"
-                                        >
-                                            {{ match.date }}
-                                        </p>
-                                        <p
-                                            class="text-[10px] md:text-xs text-gray-500"
-                                        >
-                                            👥 Зрителей: {{ match.attendance }}
-                                        </p>
-                                    </div>
-                                    <div class="text-right">
-                                        <p
-                                            class="text-2xl md:text-3xl font-black mb-1"
-                                            :class="
-                                                match.status === 'win'
-                                                    ? 'text-green-600'
-                                                    : 'text-red-600'
-                                            "
-                                        >
-                                            {{ match.result }}
-                                        </p>
-                                        <p
-                                            class="text-xs md:text-sm font-bold flex items-center space-x-1 justify-end"
-                                            :class="
-                                                match.status === 'win'
-                                                    ? 'text-green-600'
-                                                    : 'text-red-600'
-                                            "
-                                        >
-                                            <span>
-                                                {{
-                                                    match.status === 'win'
-                                                        ? '✅'
-                                                        : '❌'
-                                                }}
-                                            </span>
-                                            <span>
-                                                {{
-                                                    match.status === 'win'
-                                                        ? 'Победа'
-                                                        : 'Поражение'
-                                                }}
-                                            </span>
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
+                    
                     <!-- Action Buttons с улучшенным дизайном -->
                     <div
                         class="flex flex-col md:flex-row gap-4 md:gap-6 mb-8 md:mb-12"
                     >
-                        <button
+                        <!-- <button
                             class="group flex-1 bg-gradient-to-r from-blue-600 via-blue-700 to-blue-800 hover:from-blue-700 hover:via-blue-800 hover:to-blue-900 text-white font-bold py-4 md:py-6 px-6 md:px-8 rounded-xl md:rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl relative overflow-hidden"
                         >
                             <div
@@ -856,7 +739,7 @@
                                     →
                                 </span>
                             </span>
-                        </button>
+                        </button> -->
                         <button
                             class="group flex-1 bg-gradient-to-r from-red-600 via-red-700 to-red-800 hover:from-red-700 hover:via-red-800 hover:to-red-900 text-white font-bold py-4 md:py-6 px-6 md:px-8 rounded-xl md:rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl relative overflow-hidden"
                         >
@@ -1046,7 +929,7 @@ const teamStats = computed(() => [
         color: 'blue',
         trend: '',
     },
-    { label: 'Рейтинг', value: 'N/A', color: 'yellow', trend: 'default' },
+   
 ])
 
 // Объединяем игроков из двух массивов
@@ -1149,28 +1032,28 @@ const recentMatches = [
 const additionalStats = [
     {
         icon: '⚡',
-        value: '85%',
+        value: '0%',
         label: 'Владение шайбой',
         color: 'blue',
         description: 'Средний показатель за сезон',
     },
     {
         icon: '🎯',
-        value: '32',
+        value: '0',
         label: 'Броски в створ',
         color: 'red',
         description: 'За последнюю игру',
     },
     {
         icon: '🛡️',
-        value: '92%',
+        value: '0%',
         label: 'Силовая игра',
         color: 'green',
         description: 'Эффективность в большинстве',
     },
     {
         icon: '🔥',
-        value: '15',
+        value: '0',
         label: 'Хет-трики',
         color: 'yellow',
         description: 'За всю историю клуба',

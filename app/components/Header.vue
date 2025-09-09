@@ -97,25 +97,7 @@
                         <div
                             class="absolute top-full left-0 mt-2 w-64 bg-gray-800 rounded-lg shadow-xl border border-gray-700 py-2 z-50 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200"
                         >
-                            <NuxtLink
-                                v-for="(championship, index) in championships"
-                                :key="index"
-                                :to="championship.href"
-                                class="flex items-center px-4 py-3 hover:bg-gray-700 transition-colors"
-                                @click="closeAllDropdowns"
-                            >
-                                <span class="text-2xl mr-3">{{
-                                    championship.emoji
-                                }}</span>
-                                <div>
-                                    <div class="text-white font-medium">
-                                        {{ championship.name }}
-                                    </div>
-                                    <div class="text-sm text-gray-400">
-                                        {{ championship.status }}
-                                    </div>
-                                </div>
-                            </NuxtLink>
+                            Пока недоступно
                         </div>
                     </div>
 
@@ -254,18 +236,9 @@
                         </svg>
                     </button>
                     <div v-if="activeDropdown === 'championships'" class="pl-4">
-                        <NuxtLink
-                            v-for="(championship, index) in championships"
-                            :key="index"
-                            :to="championship.href"
-                            class="flex items-center py-2 text-gray-300 hover:text-white transition-colors"
-                            @click="closeMobileMenu"
+                       <span class="text-gray-400 text-sm font-medium"
+                            >Пока недоступно</span
                         >
-                            <span class="text-lg mr-2">{{
-                                championship.emoji
-                            }}</span>
-                            <span>{{ championship.name }}</span>
-                        </NuxtLink>
                     </div>
                 </div>
 

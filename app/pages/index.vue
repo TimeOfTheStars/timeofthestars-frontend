@@ -21,10 +21,7 @@
 
                     <p
                         class="text-xl md:text-2xl mb-8 text-white/90 max-w-3xl mx-auto"
-                    >
-                        🚀 Растим будущих чемпионов на льду в любительской
-                        хоккейной лиге
-                    </p>
+                    ></p>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
                         <!-- <router-link to="/register">
                             <button
@@ -120,7 +117,7 @@
             </div>
         </section>
 
-         <!-- Tournaments Section -->
+        <!-- Tournaments Section -->
         <section class="py-16 px-4">
             <div class="max-w-6xl mx-auto">
                 <div class="text-center mb-12">
@@ -132,10 +129,10 @@
                     </p>
                 </div>
 
-                <div class="flex items-center">
+                <div class="m-auto">
                     <router-link to="/turnirOne" class="block group">
                         <div
-                            class="bg-gray-800 rounded-xl p-6 card-hover border-l-4 border-secondary-blue group-hover:border-accent-blue transition-colors"
+                            class="bg-gray-800 rounded-xl p-6 card-hover border-l-4 border-secondary-blue group-hover:border-accent-blue transition-colors text-center"
                         >
                             <div
                                 class="text-5xl mb-4 group-hover:scale-110 transition-transform"
@@ -145,18 +142,22 @@
                             <h3
                                 class="text-xl font-semibold mb-2 group-hover:text-accent-blue transition-colors"
                             >
-                                Предсезонный урнир
+                                Предсезонный турнир
                             </h3>
                             <p class="text-gray-400 mb-4">
                                 среди любительских спорткоманд
                             </p>
                             <div class="space-y-2 text-sm">
                                 <div class="flex items-center gap-2"></div>
-                                <div class="flex items-center gap-2">
+                                <div
+                                    class="flex items-center justify-center gap-2"
+                                >
                                     <span>👥</span>
-                                    <span>5 команд участвуют</span>
+                                    <span>6 команд участвуют</span>
                                 </div>
-                                <div class="flex items-center gap-2">
+                                <div
+                                    class="flex items-center justify-center gap-2"
+                                >
                                     <span>🏆</span>
                                     <span>Победитель: не определен</span>
                                 </div>
@@ -248,10 +249,7 @@
                 </div>
 
                 <div>
-                    <div
-                       
-                        class="bg-gray-700 rounded-xl p-4 md:p-6 card-hover"
-                    >
+                    <div class="bg-gray-700 rounded-xl p-4 md:p-6 card-hover">
                         <Kalendar :turnirData="turnirdata" />
                     </div>
                 </div>
@@ -303,8 +301,6 @@
                 </div>
             </div>
         </section>
-
-        
 
         <!-- Features Section -->
         <section class="py-16 px-4">

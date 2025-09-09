@@ -70,7 +70,7 @@
                                 </td>
                                 -->
                                 <td class="px-6 py-4">
-                                    <div class="flex items-center gap-3">
+                                    <NuxtLink :to="`/teams/${team.id}`" class="flex items-center gap-3 hover:text-accent-blue transition-colors">
                                         <div class="w-8 h-8 relative">
                                             <img
                                                 :src="team.logo"
@@ -81,7 +81,7 @@
                                         <span class="font-medium">{{
                                             team.team
                                         }}</span>
-                                    </div>
+                                    </NuxtLink>
                                 </td>
                                 <td class="px-6 py-4 text-center">
                                     {{ team.games }}
@@ -138,7 +138,7 @@ import { ref } from 'vue';
 
 const standings = ref([
     {
-        // place: '1',
+        id: 5,
         team: 'ХК "Торпедо"',
         logo: '/photo_53844715688281.png (4).webp',
         games: 0,
@@ -150,7 +150,7 @@ const standings = ref([
         status: '',
     },
     {
-        // place: '2',
+        id: 1,
         team: 'ХК "Переславль"',
         logo: '/newPereslavl.webp',
         games: 0,
@@ -162,7 +162,7 @@ const standings = ref([
         status: '',
     },
     {
-        // place: '3',
+        id: 2,
         team: 'ХК "Зубр"',
         logo: '/photo_53844715688281.png (1).webp',
         games: 0,
@@ -174,7 +174,7 @@ const standings = ref([
         status: '',
     },
     {
-        // place: '4',
+        id: 3,
         team: 'ХК "Вымпел-v"',
         logo: '/photo_53844715688281.png (2).webp',
         games: 0,
@@ -187,7 +187,7 @@ const standings = ref([
     },
     
     {
-        // place: '6',
+        id: 4,
         team: 'ХК "Ярославич"',
         logo: '/photo_53844715688281.png (3).webp',
         games: 0,
@@ -200,7 +200,7 @@ const standings = ref([
     },
     
     {
-        // place: '8',
+        id: 6,
         team: 'ХК "БГВ"',
         logo: '/BGV.webp',
         games: 0,

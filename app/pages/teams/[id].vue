@@ -195,7 +195,8 @@
                                     >
                                         <div class="relative">
                                             <div
-                                                class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-red-500 to-red-700 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-shadow duration-300 group-hover:rotate-12 transition-transform"
+                                                class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-shadow duration-300 group-hover:rotate-12 transition-transform"
+                                                :class="teamColors.home"
                                             >
                                                 <span
                                                     class="text-white font-black text-xl md:text-2xl"
@@ -217,7 +218,7 @@
                                             <p
                                                 class="font-bold text-gray-200 text-base md:text-lg mb-1"
                                             >
-                                                Красно-белая
+                                                {{ teamColors.homeName }}
                                             </p>
                                             <p
                                                 class="text-xs md:text-sm text-gray-400 mb-2"
@@ -247,7 +248,8 @@
                                     >
                                         <div class="relative">
                                             <div
-                                                class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br from-blue-500 to-blue-700 rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-shadow duration-300 group-hover:rotate-12 transition-transform"
+                                                class="w-16 h-16 md:w-20 md:h-20 bg-gradient-to-br rounded-xl md:rounded-2xl flex items-center justify-center shadow-lg group-hover:shadow-2xl transition-shadow duration-300 group-hover:rotate-12 transition-transform"
+                                                :class="teamColors.away"
                                             >
                                                 <span
                                                     class="text-white font-black text-xl md:text-2xl"
@@ -269,7 +271,7 @@
                                             <p
                                                 class="font-bold text-base text-gray-200 md:text-lg mb-1"
                                             >
-                                                Сине-белая
+                                                {{ teamColors.awayName }}
                                             </p>
                                             <p
                                                 class="text-xs md:text-sm text-gray-400 mb-2"
@@ -883,6 +885,8 @@ if (error.value || !teamData.value) {
     })
 }
 
+const teamColors = usePlayerColor(teamId)
+
 // --- Интегрированная логика ---
 
 const activeTab = ref('forwards')
@@ -921,13 +925,13 @@ const teamStats = computed(() => [
         label: 'Поражения',
         value: teamData.value.losses,
         color: 'red',
-        trend: '',
+        trend: ''
     },
     {
         label: 'Игроки',
         value: teamData.value.players_count,
         color: 'blue',
-        trend: '',
+        trend: ''
     },
    
 ])

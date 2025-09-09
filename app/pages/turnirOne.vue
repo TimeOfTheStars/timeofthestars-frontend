@@ -23,47 +23,50 @@
         <!-- Tournament Stats -->
         <section class="py-16 px-4 bg-gray-800">
             <div class="max-w-6xl mx-auto">
-                <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <!-- Команды -->
                     <div class="space-y-2 group">
                         <div
                             class="text-5xl group-hover:scale-110 transition-transform"
                         >
                             👥
                         </div>
-                        <div class="text-4xl font-bold text-gradient">{{teamData.teamCount}}</div>
+                        <div class="text-4xl font-bold text-gradient">
+                            {{ teamData.teamCount }}
+                        </div>
                         <div class="text-gray-300">Команд</div>
                     </div>
+
+                    <!-- Матчи -->
                     <div class="space-y-2 group">
                         <div
                             class="text-5xl group-hover:scale-110 transition-transform"
                         >
                             🏒
                         </div>
-                        <div class="text-4xl font-bold text-gradient">{{teamData.gamesCount}}</div>
+                        <div class="text-4xl font-bold text-gradient">
+                            {{ teamData.gamesCount }}
+                        </div>
                         <div class="text-gray-300">Матчей</div>
                     </div>
+
+                    <!-- Дата начала -->
                     <div class="space-y-2 group">
                         <div
                             class="text-5xl group-hover:scale-110 transition-transform"
                         >
                             📅
                         </div>
-                        <div class="text-4xl font-bold text-gradient">{{teamData.start_date}}</div>
-                        <div class="text-gray-300">Дата начала турнира</div>
-                    </div>
-                    <div class="space-y-2 group">
                         <div
-                            class="text-5xl group-hover:scale-110 transition-transform"
+                            class="text-3xl md:text-4xl font-bold text-gradient"
                         >
-                            🏆
+                            {{ teamData.start_date }}
                         </div>
-                        <div class="text-4xl font-bold text-gradient">1</div>
-                        <div class="text-gray-300">Победитель</div>
+                        <div class="text-gray-300">Дата начала турнира</div>
                     </div>
                 </div>
             </div>
         </section>
-
         <!-- Navigation Tabs -->
         <section class="py-8 px-4 bg-gray-800 border-b border-gray-700">
             <div class="max-w-6xl mx-auto">
@@ -127,13 +130,14 @@
                 </h2>
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div
+                    <NuxtLink
                         v-for="team in teams"
                         :key="team.id"
-                        class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700"
+                        :to="`/teams/${team.id}`"
+                        class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700 block hover:bg-gray-700 transition-colors"
                     >
                         <TurnirParticipants :team="team" />
-                    </div>
+                    </NuxtLink>
                 </div>
             </div>
         </section>
@@ -145,7 +149,7 @@
                     📅 Календарь турнира
                 </h2>
                 <div class="bg-gray-800 rounded-xl p-8 text-center">
-                    <Kalendar :turnirData ="turnirdata"/>
+                    <Kalendar :turnirData="turnirdata" />
                 </div>
             </div>
         </section>
@@ -225,7 +229,8 @@
                                     турнира!
                                 </div>
                             </div> -->
-                            Информация о победителе отобразиться здесь по окончании турнира
+                            Информация о победителе отобразиться здесь по
+                            окончании турнира
                         </div>
                     </div>
                 </div>
@@ -301,20 +306,19 @@ const sortedTeams = computed(() => {
     return [...teams.value].sort((a, b) => b.points - a.points)
 })
 
-const { data: tournamentsdata, error } = useFetch('https://api.timeofthestars.ru/api/tournaments')
-
+const { data: tournamentsdata, error } = useFetch(
+    'https://api.timeofthestars.ru/api/tournaments'
+)
 
 const teamData = computed(() => {
     if (!tournamentsdata.value || tournamentsdata.value.length === 0) {
-        return {teamCount:0, gamesCount:0,start_date:0}
-    }
-    else{
-        return{
-            teamCount:tournamentsdata.value[0].teams.length,
-            gamesCount:tournamentsdata.value[0].games.length,
-            start_date:tournamentsdata.value[0].start_date,
+        return { teamCount: 0, gamesCount: 0, start_date: 0 }
+    } else {
+        return {
+            teamCount: tournamentsdata.value[0].teams.length,
+            gamesCount: tournamentsdata.value[0].games.length,
+            start_date: tournamentsdata.value[0].start_date,
         }
     }
 })
-
 </script>

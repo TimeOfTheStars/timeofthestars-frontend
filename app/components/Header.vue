@@ -61,12 +61,10 @@
                                 class="flex items-center px-4 py-3 hover:bg-gray-700 transition-colors"
                                 @click="closeAllDropdowns"
                             >
-                                
                                 <div>
                                     <div class="text-white font-medium">
-                                        {{ tournament.name }}
+                                        🏆 {{ tournament.name }}
                                     </div>
-                                
                                 </div>
                             </NuxtLink>
                         </div>
@@ -201,10 +199,8 @@
                             class="flex items-center py-2 text-gray-300 hover:text-white transition-colors"
                             @click="closeMobileMenu"
                         >
-                            <span class="text-lg mr-2">{{
-                                
-                            }}</span>
-                            <span>{{ tournament.name }}</span>
+                            <span class="text-lg mr-2">{{}}</span>
+                            <span>🏆 {{ tournament.name }}</span>
                         </NuxtLink>
                     </div>
                 </div>
@@ -236,7 +232,7 @@
                         </svg>
                     </button>
                     <div v-if="activeDropdown === 'championships'" class="pl-4">
-                       <span class="text-gray-400 text-sm font-medium"
+                        <span class="text-gray-400 text-sm font-medium"
                             >Пока недоступно</span
                         >
                     </div>
@@ -256,13 +252,13 @@
                 >
                     Расписание
                 </NuxtLink>
-                <NuxtLink
+                <!-- <NuxtLink
                     to="/gallery"
                     class="block text-gray-300 hover:text-white active-text-gradient transition-colors"
                     @click="closeMobileMenu"
                 >
                     Галерея
-                </NuxtLink>
+                </NuxtLink> -->
 
                 <!-- <NuxtLink to="/regpage" @click="closeMobileMenu">
                     <button
@@ -302,9 +298,9 @@ const closeAllDropdowns = () => {
     activeDropdown.value = ''
 }
 
-
-    const { data: tournamentsdata, error } = useFetch(
-    'https://api.timeofthestars.ru/api/tournaments')
+const { data: tournamentsdata, error } = useFetch(
+    'https://api.timeofthestars.ru/api/tournaments'
+)
 
 const championships = [
     {

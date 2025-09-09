@@ -1,6 +1,4 @@
 <template>
-
- 
     <div class="space-y-6 md:space-y-8">
         <div>
             <h3
@@ -11,9 +9,9 @@
             </h3>
             <div class="space-y-3 md:space-y-4">
                 <div
-                    v-for="(match, index) in turnirDataCurrent.games"
+                    v-for="match in turnirDataCurrent.games"
                     :key="match.id"
-                    class="bg-gray-700 rounded-lg md:rounded-xl p-4 md:p-6 card-hover"
+                    class="bg-gray-800 rounded-lg md:rounded-xl p-4 md:p-6 card-hover"
                 >
                     <div
                         class="flex flex-col md:flex-row md:items-center justify-between gap-3"
@@ -33,22 +31,20 @@
                             class="flex-1 flex flex-col sm:flex-row items-center gap-3 md:gap-6 overflow-hidden"
                         >
                             <!-- Команда 1 -->
-                            <div
-                                class="flex items-center gap-2 md:gap-3 flex-1 min-w-0"
-                            >
+                            <NuxtLink :to="`/teams/${match.team_a_id}`" class="flex items-center gap-2 md:gap-3 flex-1 min-w-0">
                                 <div
                                     class="w-6 h-6 md:w-8 md:h-8 relative flex-shrink-0 bg-gray-600 rounded-full flex items-center justify-center"
                                 >
-                                     <img
+                                    <img
                                         :src="getTeamLogo(match.team_a_id)"
-                                        :alt="match.team1"
-                                        class="object-contain rounded-full w-full h-full"/>
+                                        :alt="getTeamName(match.team_a_id)"
+                                        class="object-contain rounded-full w-full h-full"
+                                    />
                                 </div>
-                                <span
-                                    class="font-medium text-sm truncate"
-                                    >{{ getTeamName(match.team_a_id) }}</span
-                                >
-                            </div>
+                                <span class="font-medium text-sm truncate">{{
+                                    getTeamName(match.team_a_id)
+                                }}</span>
+                            </NuxtLink>
 
                             <!-- Счет -->
                             <div
@@ -58,22 +54,20 @@
                             </div>
 
                             <!-- Команда 2 -->
-                            <div
-                                class="flex items-center gap-2 md:gap-3 flex-1 min-w-0 justify-end"
-                            >
-                                <span
-                                    class="font-medium text-sm truncate"
-                                    >{{ getTeamName(match.team_b_id) }}</span
-                                >
+                            <NuxtLink :to="`/teams/${match.team_b_id}`" class="flex items-center gap-2 md:gap-3 flex-1 min-w-0 justify-end">
+                                <span class="font-medium text-sm truncate">{{
+                                    getTeamName(match.team_b_id)
+                                }}</span>
                                 <div
                                     class="w-6 h-6 md:w-8 md:h-8 relative flex-shrink-0 bg-gray-600 rounded-full flex items-center justify-center"
                                 >
                                     <img
                                         :src="getTeamLogo(match.team_b_id)"
-                                        :alt="match.team1"
-                                        class="object-contain rounded-full w-full h-full"/>
+                                        :alt="getTeamName(match.team_b_id)"
+                                        class="object-contain rounded-full w-full h-full"
+                                    />
                                 </div>
-                            </div>
+                            </NuxtLink>
                         </div>
 
                         <!-- Статус -->
@@ -95,8 +89,8 @@ import { computed } from 'vue'
 const props = defineProps({
     turnirData: {
         type: Object,
-        required: true
-    }
+        required: true,
+    },
 })
 
 // Получаем первый турнир из массива
@@ -108,34 +102,36 @@ const turnirDataCurrent = computed(() => {
 })
 
 // Функция для получения названия команды по ID
-const getTeamName = (teamId) => {
+const getTeamName = teamId => {
     const team = turnirDataCurrent.value.teams.find(t => t.id === teamId)
     return team ? team.name : `Команда ${teamId}`
 }
 
+
+
 // Функция для форматирования даты
-const formatDate = (dateString) => {
+const formatDate = dateString => {
     if (!dateString) return 'Дата уточняется'
     const date = new Date(dateString)
     return date.toLocaleDateString('ru-RU', {
         day: 'numeric',
-        month: 'long'
+        month: 'long',
     })
 }
 
 // Функция для форматирования времени
-const formatTime = (timeString) => {
+const formatTime = timeString => {
     if (!timeString) return 'Время уточняется'
     return timeString.slice(0, 5)
 }
 
 // Функция для определения статуса матча
-const getMatchStatus = (match) => {
+const getMatchStatus = match => {
     if (match.score) return 'Завершен'
-    
+
     const matchDate = new Date(match.date + 'T' + match.time)
     const now = new Date()
-    
+
     if (matchDate > now) return 'Запланирован'
     return 'В процессе'
 }

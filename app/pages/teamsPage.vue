@@ -13,11 +13,11 @@
                 </div>
 
                 <div
-                    v-if="teamsdata"
+                    v-if="tournamentTeamsData"
                     class="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
                 >
                     <div
-                        v-for="team in teamsdata"
+                        v-for="team in tournamentTeamsData"
                         :key="team.id"
                         class="bg-gray-700 rounded-xl p-6 card-hover text-center"
                     >
@@ -35,7 +35,14 @@
 </template>
 
 <script setup>
-const { data: teamsdata, error } = useFetch(
-    'https://api.timeofthestars.ru/api/teams'
+const { data: turnirdata } = useFetch(
+    'https://api.timeofthestars.ru/api/tournaments'
 )
+
+const tournamentTeamsData = computed(() => {
+    if (!turnirdata.value || turnirdata.value.length === 0) {
+        return { games: [], teams: [] }
+    }
+    return turnirdata.value[0].teams
+})
 </script>

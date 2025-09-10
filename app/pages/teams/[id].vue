@@ -102,12 +102,12 @@
                         <h2
                             class="text-2xl md:text-4xl lg:text-6xl font-black mb-2 md:mb-3 tracking-wider"
                         >
-                            {{ teamData.name }}
+                            {{ tournamentTeamsData.name }}
                         </h2>
                         <p
                             class="text-sm md:text-xl lg:text-2xl opacity-90 font-light"
                         >
-                            г. {{ teamData.city }}
+                            г. {{ tournamentTeamsData.city }}
                         </p>
                     </div>
 
@@ -125,21 +125,12 @@
                     </div>
 
                     <!-- Floating stats -->
-                    <div
-                        class="absolute bottom-3 left-3 md:bottom-6 md:left-6 bg-white/20 backdrop-blur-md rounded-xl md:rounded-2xl px-2 py-1 md:px-4 md:py-2 border border-white/30"
-                    >
-                        <span
-                            class="text-white text-xs md:text-sm font-semibold"
-                        >
-                            🔥 Серия: 0 побед подряд
-                        </span>
-                    </div>
                 </div>
 
                 <!-- Team Stats с улучшенной анимацией -->
                 <div class="p-4 md:p-8 lg:p-12">
                     <div
-                        class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-8 mb-8 md:mb-12"
+                        class="flex flex-wrap justify-center gap-4 md:gap-8 mb-8 md:mb-12"
                     >
                         <div
                             v-for="(stat, index) in teamStats"
@@ -164,7 +155,7 @@
                                 {{ stat.label }}
                             </div>
                             <div class="text-xs text-green-500 font-semibold">
-                                {{ stat.trend }} 
+                                {{ stat.trend }}
                             </div>
                         </div>
                     </div>
@@ -503,7 +494,8 @@
                             <div
                                 class="text-sm bg-blue-900/30 text-blue-300 px-3 py-1 md:px-4 md:py-2 rounded-full self-start md:self-auto"
                             >
-                                Всего: {{ teamData.players_count }} игроков
+                                Всего:
+                                {{ totalPlayersCount }} игроков
                             </div>
                         </div>
 
@@ -583,20 +575,6 @@
                                                 >
                                                     {{ player.full_name }}
                                                 </h5>
-                                                <span
-                                                    class="text-xs md:text-sm font-medium"
-                                                    :class="
-                                                        getTrendColor(
-                                                            player.trend
-                                                        )
-                                                    "
-                                                >
-                                                    {{
-                                                        getTrendIcon(
-                                                            player.trend
-                                                        )
-                                                    }}
-                                                </span>
                                             </div>
                                             <div
                                                 class="flex items-center space-x-1 md:space-x-2"
@@ -636,8 +614,7 @@
                                                     <span>🛡️</span>
                                                     <span class="font-semibold"
                                                         >{{
-                                                            player.saves ||
-                                                            '0'
+                                                            player.saves || '0'
                                                         }}%</span
                                                     >
                                                 </span>
@@ -645,11 +622,9 @@
                                                     class="flex items-center space-x-1"
                                                 >
                                                     <span>🚫</span>
-                                                    <span
-                                                        class="font-semibold"
-                                                        >                                                        {{
-                                                            player.shutouts ||
-                                                            0
+                                                    <span class="font-semibold">
+                                                        {{
+                                                            player.shutouts || 0
                                                         }}</span
                                                     >
                                                 </span>
@@ -664,9 +639,7 @@
                                                     >
                                                         {{
                                                             player.pivot
-                                                                ?.goals ||
-                                                            player.goals ||
-                                                            0
+                                                                ?.goals || 0
                                                         }}
                                                     </span>
                                                 </span>
@@ -679,38 +652,11 @@
                                                     >
                                                         {{
                                                             player.pivot
-                                                                ?.assists ||
-                                                            player.assists ||
-                                                            0
+                                                                ?.assists || 0
                                                         }}
                                                     </span>
                                                 </span>
                                             </template>
-                                        </div>
-
-                                        <!-- Рейтинг игрока -->
-                                        <div
-                                            class="flex items-center justify-between pt-2 border-t border-gray-700"
-                                        >
-                                            <span
-                                                class="text-[10px] md:text-xs text-gray-500"
-                                            >
-                                                Рейтинг
-                                            </span>
-                                            <div
-                                                class="flex items-center space-x-1"
-                                            >
-                                                <span
-                                                    class="text-yellow-500 text-sm md:text-base"
-                                                >
-                                                    ⭐
-                                                </span>
-                                                <span
-                                                    class="font-bold text-yellow-600 text-xs md:text-sm"
-                                                >
-                                                    {{ player.rating || 0 }}
-                                                </span>
-                                            </div>
                                         </div>
                                     </div>
                                 </div>
@@ -719,7 +665,7 @@
                     </div>
 
                     <!-- Recent Matches с timeline дизайном -->
-                    
+
                     <!-- Action Buttons с улучшенным дизайном -->
                     <div
                         class="flex flex-col md:flex-row gap-4 md:gap-6 mb-8 md:mb-12"
@@ -742,23 +688,26 @@
                                 </span>
                             </span>
                         </button> -->
+
                         <button
                             class="group flex-1 bg-gradient-to-r from-red-600 via-red-700 to-red-800 hover:from-red-700 hover:via-red-800 hover:to-red-900 text-white font-bold py-4 md:py-6 px-6 md:px-8 rounded-xl md:rounded-2xl transition-all duration-300 transform hover:scale-105 shadow-lg hover:shadow-2xl relative overflow-hidden"
                         >
-                            <div
-                                class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"
-                            ></div>
-                            <span
-                                class="relative z-10 flex items-center justify-center space-x-2 md:space-x-3 text-sm md:text-lg"
-                            >
-                                <span>📅</span>
-                                <span>Смотреть расписание</span>
+                            <NuxtLink to="/schedule"
+                                ><div
+                                    class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-700"
+                                ></div>
                                 <span
-                                    class="group-hover:translate-x-1 transition-transform duration-200"
+                                    class="relative z-10 flex items-center justify-center space-x-2 md:space-x-3 text-sm md:text-lg"
                                 >
-                                    →
+                                    <span>📅</span>
+                                    <span>Смотреть расписание</span>
+                                    <span
+                                        class="group-hover:translate-x-1 transition-transform duration-200"
+                                    >
+                                        →
+                                    </span>
                                 </span>
-                            </span>
+                            </NuxtLink>
                         </button>
                     </div>
                 </div>
@@ -858,8 +807,8 @@
                     </button>
                 </div>
                 <p class="text-gray-400 text-xs md:text-sm">
-                    © 2024 {{ teamData.name }} • Все права защищены • Сделано с
-                    ❤️ для болельщиков
+                    © 2025 {{ tournamentTeamsData.name }} • Все права защищены •
+                    Сделано с ❤️ для болельщиков
                 </p>
             </div>
         </div>
@@ -877,7 +826,18 @@ const { data: teamData, error } = await useAsyncData(`team-${teamId}`, () =>
     $fetch(`https://api.timeofthestars.ru/api/teams/${teamId}`)
 )
 
-if (error.value || !teamData.value) {
+const { data: turnirdata } = useFetch(
+    'https://api.timeofthestars.ru/api/tournaments'
+)
+
+const tournamentTeamsData = computed(() => {
+    if (!turnirdata.value || turnirdata.value.length === 0) {
+        return { games: [], teams: [] }
+    }
+    return turnirdata.value[0].teams[teamId - 1]
+})
+
+if (error.value || !tournamentTeamsData.value) {
     throw createError({
         statusCode: 404,
         statusMessage: `Команда не найдена`,
@@ -911,42 +871,41 @@ const formattedTime = computed(() => {
     return currentTime.value.toLocaleTimeString('ru-RU')
 })
 
-const getTrendIcon = trend => {
-    return '➡️'
-}
-
 const getTrendColor = trend => {
     return 'text-gray-500'
 }
 
 const teamStats = computed(() => [
-    { label: 'Победы', value: teamData.value.wins, color: 'green', trend: '' },
+    {
+        label: 'Победы',
+        value: tournamentTeamsData.value?.pivot?.wins,
+        color: 'green',
+        trend: '',
+    },
     {
         label: 'Поражения',
-        value: teamData.value.losses,
+        value: tournamentTeamsData.value?.pivot?.losses,
         color: 'red',
-        trend: ''
+        trend: '',
     },
     {
         label: 'Игроки',
-        value: teamData.value.players_count,
+        value: totalPlayersCount.value,
         color: 'blue',
-        trend: ''
+        trend: '',
     },
-   
 ])
 
 // Объединяем игроков из двух массивов
 const allPlayers = computed(() => {
-    const players = [
-        ...(teamData.value.championship_players || []),
-        ...(teamData.value.tournament_players || []),
-    ]
+    const players = [...(teamData.value.tournament_players || [])]
     // Убираем дубликаты по ID, если они есть
     const uniquePlayers = new Map()
     players.forEach(p => uniquePlayers.set(p.id, p))
     return Array.from(uniquePlayers.values())
 })
+
+const totalPlayersCount = computed(() => allPlayers.value.length)
 
 // Группируем игроков по позиции
 const playersByPosition = computed(() => {
@@ -1033,37 +992,6 @@ const recentMatches = [
     },
 ]
 
-const additionalStats = [
-    {
-        icon: '⚡',
-        value: '0%',
-        label: 'Владение шайбой',
-        color: 'blue',
-        description: 'Средний показатель за сезон',
-    },
-    {
-        icon: '🎯',
-        value: '0',
-        label: 'Броски в створ',
-        color: 'red',
-        description: 'За последнюю игру',
-    },
-    {
-        icon: '🛡️',
-        value: '0%',
-        label: 'Силовая игра',
-        color: 'green',
-        description: 'Эффективность в большинстве',
-    },
-    {
-        icon: '🔥',
-        value: '0',
-        label: 'Хет-трики',
-        color: 'yellow',
-        description: 'За всю историю клуба',
-    },
-]
-
 const achievements = [
     {
         year: '2023',
@@ -1080,13 +1008,6 @@ const achievements = [
         title: 'Золотой Шлем',
         description: 'Рекордная серия побед',
     },
-]
-
-const socials = [
-    { icon: '📘', color: 'blue' },
-    { icon: '📷', color: 'pink' },
-    { icon: '🐦', color: 'blue' },
-    { icon: '📺', color: 'red' },
 ]
 </script>
 

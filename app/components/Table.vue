@@ -12,7 +12,9 @@
                     <table class="w-full">
                         <thead class="bg-gray-700">
                             <tr>
-                                <th class="px-4 py-4 text-center font-semibold w-16">
+                                <th
+                                    class="px-4 py-4 text-center font-semibold w-16"
+                                >
                                     Место
                                 </th>
                                 <th class="px-6 py-4 text-left font-semibold">
@@ -44,13 +46,19 @@
                                 :key="team.id"
                                 :class="`border-t border-gray-700 hover:bg-gray-700/50 transition-colors ${getStatusColor(
                                     team.status
-                                )} table-row-${team.place-1} bg-opacity-10`"
+                                )} table-row-${team.place - 1} bg-opacity-10`"
                             >
                                 <td class="px-4 py-4 text-center font-semibold">
-                                    <span :class="['medal-' + (team.place-1)]">{{ team.place }}</span>
+                                    <span
+                                        :class="['medal-' + (team.place - 1)]"
+                                        >{{ team.place }}</span
+                                    >
                                 </td>
                                 <td class="px-6 py-4">
-                                    <NuxtLink :to="`/teams/${team.id}`" class="flex items-center gap-3 hover:text-accent-blue transition-colors">
+                                    <NuxtLink
+                                        :to="`/teams/${team.id}`"
+                                        class="flex items-center gap-3 hover:text-accent-blue transition-colors"
+                                    >
                                         <div class="w-8 h-8 relative">
                                             <img
                                                 :src="team.logo"
@@ -71,14 +79,10 @@
                                 >
                                     {{ team.wins }}
                                 </td>
-                                <td
-                                    class="px-6 py-4 text-center text-gray-400"
-                                >
+                                <td class="px-6 py-4 text-center text-gray-400">
                                     {{ team.draws }}
                                 </td>
-                                <td
-                                    class="px-6 py-4 text-center text-red-400"
-                                >
+                                <td class="px-6 py-4 text-center text-red-400">
                                     {{ team.losses }}
                                 </td>
                                 <td class="px-6 py-4 text-center">
@@ -94,129 +98,79 @@
                     </table>
                 </div>
             </div>
-
-            
         </div>
     </section>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { computed } from 'vue'
 
-const standings = ref([
-    {
-        id: 5,
-        team: 'ХК "Торпедо"',
-        logo: '/photo_53844715688281.png (4).webp',
-        games: 0,
-        wins: 0,
-        draws: 0,
-        losses: 0,
-        goals: '0-0',
-        points: 0,
-        status: '',
-    },
-    {
-        id: 1,
-        team: 'ХК "Переславль"',
-        logo: '/newPereslavl.webp',
-        games: 0,
-        wins: 0,
-        draws: 0,
-        losses: 0,
-        goals: '0-0',
-        points: 0,
-        status: '',
-    },
-    {
-        id: 2,
-        team: 'ХК "Зубр"',
-        logo: '/photo_53844715688281.png (1).webp',
-        games: 1,
-        wins: 1,
-        draws: 0,
-        losses: 0,
-        goals: '8-2',
-        points: 2,
-        status: '',
-    },
-    {
-        id: 3,
-        team: 'ХК "Вымпел-v"',
-        logo: '/photo_53844715688281.png (2).webp',
-        games: 0,
-        wins: 0,
-        draws: 0,
-        losses: 0,
-        goals: '0-0',
-        points: 0,
-        status: '',
-    },
-    
-    {
-        id: 4,
-        team: 'ХК "Ярославич"',
-        logo: '/photo_53844715688281.png (3).webp',
-        games: 1,
-        wins: 0,
-        draws: 0,
-        losses: 1,
-        goals: '2-8',
-        points: 0,
-        status: '',
-    },
-    
-    {
-        id: 6,
-        team: 'ХК "БГВ"',
-        logo: '/BGV.webp',
-        games: 0,
-        wins: 0,
-        draws: 0,
-        losses: 0,
-        goals: '0-0',
-        points: 0,
-        status: '',
-    },
-]);
+const { data: turnirdata } = useFetch(
+    'https://api.timeofthestars.ru/api/tournaments'
+)
 
-// Вычисляем разность голов для каждой команды
-const standingsWithGoalDiff = computed(() => {
-    return standings.value.map(team => {
-        const [scored, conceded] = team.goals.split('-').map(Number);
-        return {
-            ...team,
-            goalDifference: scored - conceded
-        };
-    });
-});
+const tournamentTeamsData = computed(() => {
+    if (
+        !turnirdata.value ||
+        turnirdata.value.length === 0 ||
+        !turnirdata.value[0].teams
+    ) {
+        return []
+    }
+    return turnirdata.value[0].teams
+})
 
-// Сортируем команды по очкам и разности голов
 const sortedStandings = computed(() => {
-    let sorted = [...standingsWithGoalDiff.value];
-    
+    const processedTeams = tournamentTeamsData.value.map(team => {
+        const goals_scored = team.pivot?.goals_scored ?? 0
+        const goals_conceded = team.pivot?.goals_conceded ?? 0
+        const wins = team.pivot?.wins ?? 0
+        const draws = team.pivot?.draws ?? 0
+        // const points = team.pivot?.wins * 2 + team.pivot?.draws ?? 0
+        return {
+            id: team.id,
+            team: team.name,
+            logo: getTeamLogo(team.id) || '/zvezdalogo.webp',
+            games: team.pivot?.games ?? 0,
+            wins: team.pivot?.wins ?? 0,
+            draws: team.pivot?.draws ?? 0,
+            losses: team.pivot?.losses ?? 0,
+            goals: `${goals_scored}-${goals_conceded}`,
+            points: `${wins * 2 + draws}`,
+            status: team.status,
+        }
+    })
+
+    let sorted = [...processedTeams]
+
     // Сортируем по очкам (по убыванию)
     sorted.sort((a, b) => {
         if (b.points !== a.points) {
-            return b.points - a.points;
+            return b.points - a.points
         }
         // При равенстве очков учитываем разность голов
         if (b.goalDifference !== a.goalDifference) {
-            return b.goalDifference - a.goalDifference;
+            return b.goalDifference - a.goalDifference
         }
-        return 0;
-    });
-    
+        // Если и разница мячей равна, сотрируем по забитым голам
+        const a_scored = a.goals.split('-').map(Number)[0]
+        const b_scored = b.goals.split('-').map(Number)[0]
+        if (b_scored !== a_scored) {
+            return b_scored - a_scored
+        }
+        return 0
+    })
+
     // Добавляем место в зависимости от позиции в рейтинге
     return sorted.map((team, index) => {
         return {
             ...team,
-            place: index + 1
-        };
-    });
-});
+            place: index + 1,
+        }
+    })
+})
 
-const getStatusColor = (status) => {
+const getStatusColor = status => {
     switch (status) {
         case 'playoff':
             return 'bg-green-600'
@@ -231,10 +185,25 @@ const getStatusColor = (status) => {
 </script>
 
 <style>
-.table-row-0 { background-color: rgba(255, 217, 0, 0.796); }
-.table-row-1 { background-color: rgb(116, 116, 116); }
-.table-row-2 { background-color: rgba(214, 133, 52, 0.881); }
-.medal-0::before { content: "🥇"; margin-right: 4px; }
-.medal-1::before { content: "🥈"; margin-right: 4px; }
-.medal-2::before { content: "🥉"; margin-right: 4px; }
-</style>    
+.table-row-0 {
+    background-color: rgba(255, 217, 0, 0.796);
+}
+.table-row-1 {
+    background-color: rgb(116, 116, 116);
+}
+.table-row-2 {
+    background-color: rgba(214, 133, 52, 0.881);
+}
+.medal-0::before {
+    content: '🥇';
+    margin-right: 4px;
+}
+.medal-1::before {
+    content: '🥈';
+    margin-right: 4px;
+}
+.medal-2::before {
+    content: '🥉';
+    margin-right: 4px;
+}
+</style>

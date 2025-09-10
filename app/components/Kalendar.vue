@@ -31,7 +31,10 @@
                             class="flex-1 flex flex-col sm:flex-row items-center gap-3 md:gap-6 overflow-hidden"
                         >
                             <!-- Команда 1 -->
-                            <NuxtLink :to="`/teams/${match.team_a_id}`" class="flex items-center gap-2 md:gap-3 flex-1 min-w-0">
+                            <NuxtLink
+                                :to="`/teams/${match.team_a_id}`"
+                                class="flex items-center gap-2 md:gap-3 flex-1 min-w-0"
+                            >
                                 <div
                                     class="w-6 h-6 md:w-8 md:h-8 relative flex-shrink-0 bg-gray-600 rounded-full flex items-center justify-center"
                                 >
@@ -50,11 +53,18 @@
                             <div
                                 class="bg-primary-blue px-3 py-1 md:px-4 md:py-2 rounded-lg text-white font-bold text-sm md:text-base whitespace-nowrap mx-auto sm:mx-0"
                             >
-                              {{ match.score_team_a != null ? `${match.score_team_a} - ${match.score_team_b}` : 'vs' }}
+                                {{
+                                    match.score_team_a != null
+                                        ? `${match.score_team_a} - ${match.score_team_b}`
+                                        : 'vs'
+                                }}
                             </div>
 
                             <!-- Команда 2 -->
-                            <NuxtLink :to="`/teams/${match.team_b_id}`" class="flex items-center gap-2 md:gap-3 flex-1 min-w-0 justify-end">
+                            <NuxtLink
+                                :to="`/teams/${match.team_b_id}`"
+                                class="flex items-center gap-2 md:gap-3 flex-1 min-w-0 justify-end"
+                            >
                                 <span class="font-medium text-sm truncate">{{
                                     getTeamName(match.team_b_id)
                                 }}</span>
@@ -107,8 +117,6 @@ const getTeamName = teamId => {
     return team ? team.name : `Команда ${teamId}`
 }
 
-
-
 // Функция для форматирования даты
 const formatDate = dateString => {
     if (!dateString) return 'Дата уточняется'
@@ -127,7 +135,7 @@ const formatTime = timeString => {
 
 // Функция для определения статуса матча
 const getMatchStatus = match => {
-    if (match.score) return 'Завершен'
+    if (match.score_team_a) return 'Завершен'
 
     const matchDate = new Date(match.date + 'T' + match.time)
     const now = new Date()

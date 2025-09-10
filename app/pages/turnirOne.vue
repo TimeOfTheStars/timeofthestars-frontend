@@ -131,7 +131,7 @@
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <NuxtLink
-                        v-for="team in teams"
+                        v-for="team in tournamentTeamsData"
                         :key="team.id"
                         :to="`/teams/${team.id}`"
                         class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700 block hover:bg-gray-700 transition-colors"
@@ -288,36 +288,25 @@ const { data: turnirdata } = useFetch(
     'https://api.timeofthestars.ru/api/tournaments'
 )
 
-const teams = computed(() => {
-    if (!turnirdata.value || turnirdata.value.length === 0) {
+const tournamentTeamsData = computed(() => {
+    if (
+        !turnirdata.value ||
+        turnirdata.value.length === 0 ||
+        !turnirdata.value[0].teams
+    ) {
         return []
     }
-    return turnirdata.value[0].teams || []
+    return turnirdata.value[0].teams
 })
-const matches = computed(() => {
-    if (!turnirdata.value || turnirdata.value.length === 0) {
-        return []
-    }
-    return turnirdata.value[0].games || []
-})
-
-// Сортированные команды по очкам для таблицы
-const sortedTeams = computed(() => {
-    return [...teams.value].sort((a, b) => b.points - a.points)
-})
-
-const { data: tournamentsdata, error } = useFetch(
-    'https://api.timeofthestars.ru/api/tournaments'
-)
 
 const teamData = computed(() => {
-    if (!tournamentsdata.value || tournamentsdata.value.length === 0) {
+    if (!turnirdata.value || turnirdata.value.length === 0) {
         return { teamCount: 0, gamesCount: 0, start_date: 0 }
     } else {
         return {
-            teamCount: tournamentsdata.value[0].teams.length,
-            gamesCount: tournamentsdata.value[0].games.length,
-            start_date: tournamentsdata.value[0].start_date,
+            teamCount: turnirdata.value[0].teams.length,
+            gamesCount: turnirdata.value[0].games.length,
+            start_date: turnirdata.value[0].start_date,
         }
     }
 })

@@ -115,20 +115,6 @@
                 </div>
             </div>
 
-            <div class="flex flex-wrap justify-center gap-6 mt-8">
-                <div class="flex items-center gap-2">
-                    <div class="w-4 h-4 bg-green-600 rounded"></div>
-                    <span class="text-sm">Плей-офф</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <div class="w-4 h-4 bg-yellow-600 rounded"></div>
-                    <span class="text-sm">Переходные матчи</span>
-                </div>
-                <div class="flex items-center gap-2">
-                    <div class="w-4 h-4 bg-red-600 rounded"></div>
-                    <span class="text-sm">Вылет</span>
-                </div>
-            </div>
         </div>
     </section>
 </template>
@@ -165,12 +151,12 @@ const standings = ref([
         id: 2,
         team: 'ХК "Зубр"',
         logo: '/photo_53844715688281.png (1).webp',
-        games: 0,
-        wins: 0,
+        games: 1,
+        wins: 1,
         draws: 0,
         losses: 0,
-        goals: '0-0',
-        points: 0,
+        goals: '8-2',
+        points: 2,
         status: '',
     },
     {
@@ -190,11 +176,11 @@ const standings = ref([
         id: 4,
         team: 'ХК "Ярославич"',
         logo: '/photo_53844715688281.png (3).webp',
-        games: 0,
+        games: 1,
         wins: 0,
         draws: 0,
-        losses: 0,
-        goals: '0-0',
+        losses: 1,
+        goals: '2-8',
         points: 0,
         status: '',
     },

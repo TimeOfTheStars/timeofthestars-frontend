@@ -12,63 +12,43 @@
                     <table class="w-full">
                         <thead class="bg-gray-700">
                             <tr>
-                                <!--
-                                <th
-                                    class="px-6 py-4 text-left font-semibold"
-                                >
+                                <th class="px-4 py-4 text-center font-semibold w-16">
                                     Место
                                 </th>
-                                -->
-                                <th
-                                    class="px-6 py-4 text-left font-semibold"
-                                >
+                                <th class="px-6 py-4 text-left font-semibold">
                                     Команда
                                 </th>
-                                <th
-                                    class="px-6 py-4 text-center font-semibold"
-                                >
+                                <th class="px-6 py-4 text-center font-semibold">
                                     И
                                 </th>
-                                <th
-                                    class="px-6 py-4 text-center font-semibold"
-                                >
+                                <th class="px-6 py-4 text-center font-semibold">
                                     Пб
                                 </th>
-                                <th
-                                    class="px-6 py-4 text-center font-semibold"
-                                >
+                                <th class="px-6 py-4 text-center font-semibold">
                                     Н
                                 </th>
-                                <th
-                                    class="px-6 py-4 text-center font-semibold"
-                                >
+                                <th class="px-6 py-4 text-center font-semibold">
                                     Пр
                                 </th>
-                                <th
-                                    class="px-6 py-4 text-center font-semibold"
-                                >
+                                <th class="px-6 py-4 text-center font-semibold">
                                     Голы
                                 </th>
-                                <th
-                                    class="px-6 py-4 text-center font-semibold"
-                                >
+                                <th class="px-6 py-4 text-center font-semibold">
                                     О
                                 </th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr
-                                v-for="(team, index) in standings"
-                                :key="index"
+                                v-for="team in sortedStandings"
+                                :key="team.id"
                                 :class="`border-t border-gray-700 hover:bg-gray-700/50 transition-colors ${getStatusColor(
                                     team.status
-                                )} bg-opacity-10`"
+                                )} table-row-${team.place-1} bg-opacity-10`"
                             >
-                                <!--
-                                <td class="px-6 py-4 font-semibold text-lg">
-                                    {{ team.place }}
+                                <td class="px-4 py-4 text-center font-semibold">
+                                    <span :class="['medal-' + (team.place-1)]">{{ team.place }}</span>
                                 </td>
-                                -->
                                 <td class="px-6 py-4">
                                     <NuxtLink :to="`/teams/${team.id}`" class="flex items-center gap-3 hover:text-accent-blue transition-colors">
                                         <div class="w-8 h-8 relative">
@@ -115,12 +95,13 @@
                 </div>
             </div>
 
+            
         </div>
     </section>
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 
 const standings = ref([
     {
@@ -197,7 +178,43 @@ const standings = ref([
         points: 0,
         status: '',
     },
-])
+]);
+
+// Вычисляем разность голов для каждой команды
+const standingsWithGoalDiff = computed(() => {
+    return standings.value.map(team => {
+        const [scored, conceded] = team.goals.split('-').map(Number);
+        return {
+            ...team,
+            goalDifference: scored - conceded
+        };
+    });
+});
+
+// Сортируем команды по очкам и разности голов
+const sortedStandings = computed(() => {
+    let sorted = [...standingsWithGoalDiff.value];
+    
+    // Сортируем по очкам (по убыванию)
+    sorted.sort((a, b) => {
+        if (b.points !== a.points) {
+            return b.points - a.points;
+        }
+        // При равенстве очков учитываем разность голов
+        if (b.goalDifference !== a.goalDifference) {
+            return b.goalDifference - a.goalDifference;
+        }
+        return 0;
+    });
+    
+    // Добавляем место в зависимости от позиции в рейтинге
+    return sorted.map((team, index) => {
+        return {
+            ...team,
+            place: index + 1
+        };
+    });
+});
 
 const getStatusColor = (status) => {
     switch (status) {
@@ -212,3 +229,12 @@ const getStatusColor = (status) => {
     }
 }
 </script>
+
+<style>
+.table-row-0 { background-color: rgba(255, 217, 0, 0.796); }
+.table-row-1 { background-color: rgb(116, 116, 116); }
+.table-row-2 { background-color: rgba(214, 133, 52, 0.881); }
+.medal-0::before { content: "🥇"; margin-right: 4px; }
+.medal-1::before { content: "🥈"; margin-right: 4px; }
+.medal-2::before { content: "🥉"; margin-right: 4px; }
+</style>    

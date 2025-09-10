@@ -50,7 +50,7 @@
                             <div
                                 class="bg-primary-blue px-3 py-1 md:px-4 md:py-2 rounded-lg text-white font-bold text-sm md:text-base whitespace-nowrap mx-auto sm:mx-0"
                             >
-                                {{ match.score || 'vs' }}
+                              {{ match.score_team_a != null ? `${match.score_team_a} - ${match.score_team_b}` : 'vs' }}
                             </div>
 
                             <!-- Команда 2 -->

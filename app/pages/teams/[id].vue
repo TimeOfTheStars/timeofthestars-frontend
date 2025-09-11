@@ -495,7 +495,7 @@
                                 class="text-sm bg-blue-900/30 text-blue-300 px-3 py-1 md:px-4 md:py-2 rounded-full self-start md:self-auto"
                             >
                                 Всего:
-                                {{ totalPlayersCount }} игрока
+                                {{ totalPlayersCount }}
                             </div>
                         </div>
 

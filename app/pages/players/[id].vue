@@ -613,16 +613,16 @@ const currentSeasonStats = computed(() => [
         color: 'red',
         trend: '',
     },
-    
+
     {
         label: '🎮 Игры',
         value: player.gamesPlayed,
         color: 'purple',
         trend: '',
     },
-   
+
     {
-        label: '⏱️ Штраф',
+        label: '⏱️ ',
         value: '0 мин',
         color: 'orange',
         trend: '',

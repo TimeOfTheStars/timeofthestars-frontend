@@ -646,7 +646,7 @@
                                                     <div
                                                         class="text-[10px] text-gray-400"
                                                     >
-                                                        Штраф
+                                                        Штрафы
                                                     </div>
                                                 </div>
                                                 <div class="text-center">
@@ -708,7 +708,7 @@
                                                     <div
                                                         class="text-[10px] text-gray-400"
                                                     >
-                                                        Штраф
+                                                        Штрафы
                                                     </div>
                                                 </div>
                                                 <div class="text-center">

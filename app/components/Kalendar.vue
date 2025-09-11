@@ -2,10 +2,10 @@
     <div class="space-y-6 md:space-y-8">
         <div>
             <h3
-                class="text-xl md:text-2xl font-semibold mb-4 md:mb-6 text-accent-blue flex items-center gap-2"
+                class="text-xl md:text-2xl font-semibold mb-4 md:mb-6 text-accent-blue flex items-center justify-center mt-8 gap-2"
             >
                 <span class="text-2xl md:text-3xl">🗓️</span>
-                Игры турнира
+                Расписание игровых матчей
             </h3>
             <div class="space-y-3 md:space-y-4">
                 <div
@@ -18,7 +18,7 @@
                     >
                         <!-- Дата и время -->
                         <div
-                            class="text-xs md:text-sm text-gray-400 w-full md:w-20"
+                            class="text-xs md:text-sm text-gray-400 w-full md:w-32"
                         >
                             <div class="font-medium">
                                 {{ formatDate(match.date) }}
@@ -28,12 +28,12 @@
 
                         <!-- Команды и счет -->
                         <div
-                            class="flex-1 flex flex-col sm:flex-row items-center gap-3 md:gap-6 overflow-hidden"
+                            class="flex-1 flex flex-col sm:grid sm:grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6 overflow-hidden"
                         >
                             <!-- Команда 1 -->
                             <NuxtLink
                                 :to="`/teams/${match.team_a_id}`"
-                                class="flex items-center gap-2 md:gap-3 flex-1 min-w-0"
+                                class="flex items-center gap-2 md:gap-3 min-w-0 justify-self-start"
                             >
                                 <div
                                     class="w-6 h-6 md:w-8 md:h-8 relative flex-shrink-0 bg-gray-600 rounded-full flex items-center justify-center"
@@ -51,7 +51,7 @@
 
                             <!-- Счет -->
                             <div
-                                class="bg-primary-blue px-3 py-1 md:px-4 md:py-2 rounded-lg text-white font-bold text-sm md:text-base whitespace-nowrap mx-auto sm:mx-0"
+                                class="bg-primary-blue px-3 py-1 md:px-4 md:py-2 rounded-lg text-white font-bold text-sm md:text-base whitespace-nowrap text-center justify-self-center md:min-w-24"
                             >
                                 {{
                                     match.score_team_a != null
@@ -63,7 +63,7 @@
                             <!-- Команда 2 -->
                             <NuxtLink
                                 :to="`/teams/${match.team_b_id}`"
-                                class="flex items-center gap-2 md:gap-3 flex-1 min-w-0 justify-end"
+                                class="flex items-center gap-2 md:gap-3 min-w-0 justify-end justify-self-end"
                             >
                                 <span class="font-medium text-sm truncate">{{
                                     getTeamName(match.team_b_id)
@@ -82,7 +82,7 @@
 
                         <!-- Статус -->
                         <div
-                            class="bg-green-600/20 text-green-400 px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm ml-auto md:ml-0"
+                            class="bg-green-600/20 text-green-400 px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm ml-auto md:ml-0 md:w-32 text-center"
                         >
                             {{ getMatchStatus(match) }}
                         </div>

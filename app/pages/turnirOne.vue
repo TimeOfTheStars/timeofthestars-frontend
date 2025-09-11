@@ -300,13 +300,23 @@ const tournamentTeamsData = computed(() => {
 })
 
 const teamData = computed(() => {
-    if (!turnirdata.value || turnirdata.value.length === 0) {
-        return { teamCount: 0, gamesCount: 0, start_date: 0 }
+    if (
+        !turnirdata.value ||
+        turnirdata.value.length === 0 ||
+        !turnirdata.value[0].start_date
+    ) {
+        return { teamCount: 0, gamesCount: 0, start_date: 'Не определена' }
     } else {
+        const date = new Date(turnirdata.value[0].start_date)
+        const formattedDate = date.toLocaleDateString('ru-RU', {
+            day: 'numeric',
+            month: 'numeric',
+            year: 'numeric',
+        })
         return {
             teamCount: turnirdata.value[0].teams.length,
             gamesCount: turnirdata.value[0].games.length,
-            start_date: turnirdata.value[0].start_date,
+            start_date: formattedDate,
         }
     }
 })

@@ -30,7 +30,10 @@
         </div>
         <div>
             <div class="text-xl font-bold text-accent-blue">
-                {{ Number(team.points || 0) * 2 + Number(team.draws || 0) }}
+                {{
+                    Number(team?.pivot?.wins || 0) * 2 +
+                    Number(team?.pivot?.draws || 0)
+                }}
             </div>
             <div class="text-xs text-gray-400">Очки</div>
         </div>

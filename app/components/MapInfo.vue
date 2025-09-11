@@ -117,13 +117,11 @@
                     <!-- Map Controls -->
                     <div class="flex flex-wrap justify-center gap-4 mb-6">
                         <button
-                        
                             class="bg-red-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-red-700 transition-colors"
                         >
                             🗺️ Яндекс.Карты
                         </button>
                         <button
-                           
                             class="bg-blue-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors"
                         >
                             📍 Google Maps
@@ -214,7 +212,7 @@
                 </div>
             </div>
 
-            <!-- Useful Information -->
+            <!-- Useful Information
             <div class="mt-12 grid md:grid-cols-2 gap-8">
                 <div class="bg-gray-700 rounded-xl p-6">
                     <h3 class="text-xl font-bold mb-4 flex items-center gap-2">
@@ -265,7 +263,7 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div> -->
         </div>
     </section>
 </template>

@@ -26,7 +26,10 @@
         </div>
         <div>
             <div class="text-lg font-bold text-accent-blue">
-                {{ team.players_count ?? 0 }}
+                {{
+                    tournamentTeamsData[team.id - 1]?.tournament_players
+                        .length ?? 0
+                }}
             </div>
             <div class="text-xs text-gray-400">Игроки</div>
         </div>
@@ -43,6 +46,17 @@
 
 <script setup>
 import { getTeamLogo } from '@/utils/PicturesAdmin.ts'
+
+const { data: teamsdata, error } = useFetch(
+    'https://api.timeofthestars.ru/api/teams'
+)
+
+const tournamentTeamsData = computed(() => {
+    if (!teamsdata.value || teamsdata.value.length === 0) {
+        return { games: [], teams: [] }
+    }
+    return teamsdata.value
+})
 
 defineProps({
     team: {

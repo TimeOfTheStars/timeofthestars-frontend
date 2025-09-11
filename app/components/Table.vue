@@ -46,7 +46,7 @@
                                 :key="team.id"
                                 :class="`border-t border-gray-700 hover:bg-gray-700/50 transition-colors ${getStatusColor(
                                     team.status
-                                )} table-row-${team.place - 1} bg-opacity-10`"
+                                )} ${getGradientClass(team.place)}`"
                             >
                                 <td class="px-4 py-4 text-center font-semibold">
                                     <span
@@ -126,7 +126,6 @@ const sortedStandings = computed(() => {
         const goals_conceded = team.pivot?.goals_conceded ?? 0
         const wins = team.pivot?.wins ?? 0
         const draws = team.pivot?.draws ?? 0
-        // const points = team.pivot?.wins * 2 + team.pivot?.draws ?? 0
         return {
             id: team.id,
             team: team.name,
@@ -142,17 +141,10 @@ const sortedStandings = computed(() => {
     })
 
     let sorted = [...processedTeams]
-
-    // Сортируем по очкам (по убыванию)
     sorted.sort((a, b) => {
         if (b.points !== a.points) {
             return b.points - a.points
         }
-        // При равенстве очков учитываем разность голов
-        if (b.goalDifference !== a.goalDifference) {
-            return b.goalDifference - a.goalDifference
-        }
-        // Если и разница мячей равна, сотрируем по забитым голам
         const a_scored = a.goals.split('-').map(Number)[0]
         const b_scored = b.goals.split('-').map(Number)[0]
         if (b_scored !== a_scored) {
@@ -161,7 +153,6 @@ const sortedStandings = computed(() => {
         return 0
     })
 
-    // Добавляем место в зависимости от позиции в рейтинге
     return sorted.map((team, index) => {
         return {
             ...team,
@@ -179,21 +170,52 @@ const getStatusColor = status => {
         case 'relegation':
             return 'bg-red-600'
         default:
-            return 'bg-gray-600'
+            return ''
+    }
+}
+
+const getGradientClass = place => {
+    switch (place) {
+        case 1:
+            return 'gold-gradient'
+        case 2:
+            return 'silver-gradient'
+        case 3:
+            return 'bronze-gradient'
+        default:
+            return 'bg-gray-600/10'
     }
 }
 </script>
 
 <style>
-.table-row-0 {
-    background-color: rgba(255, 217, 0, 0.796);
+.gold-gradient {
+    background: linear-gradient(
+        90deg,
+        rgb(255, 217, 0) 0%,
+        rgba(255, 217, 0, 0.295) 40%,
+        rgba(75, 85, 99, 0.1) 100%
+    );
 }
-.table-row-1 {
-    background-color: rgb(116, 116, 116);
+
+.silver-gradient {
+    background: linear-gradient(
+        90deg,
+        rgb(192, 192, 192) 0%,
+        rgba(192, 192, 192, 0.288) 40%,
+        rgba(75, 85, 99, 0.1) 100%
+    );
 }
-.table-row-2 {
-    background-color: rgba(214, 133, 52, 0.881);
+
+.bronze-gradient {
+    background: linear-gradient(
+        90deg,
+        rgb(205, 128, 50) 0%,
+        rgba(205, 128, 50, 0.281) 40%,
+        rgba(75, 85, 99, 0.1) 100%
+    );
 }
+
 .medal-0::before {
     content: '🥇';
     margin-right: 4px;

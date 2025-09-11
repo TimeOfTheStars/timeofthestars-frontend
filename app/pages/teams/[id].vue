@@ -640,7 +640,7 @@
                                                     >
                                                         {{
                                                             player.pivot
-                                                                ?.penalty || 0
+                                                                ?.penalties || 0
                                                         }}
                                                     </div>
                                                     <div
@@ -655,7 +655,7 @@
                                                     >
                                                         {{
                                                             player.pivot
-                                                                ?.games || 0
+                                                                ?.matches || 0
                                                         }}
                                                     </div>
                                                     <div
@@ -671,7 +671,7 @@
                                                         class="font-bold text-blue-600"
                                                     >
                                                         {{
-                                                            player.pivot
+                                                            player?.pivot
                                                                 ?.goals || 0
                                                         }}
                                                     </div>
@@ -686,7 +686,7 @@
                                                         class="font-bold text-red-600"
                                                     >
                                                         {{
-                                                            player.pivot
+                                                            player?.pivot
                                                                 ?.assists || 0
                                                         }}
                                                     </div>
@@ -701,8 +701,8 @@
                                                         class="font-bold text-yellow-500"
                                                     >
                                                         {{
-                                                            player.pivot
-                                                                ?.penalty || 0
+                                                            player?.pivot
+                                                                ?.penalties || 0
                                                         }}
                                                     </div>
                                                     <div
@@ -716,8 +716,8 @@
                                                         class="font-bold text-gray-400"
                                                     >
                                                         {{
-                                                            player.pivot
-                                                                ?.games || 0
+                                                            player?.pivot
+                                                                ?.matches || 0
                                                         }}
                                                     </div>
                                                     <div

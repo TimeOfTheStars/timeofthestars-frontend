@@ -15,7 +15,7 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-3 gap-4 text-center">
+    <div class="grid grid-cols-4 gap-4 text-center">
         <div>
             <div class="text-xl font-bold text-green-400">
                 {{ team.pivot.wins }}
@@ -36,6 +36,12 @@
                 }}
             </div>
             <div class="text-xs text-gray-400">Очки</div>
+        </div>
+        <div>
+            <div class="text-xl font-bold text-blue-400">
+                {{ team?.pivot?.games }}
+            </div>
+            <div class="text-xs text-gray-400">Игры</div>
         </div>
     </div>
 </template>

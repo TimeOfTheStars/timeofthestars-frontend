@@ -46,11 +46,10 @@
                                 :key="team.id"
                                 :class="`border-t border-gray-700 hover:bg-gray-700/50 transition-colors ${getStatusColor(
                                     team.status
-                                )} ${getGradientClass(team.place)}`"
+                                )} ${''/*getGradientClass(team.place)*/}`"
                             >
                                 <td class="px-4 py-4 text-center font-semibold">
                                     <span
-                                        :class="['medal-' + (team.place - 1)]"
                                         >{{ team.place }}</span
                                     >
                                 </td>
@@ -173,7 +172,7 @@ const getStatusColor = status => {
             return ''
     }
 }
-
+/*
 const getGradientClass = place => {
     switch (place) {
         case 1:
@@ -186,9 +185,11 @@ const getGradientClass = place => {
             return 'bg-gray-600/10'
     }
 }
+*/
 </script>
 
 <style>
+/*
 .gold-gradient {
     background: linear-gradient(
         90deg,
@@ -228,4 +229,5 @@ const getGradientClass = place => {
     content: '🥉';
     margin-right: 4px;
 }
+*/
 </style>

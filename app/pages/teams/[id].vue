@@ -94,10 +94,12 @@
                         class="text-center text-white relative z-10 px-4 pb-4 md:pb-0"
                     >
                         <div
-                            class="text-6xl md:text-8xl lg:text-[12rem] mb-4 md:mb-6 animate-bounce"
-                            style="animation-duration: 3s"
+                            class="w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 mx-auto mb-4 md:mb-6"
                         >
-                            🏒
+                            <img
+                                :src="getTeamLogo(tournamentTeamsData.id)"
+                                class="w-full h-full object-contain"
+                            />
                         </div>
                         <h2
                             class="text-2xl md:text-4xl lg:text-6xl font-black mb-2 md:mb-3 tracking-wider"
@@ -906,6 +908,8 @@ const tournamentTeamsData = computed(() => {
     }
     return turnirdata.value[0].teams[teamId - 1]
 })
+
+console.log(tournamentTeamsData.value.id)
 
 if (error.value || !tournamentTeamsData.value) {
     throw createError({

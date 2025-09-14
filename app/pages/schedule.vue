@@ -8,8 +8,13 @@
 </template>
 
 <script setup>
+import { useHead } from '#imports';
 // Импортируем компонент календаря
 import Kalendar from '@/components/Kalendar.vue'
+
+useHead({
+  title: 'Расписание',
+})
 
 // Получаем данные турнира
 const { data: turnirdata } = useFetch(

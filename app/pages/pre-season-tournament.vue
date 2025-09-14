@@ -281,6 +281,13 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useHead } from '#imports'
+
+// Set page title
+useHead({
+  title: 'Pre-season Tournament',
+})
+
 // Активная вкладка
 const activeTab = ref('participants')
 

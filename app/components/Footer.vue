@@ -26,7 +26,7 @@
                     <ul class="space-y-2 text-gray-400">
                         <li>
                             <NuxtLink
-                                to="/turnirOne"
+                                to="/pre-season-tournament"
                                 class="hover:text-white transition-colors"
                             >
                                 Предсезонный турнир

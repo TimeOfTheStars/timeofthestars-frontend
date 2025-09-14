@@ -130,7 +130,7 @@
                 </div>
 
                 <div class="m-auto">
-                    <router-link to="/turnirOne" class="block group">
+                    <router-link to="/pre-season-tournament" class="block group">
                         <div
                             class="bg-gray-800 rounded-xl p-6 card-hover border-l-4 border-secondary-blue group-hover:border-accent-blue transition-colors text-center"
                         >
@@ -585,8 +585,13 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
+import { useHead } from '#imports'
 import MapInfo from '@/components/MapInfo.vue'
+
+useHead({
+  title: 'Главная',
+})
 
 const { data: teamsdata, error } = useFetch(
     'https://api.timeofthestars.ru/api/teams'

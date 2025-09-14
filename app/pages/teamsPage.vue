@@ -14,7 +14,7 @@
 
                 <div
                     v-if="tournamentTeamsData"
-                    class="grid md:grid-cols-2 lg:grid-cols-4 gap-6"
+                    class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
                 >
                     <div
                         v-for="team in tournamentTeamsData"
@@ -35,6 +35,13 @@
 </template>
 
 <script setup>
+import { computed } from 'vue'
+import { useHead } from '#imports'
+
+useHead({
+    title: 'Наши команды',
+})
+
 const { data: turnirdata } = useFetch(
     'https://api.timeofthestars.ru/api/tournaments'
 )

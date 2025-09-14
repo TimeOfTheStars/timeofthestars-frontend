@@ -565,31 +565,29 @@
                                         class="absolute inset-0 bg-gradient-to-br from-blue-900/20 to-red-900/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
                                     ></div>
 
-                                    <div class="relative z-10">
+                                    <div class="relative z-10 text-center">
+                                        <div class="flex justify-center mb-3">
+                                            <img
+                                                :src="getPlayerPhoto(player.id)"
+                                                :alt="player.full_name"
+                                                class="w-20 h-20 rounded-full object-cover border-4 border-gray-700 group-hover:border-blue-500 transition-all duration-300"
+                                            />
+                                        </div>
                                         <div
-                                            class="flex items-center justify-between mb-2 md:mb-3"
+                                            class="flex flex-col items-center mb-2 md:mb-3"
                                         >
-                                            <div
-                                                class="flex items-center space-x-2 md:space-x-3"
+                                            <h5
+                                                class="font-bold text-gray-200 text-base md:text-lg group-hover:text-blue-600 transition-colors duration-200 mb-2"
                                             >
-                                                <h5
-                                                    class="font-bold text-gray-200 text-base md:text-lg group-hover:text-blue-600 transition-colors duration-200"
-                                                >
-                                                    {{ player.full_name }}
-                                                </h5>
-                                            </div>
-                                            <div
-                                                class="flex items-center space-x-1 md:space-x-2"
+                                                {{ player.full_name }}
+                                            </h5>
+                                            <span
+                                                class="bg-gradient-to-r from-blue-600 to-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold shadow-lg group-hover:shadow-xl transition-shadow duration-200"
                                             >
-                                                <span
-                                                    class="bg-gradient-to-r from-blue-600 to-red-600 text-white rounded-full w-8 h-8 md:w-10 md:h-10 flex items-center justify-center text-xs md:text-sm font-bold shadow-lg group-hover:shadow-xl transition-shadow duration-200"
-                                                >
-                                                    {{
-                                                        player.pivot?.number ||
-                                                        '0'
-                                                    }}
-                                                </span>
-                                            </div>
+                                                {{
+                                                    player.pivot?.number || '0'
+                                                }}
+                                            </span>
                                         </div>
 
                                         <p
@@ -906,7 +904,11 @@ const tournamentTeamsData = computed(() => {
     if (!turnirdata.value || turnirdata.value.length === 0) {
         return { games: [], teams: [] }
     }
-    return turnirdata.value[0].teams[teamId - 1]
+    return turnirdata.value[0].teams.find(team => team.id == teamId)
+})
+
+useHead({
+    title: computed(() => tournamentTeamsData.value?.name || 'Загрузка...'),
 })
 
 console.log(tournamentTeamsData.value.id)

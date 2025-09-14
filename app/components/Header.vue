@@ -57,7 +57,7 @@
                             <NuxtLink
                                 v-for="tournament in tournamentsdata"
                                 :key="tournament.id"
-                                to="/turnirOne"
+                                to="/pre-season-tournament"
                                 class="flex items-center px-4 py-3 hover:bg-gray-700 transition-colors"
                                 @click="closeAllDropdowns"
                             >
@@ -195,7 +195,7 @@
                         <NuxtLink
                             v-for="tournament in tournamentsdata"
                             :key="tournament.index"
-                            to="/turnirOne"
+                            to="/pre-season-tournament"
                             class="flex items-center py-2 text-gray-300 hover:text-white transition-colors"
                             @click="closeMobileMenu"
                         >

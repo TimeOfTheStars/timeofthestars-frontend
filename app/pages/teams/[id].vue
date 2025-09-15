@@ -611,13 +611,14 @@
                                                         class="font-semibold text-blue-600"
                                                     >
                                                         {{
-                                                            player.saves || '0'
+                                                            player?.pivot
+                                                                ?.gaa || '0'
                                                         }}%
                                                     </div>
                                                     <div
                                                         class="text-[10px] text-gray-400"
                                                     >
-                                                        Сейвы
+                                                        К/Н
                                                     </div>
                                                 </div>
                                                 <div class="text-center">

@@ -130,7 +130,10 @@
                 </div>
 
                 <div class="m-auto">
-                    <router-link to="/pre-season-tournament" class="block group">
+                    <router-link
+                        to="/pre-season-tournament"
+                        class="block group"
+                    >
                         <div
                             class="bg-gray-800 rounded-xl p-6 card-hover border-l-4 border-secondary-blue group-hover:border-accent-blue transition-colors text-center"
                         >
@@ -590,7 +593,7 @@ import { useHead } from '#imports'
 import MapInfo from '@/components/MapInfo.vue'
 
 useHead({
-  title: 'Главная',
+    title: 'Главная',
 })
 
 const { data: teamsdata, error } = useFetch(

@@ -87,6 +87,25 @@
                             {{ getMatchStatus(match) }}
                         </div>
                     </div>
+                    <!-- Кнопка протокола -->
+                    <div class="mt-3 md:mt-4 flex justify-center">
+                        <NuxtLink
+                            v-if="isMatchCompleted(match)"
+                            :to="`/matches/${match.id}`"
+                            class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-blue text-white text-sm md:text-base font-medium hover:opacity-90 transition"
+                        >
+                            Смотреть протокол
+                        </NuxtLink>
+                        <button
+                            v-else
+                            class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-700 text-gray-400 text-sm md:text-base font-medium cursor-not-allowed"
+                            disabled
+                            aria-disabled="true"
+                            title="Протокол будет доступен после завершения матча"
+                        >
+                            Смотреть протокол
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
@@ -133,14 +152,18 @@ const formatTime = timeString => {
     return timeString.slice(0, 5)
 }
 
-// Функция для определения статуса матча
 const getMatchStatus = match => {
-    if (match.score_team_a) return 'Завершен'
+    if (match.score_team_a != null && match.score_team_b != null)
+        return 'Завершен'
 
     const matchDate = new Date(match.date + 'T' + match.time)
     const now = new Date()
 
     if (matchDate > now) return 'Запланирован'
     return 'В процессе'
+}
+
+const isMatchCompleted = match => {
+    return match.score_team_a != null && match.score_team_b != null
 }
 </script>

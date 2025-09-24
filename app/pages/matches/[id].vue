@@ -100,6 +100,7 @@ const imageSrc = !isNaN(id) ? getScan(id) : ''
     text-decoration: none;
     color: white;
     border-radius: 8px;
+    white-space: nowrap; /* Prevent text wrapping */
 }
 
 .btn-home-sticky {
@@ -113,5 +114,32 @@ const imageSrc = !isNaN(id) ? getScan(id) : ''
     color: white;
     font-weight: 600;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+    white-space: nowrap; /* Prevent text wrapping */
+}
+
+@media (max-width: 768px) {
+    .scan-page-container {
+        padding: 1rem;
+    }
+
+    .not-found-card {
+        padding: 2rem;
+        max-width: 90%;
+    }
+
+    .not-found-title {
+        font-size: 1.8rem;
+    }
+
+    .not-found-text {
+        font-size: 1rem;
+    }
+
+    .btn-home-sticky {
+        bottom: 1rem;
+        right: 1rem;
+        padding: 0.6rem 1.2rem;
+        font-size: 0.9rem;
+    }
 }
 </style>

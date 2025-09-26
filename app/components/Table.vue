@@ -125,6 +125,7 @@ const sortedStandings = computed(() => {
         const goals_conceded = team.pivot?.goals_conceded ?? 0
         const wins = team.pivot?.wins ?? 0
         const draws = team.pivot?.draws ?? 0
+        const extra_points = team.pivot?.extra_points ?? 0
         return {
             id: team.id,
             team: team.name,
@@ -134,7 +135,7 @@ const sortedStandings = computed(() => {
             draws: team.pivot?.draws ?? 0,
             losses: team.pivot?.losses ?? 0,
             goals: `${goals_scored}-${goals_conceded}`,
-            points: `${wins * 2 + draws}`,
+            points: `${wins * 2 + draws + extra_points}`,
             status: team.status,
         }
     })

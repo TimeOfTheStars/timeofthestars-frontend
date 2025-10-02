@@ -49,15 +49,24 @@
                                 }}</span>
                             </NuxtLink>
 
-                            <!-- Счет -->
-                            <div
-                                class="bg-primary-blue px-3 py-1 md:px-4 md:py-2 rounded-lg text-white font-bold text-sm md:text-base whitespace-nowrap text-center justify-self-center md:min-w-24"
-                            >
-                                {{
-                                    match.score_team_a != null
-                                        ? `${match.score_team_a} - ${match.score_team_b}`
-                                        : 'vs'
-                                }}
+                            <!-- Счет и буллиты -->
+                            <div class="flex flex-col items-center justify-self-center">
+                                <!-- Объединенный блок счета -->
+                                <div
+                                    class="bg-primary-blue px-3 py-1 md:px-4 md:py-2 rounded-lg text-white font-bold text-sm md:text-base whitespace-nowrap text-center md:min-w-24"
+                                >
+                                    <div>
+                                        {{
+                                            match.score_team_a != null
+                                                ? `${match.score_team_a} - ${match.score_team_b}`
+                                                : 'vs'
+                                        }}
+                                    </div>
+                                    <!-- Буллиты в скобках -->
+                                    <div v-if="match.bullet_win_team !== null" class="text-base font-normal opacity-90">
+                                        ({{ formatBulletScore(match) }} б)
+                                    </div>
+                                </div>
                             </div>
 
                             <!-- Команда 2 -->
@@ -150,6 +159,16 @@ const formatDate = dateString => {
 const formatTime = timeString => {
     if (!timeString) return 'Время уточняется'
     return timeString.slice(0, 5)
+}
+
+// Функция для форматирования счета буллитов
+const formatBulletScore = (match) => {
+    if (match.bullet_win_team === match.team_a_id) {
+        return `${match.score_team_a + 1} - ${match.score_team_b}`
+    } else if (match.bullet_win_team === match.team_b_id) {
+        return `${match.score_team_a} - ${match.score_team_b + 1}`
+    }
+    return ''
 }
 
 const getMatchStatus = match => {

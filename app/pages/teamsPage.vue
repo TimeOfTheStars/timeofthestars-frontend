@@ -39,7 +39,33 @@ import { computed } from 'vue'
 import { useHead } from '#imports'
 
 useHead({
-    title: 'Наши команды',
+    title: 'Команды - ВРЕМЯ ЗВЁЗД',
+    meta: [
+        {
+            name: 'description',
+            content: 'Список команд-участниц любительской хоккейной лиги "ВРЕМЯ ЗВЁЗД" в Ярославле. Информация о командах, составы.',
+        },
+        {
+            name: 'keywords',
+            content: 'хоккей, команды, ярославль, хоккейные команды, лига, время звезд',
+        },
+        { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
+        {
+            property: 'og:title',
+            content: 'Команды - ВРЕМЯ ЗВЁЗД',
+        },
+        {
+            property: 'og:description',
+            content: 'Познакомьтесь с командами нашей лиги. Вся информация о командах-участницах.',
+        },
+        { property: 'og:type', content: 'website' },
+    ],
+    link: [
+        {
+            rel: 'canonical',
+            href: 'https://timeofthestars.ru/teamsPage',
+        },
+    ],
 })
 
 const { data: turnirdata } = useFetch(

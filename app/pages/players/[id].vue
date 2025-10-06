@@ -549,6 +549,8 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
+import { useHead } from '#imports'
+import { getPlayerPhoto } from '@/utils/PicturesAdmin'
 
 const route = useRoute()
 const router = useRouter()
@@ -584,6 +586,37 @@ if (error.value || !playerData.value) {
 }
 
 const player = playerData.value
+
+useHead(computed(() => ({
+    title: `${player.full_name || 'Игрок'} - ВРЕМЯ ЗВЁЗД`,
+    meta: [
+        {
+            name: 'description',
+            content: `Страница хоккеиста ${player.full_name}. Статистика, биография, и новости.`,
+        },
+        {
+            name: 'keywords',
+            content: `хоккей, хоккеист, ${player.full_name}, ярославль, статистика, биография, время звезд`,
+        },
+        { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
+        {
+            property: 'og:title',
+            content: `${player.full_name} - ВРЕМЯ ЗВЁЗД`,
+        },
+        {
+            property: 'og:description',
+            content: `Вся информация о хоккеисте ${player.full_name}: статистика, биография, и новости.`,
+        },
+        { property: 'og:type', content: 'profile' },
+        { property: 'og:image', content: getPlayerPhoto(player.id) },
+    ],
+    link: [
+        {
+            rel: 'canonical',
+            href: `https://timeofthestars.ru/players/${player.id}`,
+        },
+    ],
+})))
 
 // Вычисляемые свойства для статистики
 const quickStats = computed(() => [

@@ -593,7 +593,36 @@ import { useHead } from '#imports'
 import MapInfo from '@/components/MapInfo.vue'
 
 useHead({
-    title: 'Главная',
+    title: 'ВРЕМЯ ЗВЁЗД — любительская хоккейная лига Ярославля',
+    meta: [
+        {
+            name: 'description',
+            content:
+                'Официальный сайт любительской хоккейной лиги "ВРЕМЯ ЗВЁЗД". Расписание матчей, составы команд, результаты и новости.',
+        },
+        {
+            name: 'keywords',
+            content:
+                'хоккей, лига, ярославль, расписание, турнир, результаты, команды, хоккей любителей',
+        },
+        { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
+        {
+            property: 'og:title',
+            content: 'ВРЕМЯ ЗВЁЗД — любительская хоккейная лига Ярославля',
+        },
+        {
+            property: 'og:description',
+            content:
+                'Все о любительском хоккее Ярославля: матчи, турниры, результаты и игроки.',
+        },
+        { property: 'og:type', content: 'website' },
+    ],
+    link: [
+        {
+            rel: 'canonical',
+            href: 'https://timeofthestars.ru',
+        },
+    ],
 })
 
 const { data: teamsdata, error } = useFetch(

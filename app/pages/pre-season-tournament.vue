@@ -285,7 +285,33 @@ import { useHead } from '#imports'
 
 // Set page title
 useHead({
-  title: 'Pre-season Tournament',
+    title: 'Предсезонный турнир - ВРЕМЯ ЗВЁЗД',
+    meta: [
+        {
+            name: 'description',
+            content: 'Информация о предсезонном турнире по хоккею в Ярославле. Участники, календарь, таблица и результаты.',
+        },
+        {
+            name: 'keywords',
+            content: 'хоккей, предсезонный турнир, ярославль, расписание, таблица, участники, результаты',
+        },
+        { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
+        {
+            property: 'og:title',
+            content: 'Предсезонный турнир - ВРЕМЯ ЗВЁЗД',
+        },
+        {
+            property: 'og:description',
+            content: 'Вся информация о предсезонном турнире по хоккею среди любительских команд Ярославля.',
+        },
+        { property: 'og:type', content: 'website' },
+    ],
+    link: [
+        {
+            rel: 'canonical',
+            href: 'https://timeofthestars.ru/pre-season-tournament',
+        },
+    ],
 })
 
 // Активная вкладка

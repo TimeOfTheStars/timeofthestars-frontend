@@ -4,8 +4,45 @@ export default defineNuxtConfig({
     compatibilityDate: '2025-07-15',
     components: true,
     devtools: { enabled: true },
+    ssr: true,
+    nitro: {
+        preset: 'static',
+        crawlLinks: true,
+    },
     css: ['~/assets/main.css'],
-    modules: ['@nuxt/icon', '@nuxt/image'],
+    modules: ['@nuxt/icon', '@nuxt/image', '@nuxtjs/sitemap'],
+    site: {
+        url: 'https://timeofthestars.ru',
+    },
+    sitemap: {
+        hostname: 'https://timeofthestars.ru',
+        gzip: true,
+        async routes() {
+            const axios = require('axios')
+            const staticRoutes = [
+                '/',
+                '/schedule',
+                '/teams',
+                '/pre-season-tournament',
+                '/teamsPage',
+            ]
+
+            const players = await axios.get(
+                'https://api.timeofthestars.ru/api/players'
+            )
+            const playerRoutes = players.data.data.map(
+                player => `/players/${player.id}`
+            )
+
+            const teams = await axios.get(
+                'https://api.timeofthestars.ru/api/teams'
+            )
+            const teamRoutes = teams.data.data.map(team => `/teams/${team.id}`)
+
+            return staticRoutes.concat(playerRoutes, teamRoutes)
+        },
+    },
+
     vite: {
         plugins: [tailwindcss()],
     },
@@ -14,6 +51,8 @@ export default defineNuxtConfig({
     },
     app: {
         head: {
+            title: 'ВРЕМЯ ЗВЁЗД — хоккей, расписание, команды и игроки',
+
             link: [
                 // Основная favicon .ico
                 {
@@ -60,6 +99,11 @@ export default defineNuxtConfig({
                 },
             ],
             meta: [
+                {
+                    name: 'description',
+                    content:
+                        'Новости, результаты и расписание хоккейных матчей проекта ВРЕМЯ ЗВЁЗД. Следите за игроками и командами онлайн.',
+                },
                 // Цвет темы для мобильных устройств
                 {
                     name: 'theme-color',
@@ -73,6 +117,33 @@ export default defineNuxtConfig({
                 {
                     name: 'msapplication-TileImage',
                     content: '/mstile-144x144.png', // если у вас есть такой файл
+                },
+                { property: 'og:locale', content: 'ru_RU' },
+                { property: 'og:site_name', content: 'ВРЕМЯ ЗВЁЗД' },
+                {
+                    property: 'og:image',
+                    content:
+                        'https://timeofthestars.ru/android-chrome-192x192.png',
+                },
+                { property: 'og:type', content: 'website' },
+                { property: 'og:title', content: 'ВРЕМЯ ЗВЁЗД' },
+            ],
+            htmlAttrs: {
+                lang: 'ru',
+            },
+            charset: 'utf-8',
+            viewport: 'width=device-width, initial-scale=1, maximum-scale=1',
+            script: [
+                {
+                    type: 'application/ld+json',
+                    children: JSON.stringify({
+                        '@context': 'https://schema.org',
+                        '@type': 'SportsOrganization',
+                        name: 'ВРЕМЯ ЗВЁЗД',
+                        url: 'https://timeofthestars.ru',
+                        logo: 'https://timeofthestars.ru/android-chrome-192x192.png',
+                        sameAs: ['https://vk.com/yourleaguepage'],
+                    }),
                 },
             ],
         },

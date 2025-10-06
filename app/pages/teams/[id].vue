@@ -889,6 +889,7 @@
 <script setup>
 import { NuxtLink } from '#components'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { getTeamLogo } from '@/utils/PicturesAdmin'
 
 const route = useRoute()
 const teamId = route.params.id
@@ -908,9 +909,36 @@ const tournamentTeamsData = computed(() => {
     return turnirdata.value[0].teams.find(team => team.id == teamId)
 })
 
-useHead({
-    title: computed(() => tournamentTeamsData.value?.name || 'Загрузка...'),
-})
+useHead(computed(() => ({
+    title: `${tournamentTeamsData.value?.name || 'Команда'} - ВРЕМЯ ЗВЁЗД`,
+    meta: [
+        {
+            name: 'description',
+            content: `Страница хоккейной команды ${tournamentTeamsData.value?.name}. Состав, статистика, расписание игр и новости команды.`,
+        },
+        {
+            name: 'keywords',
+            content: `хоккей, команда, ${tournamentTeamsData.value?.name}, ярославль, состав, статистика, игроки, время звезд`,
+        },
+        { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
+        {
+            property: 'og:title',
+            content: `${tournamentTeamsData.value?.name} - ВРЕМЯ ЗВЁЗД`,
+        },
+        {
+            property: 'og:description',
+            content: `Вся информация о хоккейной команде ${tournamentTeamsData.value?.name}: состав, статистика, новости.`,
+        },
+        { property: 'og:type', content: 'website' },
+        { property: 'og:image', content: getTeamLogo(tournamentTeamsData.value.id) },
+    ],
+    link: [
+        {
+            rel: 'canonical',
+            href: `https://timeofthestars.ru/teams/${tournamentTeamsData.value.id}`,
+        },
+    ],
+})))
 
 console.log(tournamentTeamsData.value.id)
 

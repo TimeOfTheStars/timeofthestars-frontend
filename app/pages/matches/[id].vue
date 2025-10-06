@@ -36,6 +36,7 @@
 <script lang="ts" setup>
 import { useRoute } from 'vue-router'
 import { getScan } from '../../utils/PicturesAdmin'
+import { useHead } from '#imports'
 
 const route = useRoute()
 const scanIdParam = route.params.id
@@ -45,6 +46,31 @@ const idString =
 const id = parseInt(idString, 10)
 
 const imageSrc = !isNaN(id) ? getScan(id) : ''
+
+useHead({
+    title: `Скан протокола матча №${id} - ВРЕМЯ ЗВЁЗД`,
+    meta: [
+        {
+            name: 'description',
+            content: `Скан-копия официального протокола матча №${id} любительской хоккейной лиги "ВРЕМЯ ЗВЁЗД".`,
+        },
+        {
+            name: 'keywords',
+            content: `хоккей, протокол, матч, скан, №${id}, ярославль, время звезд`,
+        },
+        { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
+        {
+            property: 'og:title',
+            content: `Протокол матча №${id} - ВРЕМЯ ЗВЁЗД`,
+        },
+        {
+            property: 'og:description',
+            content: `Официальный протокол матча №${id}.`,
+        },
+        { property: 'og:type', content: 'article' },
+        { property: 'og:image', content: imageSrc },
+    ],
+})
 </script>
 
 <style>

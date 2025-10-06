@@ -46,12 +46,10 @@
                                 :key="team.id"
                                 :class="`border-t border-gray-700 hover:bg-gray-700/50 transition-colors ${getStatusColor(
                                     team.status
-                                )} ${''/*getGradientClass(team.place)*/}`"
+                                )} ${'' /*getGradientClass(team.place)*/}`"
                             >
                                 <td class="px-4 py-4 text-center font-semibold">
-                                    <span
-                                        >{{ team.place }}</span
-                                    >
+                                    <span>{{ team.place }}</span>
                                 </td>
                                 <td class="px-6 py-4">
                                     <NuxtLink

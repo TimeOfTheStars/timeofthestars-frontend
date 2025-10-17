@@ -543,6 +543,10 @@
                             </button>
                         </div>
 
+                        <div class="bg-yellow-900/30 text-yellow-300 text-center p-3 rounded-lg mb-6 md:mb-8 text-sm">
+                            По техническим причинам, статистика игроков может быть не актуальна.
+                        </div>
+
                         <!-- Players Grid с анимацией -->
                         <div
                             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"

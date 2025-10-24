@@ -504,6 +504,7 @@
                         <!-- Улучшенная навигация по табам -->
                         <div
                             class="flex flex-wrap gap-2 md:gap-3 mb-6 md:mb-8 p-1 md:p-2 bg-gray-800 rounded-xl md:rounded-2xl"
+                            v-if="currentPlayers.length > 0"
                         >
                             <button
                                 v-for="tab in tabs"
@@ -542,11 +543,12 @@
                                 ></div>
                             </button>
                         </div>
-
-                        <div class="bg-yellow-900/30 text-yellow-300 text-center p-3 rounded-lg mb-6 md:mb-8 text-sm">
-                            По техническим причинам, статистика игроков может быть не актуальна.
+                        <div
+                            class="text-xl md:text-3xl font-black text-gray-200 flex items-center space-x-2 md:space-x-3 justify-center"
+                            v-else
+                        >
+                            Информация об игроках пока не доступна.
                         </div>
-
                         <!-- Players Grid с анимацией -->
                         <div
                             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
@@ -902,9 +904,13 @@ const { data: teamData, error } = await useAsyncData(`team-${teamId}`, () =>
     $fetch(`https://api.timeofthestars.ru/api/teams/${teamId}`)
 )
 
-const { data: turnirdata } = useFetch(
-    'https://api.timeofthestars.ru/api/tournaments'
+const isChampionshipTeam = computed(() => ['7', '8'].includes(teamId))
+const endpoint = computed(() =>
+    isChampionshipTeam.value
+        ? 'https://api.timeofthestars.ru/api/championships'
+        : 'https://api.timeofthestars.ru/api/tournaments'
 )
+const { data: turnirdata } = useFetch(endpoint)
 
 const tournamentTeamsData = computed(() => {
     if (!turnirdata.value || turnirdata.value.length === 0) {
@@ -913,36 +919,41 @@ const tournamentTeamsData = computed(() => {
     return turnirdata.value[0].teams.find(team => team.id == teamId)
 })
 
-useHead(computed(() => ({
-    title: `${tournamentTeamsData.value?.name || 'Команда'} - ВРЕМЯ ЗВЁЗД`,
-    meta: [
-        {
-            name: 'description',
-            content: `Страница хоккейной команды ${tournamentTeamsData.value?.name}. Состав, статистика, расписание игр и новости команды.`,
-        },
-        {
-            name: 'keywords',
-            content: `хоккей, команда, ${tournamentTeamsData.value?.name}, ярославль, состав, статистика, игроки, время звезд`,
-        },
-        { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
-        {
-            property: 'og:title',
-            content: `${tournamentTeamsData.value?.name} - ВРЕМЯ ЗВЁЗД`,
-        },
-        {
-            property: 'og:description',
-            content: `Вся информация о хоккейной команде ${tournamentTeamsData.value?.name}: состав, статистика, новости.`,
-        },
-        { property: 'og:type', content: 'website' },
-        { property: 'og:image', content: getTeamLogo(tournamentTeamsData.value.id) },
-    ],
-    link: [
-        {
-            rel: 'canonical',
-            href: `https://timeofthestars.ru/teams/${tournamentTeamsData.value.id}`,
-        },
-    ],
-})))
+useHead(
+    computed(() => ({
+        title: `${tournamentTeamsData.value?.name || 'Команда'} - ВРЕМЯ ЗВЁЗД`,
+        meta: [
+            {
+                name: 'description',
+                content: `Страница хоккейной команды ${tournamentTeamsData.value?.name}. Состав, статистика, расписание игр и новости команды.`,
+            },
+            {
+                name: 'keywords',
+                content: `хоккей, команда, ${tournamentTeamsData.value?.name}, ярославль, состав, статистика, игроки, время звезд`,
+            },
+            { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
+            {
+                property: 'og:title',
+                content: `${tournamentTeamsData.value?.name} - ВРЕМЯ ЗВЁЗД`,
+            },
+            {
+                property: 'og:description',
+                content: `Вся информация о хоккейной команде ${tournamentTeamsData.value?.name}: состав, статистика, новости.`,
+            },
+            { property: 'og:type', content: 'website' },
+            {
+                property: 'og:image',
+                content: getTeamLogo(tournamentTeamsData.value.id),
+            },
+        ],
+        link: [
+            {
+                rel: 'canonical',
+                href: `https://timeofthestars.ru/teams/${tournamentTeamsData.value.id}`,
+            },
+        ],
+    }))
+)
 
 console.log(tournamentTeamsData.value.id)
 
@@ -987,13 +998,13 @@ const getTrendColor = trend => {
 const teamStats = computed(() => [
     {
         label: 'Победы',
-        value: tournamentTeamsData.value?.pivot?.wins,
+        value: tournamentTeamsData.value?.pivot?.wins || 0,
         color: 'green',
         trend: '',
     },
     {
         label: 'Поражения',
-        value: tournamentTeamsData.value?.pivot?.losses,
+        value: tournamentTeamsData.value?.pivot?.losses || 0,
         color: 'red',
         trend: '',
     },

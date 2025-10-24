@@ -194,43 +194,25 @@
                         <div
                             class="bg-white/10 backdrop-blur-sm rounded-xl p-8"
                         >
-                            <!-- <div class="w-32 h-32 relative mx-auto mb-6">
+                            <div class="w-32 h-32 relative mx-auto mb-6">
                                 <img
-                                    src="/photo_53844715688281.png.webp"
-                                    alt="ХК Переславль"
+                                    src="/photo_53844715688281.png (2).webp"
+                                    alt="ХК Переславль-Залесский"
                                     class="w-full h-full object-contain rounded-full"
                                 />
                             </div>
                             <h3 class="text-3xl font-bold mb-2 text-white">
-                                ХК "Переславль"
+                                ХК Вымпел-V
                             </h3>
                             <p class="text-white/80 mb-8 text-lg">
-                                г. Переславль
+                                г. Ярославль
                             </p>
-
-                            <div class="grid grid-cols-2 gap-8">
-                                <div class="bg-white/10 rounded-lg p-4">
-                                    <div class="text-4xl font-bold text-white">
-                                        4
-                                    </div>
-                                    <div class="text-white/80">Победы</div>
-                                </div>
-                                <div class="bg-white/10 rounded-lg p-4">
-                                    <div class="text-4xl font-bold text-white">
-                                        12
-                                    </div>
-                                    <div class="text-white/80">Очков</div>
-                                </div>
-                            </div>
 
                             <div class="mt-8">
                                 <div class="text-white/80 text-lg">
-                                    Безупречная игра на протяжении всего
-                                    турнира!
+                                    Поздравляем победителей!
                                 </div>
-                            </div> -->
-                            Информация о победителе отобразиться здесь по
-                            окончании турнира
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -289,11 +271,13 @@ useHead({
     meta: [
         {
             name: 'description',
-            content: 'Информация о предсезонном турнире по хоккею в Ярославле. Участники, календарь, таблица и результаты.',
+            content:
+                'Информация о предсезонном турнире по хоккею в Ярославле. Участники, календарь, таблица и результаты.',
         },
         {
             name: 'keywords',
-            content: 'хоккей, предсезонный турнир, ярославль, расписание, таблица, участники, результаты',
+            content:
+                'хоккей, предсезонный турнир, ярославль, расписание, таблица, участники, результаты',
         },
         { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
         {
@@ -302,7 +286,8 @@ useHead({
         },
         {
             property: 'og:description',
-            content: 'Вся информация о предсезонном турнире по хоккею среди любительских команд Ярославля.',
+            content:
+                'Вся информация о предсезонном турнире по хоккею среди любительских команд Ярославля.',
         },
         { property: 'og:type', content: 'website' },
     ],

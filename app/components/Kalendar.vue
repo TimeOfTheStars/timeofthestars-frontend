@@ -5,7 +5,7 @@
                 class="text-xl md:text-2xl font-semibold mb-4 md:mb-6 text-accent-blue flex items-center justify-center mt-8 gap-2"
             >
                 <span class="text-2xl md:text-3xl">🗓️</span>
-                Расписание игровых матчей
+                Расписание матчей чемпионата
             </h3>
             <div class="space-y-3 md:space-y-4">
                 <div
@@ -50,7 +50,9 @@
                             </NuxtLink>
 
                             <!-- Счет и буллиты -->
-                            <div class="flex flex-col items-center justify-self-center">
+                            <div
+                                class="flex flex-col items-center justify-self-center"
+                            >
                                 <!-- Объединенный блок счета -->
                                 <div
                                     class="bg-primary-blue px-3 py-1 md:px-4 md:py-2 rounded-lg text-white font-bold text-sm md:text-base whitespace-nowrap text-center md:min-w-24"
@@ -63,7 +65,10 @@
                                         }}
                                     </div>
                                     <!-- Буллиты в скобках -->
-                                    <div v-if="match.bullet_win_team !== null" class="text-base font-normal opacity-90">
+                                    <div
+                                        v-if="match.bullet_win_team !== null"
+                                        class="text-base font-normal opacity-90"
+                                    >
                                         ({{ formatBulletScore(match) }} б)
                                     </div>
                                 </div>
@@ -162,7 +167,7 @@ const formatTime = timeString => {
 }
 
 // Функция для форматирования счета буллитов
-const formatBulletScore = (match) => {
+const formatBulletScore = match => {
     if (match.bullet_win_team === match.team_a_id) {
         return `${match.score_team_a + 1} - ${match.score_team_b}`
     } else if (match.bullet_win_team === match.team_b_id) {

@@ -18,13 +18,13 @@
     <div class="grid grid-cols-4 gap-4 text-center">
         <div>
             <div class="text-xl font-bold text-green-400">
-                {{ team.pivot.wins }}
+                {{ team.pivot.wins || 0 }}
             </div>
             <div class="text-xs text-gray-400">Победы</div>
         </div>
         <div>
             <div class="text-xl font-bold text-red-400">
-                {{ team.pivot.losses }}
+                {{ team.pivot.losses || 0 }}
             </div>
             <div class="text-xs text-gray-400">Поражения</div>
         </div>
@@ -39,7 +39,7 @@
         </div>
         <div>
             <div class="text-xl font-bold text-blue-400">
-                {{ team?.pivot?.games }}
+                {{ team?.pivot?.games || 0 }}
             </div>
             <div class="text-xs text-gray-400">Игры</div>
         </div>

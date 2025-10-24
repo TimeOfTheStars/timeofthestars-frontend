@@ -102,11 +102,30 @@
 <script setup>
 import { computed } from 'vue'
 
+const props = defineProps({
+    turnirData: {
+        type: Object,
+        required: false,
+        default: null,
+    },
+})
+
+// Если данные не переданы через props, получаем их из API
 const { data: turnirdata } = useFetch(
     'https://api.timeofthestars.ru/api/tournaments'
 )
 
 const tournamentTeamsData = computed(() => {
+    // Если данные переданы через props (для чемпионата), используем их
+    if (
+        props.turnirData &&
+        props.turnirData.length > 0 &&
+        props.turnirData[0].teams
+    ) {
+        return props.turnirData[0].teams
+    }
+
+    // Иначе используем данные из API (для турниров)
     if (
         !turnirdata.value ||
         turnirdata.value.length === 0 ||

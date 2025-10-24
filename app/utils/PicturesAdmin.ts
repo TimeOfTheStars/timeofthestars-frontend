@@ -5,8 +5,8 @@ const teamLogos: Record<number, string> = {
     4: '/photo_53844715688281.png (3).webp',
     5: '/photo_53844715688281.png (4).webp',
     6: '/BGV.webp',
-    7: '/photo.png.webp',
-    8: '/photo.png',
+    7: '/IMG_9753.png',
+    8: '/______.png.webp',
     9: '/BGV.webp',
     99: '/photo.png',
 }
@@ -24,6 +24,9 @@ const scans: Record<number, string> = {
     10: '/Сканы матчей/10.jpg',
     11: '/Сканы матчей/11.jpg',
     12: '/Сканы матчей/12.jpg',
+    13: '/Сканы матчей/14.jpg',
+    14: '/Сканы матчей/15.jpg',
+    15: '/Сканы матчей/13.jpg',
 }
 
 const playerPhotos: Record<number, string> = {

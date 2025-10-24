@@ -156,50 +156,21 @@
                                     class="flex items-center justify-center gap-2"
                                 >
                                     <span>👥</span>
-                                    <span>6 команд участвуют</span>
+                                    <span>6 команд участвовали</span>
                                 </div>
                                 <div
                                     class="flex items-center justify-center gap-2"
                                 >
                                     <span>🏆</span>
-                                    <span>Победитель: не определен</span>
+                                    <span>Победитель: ХК Вымпел-V</span>
                                 </div>
                             </div>
                         </div>
                     </router-link>
 
-                    <!-- <router-link to="/turnirVictory" class="block group">
+                    <NuxtLink to="/zvezdaOtechestva" class="block group">
                         <div
-                            class="bg-gray-800 rounded-xl p-6 card-hover border-l-4 border-secondary-red group-hover:border-accent-red transition-colors"
-                        >
-                            <div
-                                class="text-5xl mb-4 group-hover:scale-110 transition-transform"
-                            >
-                                🥇
-                            </div>
-                            <h3
-                                class="text-xl font-semibold mb-2 group-hover:text-accent-red transition-colors"
-                            >
-                                Кубок Победы
-                            </h3>
-                            <p class="text-gray-400 mb-4">Хоккейный турнир</p>
-                            <div class="space-y-2 text-sm">
-                                <div class="flex items-center gap-2"></div>
-                                <div class="flex items-center gap-2">
-                                    <span>👥</span>
-                                    <span>5 команд участвовали</span>
-                                </div>
-                                <div class="flex items-center gap-2">
-                                    <span>🏆</span>
-                                    <span>Победитель: ХК "Зубр"</span>
-                                </div>
-                            </div>
-                        </div>
-                    </router-link>
-
-                    <router-link to="/zvezdaOtechestva" class="block group">
-                        <div
-                            class="bg-gray-800 rounded-xl p-6 card-hover border-l-4 border-accent-blue group-hover:border-accent-red transition-colors"
+                            class="bg-gray-800 rounded-xl p-6 card-hover border-l-4 border-accent-blue group-hover:border-accent-red transition-colors text-center"
                         >
                             <div
                                 class="w-16 h-16 relative mx-auto mb-4 group-hover:scale-110 transition-transform"
@@ -219,21 +190,22 @@
                                 Чемпионат среди любительских спорткоманд
                             </p>
                             <div class="space-y-2 text-sm">
-                                <div class="flex items-center gap-2">
-                                    <span class="text-blue-400">🔵</span>
-                                    <span>Плей-офф в процессе</span>
-                                </div>
-                                <div class="flex items-center gap-2">
+                                <div class="flex items-center gap-2"></div>
+                                <div
+                                    class="flex items-center justify-center gap-2"
+                                >
                                     <span>👥</span>
-                                    <span>8 команд участвуют</span>
+                                    <span>6 команд учавствуют</span>
                                 </div>
-                                <div class="flex items-center gap-2">
-                                    <span>⚡</span>
-                                    <span>Следующий матч: 18.04.2025</span>
+                                <div
+                                    class="flex items-center justify-center gap-2"
+                                >
+                                    <span>🏆</span>
+                                    <span>Победитель: не определен</span>
                                 </div>
                             </div>
                         </div>
-                    </router-link> -->
+                    </NuxtLink>
                 </div>
             </div>
         </section>
@@ -259,28 +231,6 @@
             </div>
         </section>
 
-        <!-- Top Players -->
-        <section class="py-16 px-4">
-            <div class="max-w-6xl mx-auto">
-                <h2 class="text-3xl font-bold mb-8 text-center">
-                    🌟 Лучшие игроки
-                </h2>
-
-                <!-- <div class="grid md:grid-cols-3 gap-6">
-                    <div
-                        v-for="player in topPlayers"
-                        :key="player.id"
-                        class="bg-gray-800 rounded-xl p-6 card-hover text-center"
-                    >
-                        <PlayerCard :player="player" />
-                    </div>
-                </div> -->
-                <p class="text-center text-gray-400 mt-8">
-                    здесь будет информация о лучших игроках
-                </p>
-            </div>
-        </section>
-
         <!-- Teams Section -->
         <section class="py-16 px-4 bg-gray-800">
             <div class="max-w-6xl mx-auto">
@@ -293,7 +243,7 @@
                     </p>
                 </div>
 
-                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div
                         v-for="team in tournamentTeamsData"
                         :key="team.id"
@@ -633,7 +583,7 @@ const { data: upcomingMatches } = useFetch(
 )
 
 const { data: turnirdata } = useFetch(
-    'https://api.timeofthestars.ru/api/tournaments'
+    'https://api.timeofthestars.ru/api/championships'
 )
 
 const tournamentTeamsData = computed(() => {

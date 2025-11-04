@@ -27,6 +27,10 @@ const scans: Record<number, string> = {
     13: '/Сканы матчей/14.jpg',
     14: '/Сканы матчей/15.jpg',
     15: '/Сканы матчей/13.jpg',
+    16: '/Сканы матчей/16.jpg',
+    17: '/Сканы матчей/17.jpg',
+    18: '/Сканы матчей/18.jpg',
+    19: '/Сканы матчей/19.jpg',
 }
 
 const playerPhotos: Record<number, string> = {

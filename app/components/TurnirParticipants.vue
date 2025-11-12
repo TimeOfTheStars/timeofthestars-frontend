@@ -18,28 +18,25 @@
     <div class="grid grid-cols-4 gap-4 text-center">
         <div>
             <div class="text-xl font-bold text-green-400">
-                {{ team.pivot.wins || 0 }}
+                {{ team.stats.wins || 0 }}
             </div>
             <div class="text-xs text-gray-400">Победы</div>
         </div>
         <div>
             <div class="text-xl font-bold text-red-400">
-                {{ team.pivot.losses || 0 }}
+                {{ team.stats.losses || 0 }}
             </div>
             <div class="text-xs text-gray-400">Поражения</div>
         </div>
         <div>
             <div class="text-xl font-bold text-accent-blue">
-                {{
-                    Number(team?.pivot?.wins || 0) * 2 +
-                    Number(team?.pivot?.draws || 0)
-                }}
+                {{ team.stats.points }}
             </div>
             <div class="text-xs text-gray-400">Очки</div>
         </div>
         <div>
             <div class="text-xl font-bold text-blue-400">
-                {{ team?.pivot?.games || 0 }}
+                {{ team?.stats?.games || 0 }}
             </div>
             <div class="text-xs text-gray-400">Игры</div>
         </div>

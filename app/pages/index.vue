@@ -225,7 +225,10 @@
 
                 <div>
                     <div class="bg-gray-700 rounded-xl p-4 md:p-6 card-hover">
-                        <Kalendar :turnirData="turnirdata" />
+                        <Kalendar
+                            v-if="kalendardata && kalendardata.length > 0"
+                            :turnirData="kalendardata"
+                        />
                     </div>
                 </div>
             </div>
@@ -245,7 +248,7 @@
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <div
-                        v-for="team in tournamentTeamsData"
+                        v-for="team in turnirdata"
                         :key="team.id"
                         class="bg-gray-700 rounded-xl p-6 card-hover text-center"
                     >
@@ -575,21 +578,14 @@ useHead({
     ],
 })
 
-const { data: teamsdata, error } = useFetch(
-    'https://api.timeofthestars.ru/api/teams'
-)
-const { data: upcomingMatches } = useFetch(
-    'https://api.timeofthestars.ru/api/games'
-)
+const turnirdata = ref([])
+const kalendardata = ref([])
 
-const { data: turnirdata } = useFetch(
-    'https://api.timeofthestars.ru/api/championships'
-)
+onMounted(async () => {
+    turnirdata.value = await $fetch('https://api.timeofthestars.ru/teams/')
 
-const tournamentTeamsData = computed(() => {
-    if (!turnirdata.value || turnirdata.value.length === 0) {
-        return { games: [], teams: [] }
-    }
-    return turnirdata.value[0].teams
+    kalendardata.value = await $fetch(
+        'https://api.timeofthestars.ru/championships/'
+    )
 })
 </script>

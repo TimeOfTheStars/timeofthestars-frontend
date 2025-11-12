@@ -13,11 +13,11 @@
                 </div>
 
                 <div
-                    v-if="tournamentTeamsData"
+                    v-if="turnirdata"
                     class="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
                 >
                     <div
-                        v-for="team in tournamentTeamsData"
+                        v-for="team in turnirdata"
                         :key="team.id"
                         class="bg-gray-700 rounded-xl p-6 card-hover text-center"
                     >
@@ -43,11 +43,13 @@ useHead({
     meta: [
         {
             name: 'description',
-            content: 'Список команд-участниц любительской хоккейной лиги "ВРЕМЯ ЗВЁЗД" в Ярославле. Информация о командах, составы.',
+            content:
+                'Список команд-участниц любительской хоккейной лиги "ВРЕМЯ ЗВЁЗД" в Ярославле. Информация о командах, составы.',
         },
         {
             name: 'keywords',
-            content: 'хоккей, команды, ярославль, хоккейные команды, лига, время звезд',
+            content:
+                'хоккей, команды, ярославль, хоккейные команды, лига, время звезд',
         },
         { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
         {
@@ -56,7 +58,8 @@ useHead({
         },
         {
             property: 'og:description',
-            content: 'Познакомьтесь с командами нашей лиги. Вся информация о командах-участницах.',
+            content:
+                'Познакомьтесь с командами нашей лиги. Вся информация о командах-участницах.',
         },
         { property: 'og:type', content: 'website' },
     ],
@@ -68,14 +71,5 @@ useHead({
     ],
 })
 
-const { data: turnirdata } = useFetch(
-    'https://api.timeofthestars.ru/api/tournaments'
-)
-
-const tournamentTeamsData = computed(() => {
-    if (!turnirdata.value || turnirdata.value.length === 0) {
-        return { games: [], teams: [] }
-    }
-    return turnirdata.value[0].teams
-})
+const { data: turnirdata } = useFetch('https://api.timeofthestars.ru/teams/')
 </script>

@@ -3,12 +3,13 @@
         <Header />
 
         <!-- Вставляем компонент календаря -->
-        <Kalendar :turnirData="turnirdata" />
+        <Kalendar v-if="turnirdata && turnirdata.length > 0" :turnirData="turnirdata" />
     </div>
 </template>
 
 <script setup>
 import { useHead } from '#imports'
+import { onMounted, ref } from '#imports'
 // Импортируем компонент календаря
 import Kalendar from '@/components/Kalendar.vue'
 
@@ -44,9 +45,16 @@ useHead({
         },
     ],
 })
-
+const turnirdata = ref([])
+onMounted(async () => {
+    try {
+        turnirdata.value = await $fetch(
+            'https://api.timeofthestars.ru/championships/'
+        )
+        console.log('dasdasdasdas', turnirdata.value)
+    } catch (error) {
+        console.error('Ошибка при получении данных чемпионата:', error)
+    }
+})
 // Получаем данные чемпионата
-const { data: turnirdata } = useFetch(
-    'https://api.timeofthestars.ru/api/championships'
-)
 </script>

@@ -11,36 +11,6 @@
         {{ team.city }}
     </p>
 
-    <div class="grid grid-cols-2 gap-2 text-center">
-        <div>
-            <div class="text-lg font-bold text-green-400">
-                {{ team.pivot?.wins ?? 0 }}
-            </div>
-            <div class="text-xs text-gray-400">Победы</div>
-        </div>
-        <div>
-            <div class="text-lg font-bold text-red-400">
-                {{ team.pivot?.losses ?? 0 }}
-            </div>
-            <div class="text-xs text-gray-400">Поражения</div>
-        </div>
-        <div>
-            <div class="text-lg font-bold text-accent-blue">
-                {{
-                    tournamentTeamsData[team.id - 1]?.tournament_players
-                        .length ?? 0
-                }}
-            </div>
-            <div class="text-xs text-gray-400">Игроки</div>
-        </div>
-        <div>
-            <div class="text-lg font-bold text-blue-400 text-accent-blue">
-                {{ team?.pivot?.games || 0 }}
-            </div>
-            <div class="text-xs text-gray-400">Матчи</div>
-        </div>
-    </div>
-
     <NuxtLink :to="`/teams/${team.id}`">
         <div
             class="w-full block mt-4 bg-primary-blue text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-secondary-blue transition-colors"
@@ -52,17 +22,6 @@
 
 <script setup>
 import { getTeamLogo } from '@/utils/PicturesAdmin.ts'
-
-const { data: teamsdata, error } = useFetch(
-    'https://api.timeofthestars.ru/api/teams'
-)
-
-const tournamentTeamsData = computed(() => {
-    if (!teamsdata.value || teamsdata.value.length === 0) {
-        return { games: [], teams: [] }
-    }
-    return teamsdata.value
-})
 
 defineProps({
     team: {

@@ -112,7 +112,7 @@ const props = defineProps({
 
 // Если данные не переданы через props, получаем их из API
 const { data: turnirdata } = useFetch(
-    'https://api.timeofthestars.ru/api/tournaments'
+    'https://api.timeofthestars.ru/tournaments'
 )
 
 const tournamentTeamsData = computed(() => {

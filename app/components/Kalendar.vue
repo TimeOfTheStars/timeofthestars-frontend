@@ -5,11 +5,11 @@
                 class="text-xl md:text-2xl font-semibold mb-4 md:mb-6 text-accent-blue flex items-center justify-center mt-8 gap-2"
             >
                 <span class="text-2xl md:text-3xl">🗓️</span>
-                Расписание матчей чемпионата
+                {{ title }}
             </h3>
             <div class="space-y-3 md:space-y-4">
                 <div
-                    v-for="match in turnirDataCurrent.games"
+                    v-for="match in games"
                     :key="match.id"
                     class="bg-gray-800 rounded-lg md:rounded-xl p-4 md:p-6 card-hover"
                 >
@@ -21,9 +21,9 @@
                             class="text-xs md:text-sm text-gray-400 w-full md:w-32"
                         >
                             <div class="font-medium">
-                                {{ formatDate(match.date) }}
+                                {{ match.date }}
                             </div>
-                            <div>{{ formatTime(match.time) }}</div>
+                            <div>{{ match.time }}</div>
                         </div>
 
                         <!-- Команды и счет -->
@@ -68,9 +68,7 @@
                                     <div
                                         v-if="match.bullet_win_team !== null"
                                         class="text-base font-normal opacity-90"
-                                    >
-                                        ({{ formatBulletScore(match) }} б)
-                                    </div>
+                                    ></div>
                                 </div>
                             </div>
 
@@ -104,7 +102,7 @@
                     <!-- Кнопка протокола -->
                     <div class="mt-3 md:mt-4 flex justify-center">
                         <NuxtLink
-                            v-if="isMatchCompleted(match)"
+                            v-if="match.score_team_a"
                             :to="`/matches/${match.id}`"
                             class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-blue text-white text-sm md:text-base font-medium hover:opacity-90 transition"
                         >
@@ -127,67 +125,83 @@
 </template>
 
 <script setup>
-import { computed } from 'vue'
+import { computed, onMounted, ref } from 'vue'
+import { getTeamLogo } from '#imports'
 
 const props = defineProps({
     turnirData: {
         type: Object,
         required: true,
     },
+    dataType: {
+        type: String,
+        default: 'championship', // 'championship' or 'tournament'
+    },
 })
 
-// Получаем первый турнир из массива
-const turnirDataCurrent = computed(() => {
+const title = computed(() => {
+    return props.dataType === 'tournament'
+        ? 'Расписание матчей турнира'
+        : 'Расписание матчей чемпионата'
+})
+
+const games = ref([])
+const teams = ref([])
+
+onMounted(async () => {
     if (!props.turnirData || props.turnirData.length === 0) {
-        return { games: [], teams: [] }
+        return
     }
-    return props.turnirData[0]
+    const id = props.turnirData[0].id
+    const endpoint = props.dataType + 's'
+
+    try {
+        games.value = await $fetch(
+            `https://api.timeofthestars.ru/${endpoint}/${id}/games`
+        )
+    } catch (error) {
+        console.error(`Ошибка при получении игр ${props.dataType}:`, error)
+    }
+    try {
+        teams.value = await $fetch(
+            `https://api.timeofthestars.ru/${endpoint}/${id}/teams`
+        )
+    } catch (error) {
+        console.error(`Ошибка при получении команд ${props.dataType}:`, error)
+    }
 })
 
-// Функция для получения названия команды по ID
-const getTeamName = teamId => {
-    const team = turnirDataCurrent.value.teams.find(t => t.id === teamId)
-    return team ? team.name : `Команда ${teamId}`
+function getTeamName(teamId) {
+    const team = teams.value.find(team => team.id === teamId)
+    return team ? team.name : ''
 }
 
-// Функция для форматирования даты
-const formatDate = dateString => {
-    if (!dateString) return 'Дата уточняется'
-    const date = new Date(dateString)
-    return date.toLocaleDateString('ru-RU', {
-        day: 'numeric',
-        month: 'long',
-    })
-}
-
-// Функция для форматирования времени
-const formatTime = timeString => {
-    if (!timeString) return 'Время уточняется'
-    return timeString.slice(0, 5)
-}
-
-// Функция для форматирования счета буллитов
-const formatBulletScore = match => {
-    if (match.bullet_win_team === match.team_a_id) {
-        return `${match.score_team_a + 1} - ${match.score_team_b}`
-    } else if (match.bullet_win_team === match.team_b_id) {
-        return `${match.score_team_a} - ${match.score_team_b + 1}`
-    }
-    return ''
-}
-
-const getMatchStatus = match => {
-    if (match.score_team_a != null && match.score_team_b != null)
+function getMatchStatus(match) {
+    if (match.score_team_a != null) {
         return 'Завершен'
+    }
 
-    const matchDate = new Date(match.date + 'T' + match.time)
+    if (!match.date) {
+        return 'Неизвестно'
+    }
+
     const now = new Date()
+    const [year, month, day] = match.date.split('-').map(Number)
 
-    if (matchDate > now) return 'Запланирован'
-    return 'В процессе'
-}
+    let matchDateTime
 
-const isMatchCompleted = match => {
-    return match.score_team_a != null && match.score_team_b != null
+    if (match.time) {
+        const [hours, minutes] = match.time.split(':').map(Number)
+        matchDateTime = new Date(year, month - 1, day, hours, minutes)
+    } else {
+        // if no time is available, check against the end of the day
+        matchDateTime = new Date(year, month - 1, day, 23, 59, 59)
+    }
+
+    if (matchDateTime > now) {
+        return 'Запланирован'
+    } else {
+        return 'В процессе'
+    }
 }
 </script>

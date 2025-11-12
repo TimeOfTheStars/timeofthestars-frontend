@@ -44,9 +44,9 @@
                             <tr
                                 v-for="team in sortedStandings"
                                 :key="team.id"
-                                :class="`border-t border-gray-700 hover:bg-gray-700/50 transition-colors ${getStatusColor(
-                                    team.status
-                                )} ${'' /*getGradientClass(team.place)*/}`"
+                                :class="`border-t border-gray-700 hover:bg-gray-700/50 transition-colors ${
+                                    '' /*getGradientClass(team.place)*/
+                                }`"
                             >
                                 <td class="px-4 py-4 text-center font-semibold">
                                     <span>{{ team.place }}</span>
@@ -111,49 +111,53 @@ const props = defineProps({
 })
 
 // Если данные не переданы через props, получаем их из API
-const { data: turnirdata } = useFetch(
-    'https://api.timeofthestars.ru/tournaments'
-)
+const turnirdata = ref([])
+
+onMounted(async () => {
+    try {
+        const tournaments = await $fetch(
+            `https://api.timeofthestars.ru/tournaments/${1}/teams`
+        )
+        turnirdata.value = tournaments
+    } catch (error) {
+        console.error('Ошибка при получении данных:', error)
+    }
+})
 
 const tournamentTeamsData = computed(() => {
     // Если данные переданы через props (для чемпионата), используем их
-    if (
-        props.turnirData &&
-        props.turnirData.length > 0 &&
-        props.turnirData[0].teams
-    ) {
-        return props.turnirData[0].teams
+    if (props.turnirData && props.turnirData.length > 0 && props.turnirData) {
+        return props.turnirData
     }
 
     // Иначе используем данные из API (для турниров)
-    if (
+    else if (
         !turnirdata.value ||
         turnirdata.value.length === 0 ||
-        !turnirdata.value[0].teams
+        !turnirdata.value
     ) {
         return []
     }
-    return turnirdata.value[0].teams
+    return turnirdata.value
 })
 
 const sortedStandings = computed(() => {
     const processedTeams = tournamentTeamsData.value.map(team => {
-        const goals_scored = team.pivot?.goals_scored ?? 0
-        const goals_conceded = team.pivot?.goals_conceded ?? 0
-        const wins = team.pivot?.wins ?? 0
-        const draws = team.pivot?.draws ?? 0
-        const extra_points = team.pivot?.extra_points ?? 0
+        const goals_scored = team.stats?.goals_scored ?? 0
+        const goals_conceded = team.stats?.goals_conceded ?? 0
+        const wins = team.stats?.wins ?? 0
+        const draws = team.stats?.draws ?? 0
+        const extra_points = team.stats?.extra_points ?? 0
         return {
             id: team.id,
             team: team.name,
             logo: getTeamLogo(team.id) || '/zvezdalogo.webp',
-            games: team.pivot?.games ?? 0,
-            wins: team.pivot?.wins ?? 0,
-            draws: team.pivot?.draws ?? 0,
-            losses: team.pivot?.losses ?? 0,
+            games: team.stats?.games ?? 0,
+            wins: team.stats?.wins ?? 0,
+            draws: team.stats?.draws ?? 0,
+            losses: team.stats?.losses ?? 0,
             goals: `${goals_scored}-${goals_conceded}`,
-            points: `${wins * 2 + draws + extra_points}`,
-            status: team.status,
+            points: team.stats?.points ?? 0,
         }
     })
 
@@ -178,18 +182,6 @@ const sortedStandings = computed(() => {
     })
 })
 
-const getStatusColor = status => {
-    switch (status) {
-        case 'playoff':
-            return 'bg-green-600'
-        case 'transition':
-            return 'bg-yellow-600'
-        case 'relegation':
-            return 'bg-red-600'
-        default:
-            return ''
-    }
-}
 /*
 const getGradientClass = place => {
     switch (place) {

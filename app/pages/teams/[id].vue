@@ -97,19 +97,19 @@
                             class="w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 mx-auto mb-4 md:mb-6"
                         >
                             <img
-                                :src="getTeamLogo(tournamentTeamsData.id)"
+                                :src="getTeamLogo(teamData.id)"
                                 class="w-full h-full object-contain"
                             />
                         </div>
                         <h2
                             class="text-2xl md:text-4xl lg:text-6xl font-black mb-2 md:mb-3 tracking-wider"
                         >
-                            {{ tournamentTeamsData.name }}
+                            {{ teamData.name }}
                         </h2>
                         <p
                             class="text-sm md:text-xl lg:text-2xl opacity-90 font-light"
                         >
-                            г. {{ tournamentTeamsData.city }}
+                            г. {{ teamData.city }}
                         </p>
                     </div>
 
@@ -285,203 +285,6 @@
                         </div>
                     </div>
 
-                    <!-- Top Players с улучшенным дизайном -->
-                    <!-- <div class="mb-8 md:mb-12">
-                        <h3
-                            class="text-xl md:text-3xl font-black mb-6 md:mb-8 text-gray-200 flex items-center space-x-2 md:space-x-3"
-                        >
-                            <span
-                                style="animation-duration: 3s"
-                                class="animate-spin"
-                            >
-                                🌟
-                            </span>
-                            <span>Лучшие игроки</span>
-                        </h3>
-                        <div
-                            class="grid grid-cols-1 md:grid-cols-3 gap-4 md:gap-6"
-                        >
-                            <NuxtLink>
-                                <div
-                                    class="group bg-gradient-to-br from-blue-900 to-blue-800 rounded-2xl md:rounded-3xl p-4 md:p-8 cursor-pointer hover:scale-105 transition-all duration-300 border-2 border-blue-700 hover:border-blue-500 relative overflow-hidden"
-                                >
-                                    <div
-                                        class="absolute top-2 right-2 md:top-4 md:right-4 bg-yellow-400 text-yellow-900 rounded-full px-2 py-0.5 md:px-3 md:py-1 text-[10px] md:text-xs font-bold"
-                                    >
-                                        MVP
-                                    </div>
-                                    <div class="text-center">
-                                        <div
-                                            class="text-4xl md:text-5xl mb-3 md:mb-4 group-hover:animate-bounce"
-                                        >
-                                            🥇
-                                        </div>
-                                        <h4
-                                            class="font-black text-gray-200 text-lg md:text-xl mb-2"
-                                        >
-                                            Александров И.
-                                        </h4>
-                                        <p
-                                            class="text-blue-600 font-bold mb-3 md:mb-4 text-sm md:text-base"
-                                        >
-                                            Нападающий
-                                        </p>
-                                        <div
-                                            class="grid grid-cols-2 gap-2 md:gap-4 text-xs md:text-sm"
-                                        >
-                                            <div
-                                                class="bg-white/50 rounded-lg p-1 md:p-2"
-                                            >
-                                                <span
-                                                    class="block font-bold text-blue-600"
-                                                >
-                                                    23
-                                                </span>
-                                                <span
-                                                    class="text-gray-600 text-[10px] md:text-xs"
-                                                >
-                                                    🏒 гола
-                                                </span>
-                                            </div>
-                                            <div
-                                                class="bg-white/50 rounded-lg p-1 md:p-2"
-                                            >
-                                                <span
-                                                    class="block font-bold text-red-600"
-                                                >
-                                                    15
-                                                </span>
-                                                <span
-                                                    class="text-gray-600 text-[10px] md:text-xs"
-                                                >
-                                                    🎯 передач
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </NuxtLink>
-
-                            <div
-                                class="bg-gradient-to-br from-red-900 to-red-800 rounded-2xl md:rounded-3xl p-4 md:p-8 border-2 border-red-700 relative overflow-hidden"
-                            >
-                                <div
-                                    class="absolute top-2 right-2 md:top-4 md:right-4 bg-red-400 text-white rounded-full px-2 py-0.5 md:px-3 md:py-1 text-[10px] md:text-xs font-bold"
-                                >
-                                    TOP
-                                </div>
-                                <div class="text-center">
-                                    <div
-                                        class="text-4xl md:text-5xl mb-3 md:mb-4"
-                                    >
-                                        🥈
-                                    </div>
-                                    <h4
-                                        class="font-black text-gray-200 text-lg md:text-xl mb-2"
-                                    >
-                                        Петров В.
-                                    </h4>
-                                    <p
-                                        class="text-red-600 font-bold mb-3 md:mb-4 text-sm md:text-base"
-                                    >
-                                        Защитник
-                                    </p>
-                                    <div
-                                        class="grid grid-cols-2 gap-2 md:gap-4 text-xs md:text-sm"
-                                    >
-                                        <div
-                                            class="bg-white/50 rounded-lg p-1 md:p-2"
-                                        >
-                                            <span
-                                                class="block font-bold text-blue-600"
-                                            >
-                                                8
-                                            </span>
-                                            <span
-                                                class="text-gray-600 text-[10px] md:text-xs"
-                                            >
-                                                🏒 голов
-                                            </span>
-                                        </div>
-                                        <div
-                                            class="bg-white/50 rounded-lg p-1 md:p-2"
-                                        >
-                                            <span
-                                                class="block font-bold text-red-600"
-                                            >
-                                                22
-                                            </span>
-                                            <span
-                                                class="text-gray-600 text-[10px] md:text-xs"
-                                            >
-                                                🎯 передачи
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div
-                                class="bg-gradient-to-br from-purple-900 to-purple-800 rounded-2xl md:rounded-3xl p-4 md:p-8 border-2 border-purple-700 relative overflow-hidden"
-                            >
-                                <div
-                                    class="absolute top-2 right-2 md:top-4 md:right-4 bg-purple-400 text-white rounded-full px-2 py-0.5 md:px-3 md:py-1 text-[10px] md:text-xs font-bold"
-                                >
-                                    WALL
-                                </div>
-                                <div class="text-center">
-                                    <div
-                                        class="text-4xl md:text-5xl mb-3 md:mb-4"
-                                    >
-                                        🥉
-                                    </div>
-                                    <h4
-                                        class="font-black text-gray-200 text-lg md:text-xl mb-2"
-                                    >
-                                        Сидоров М.
-                                    </h4>
-                                    <p
-                                        class="text-purple-600 font-bold mb-3 md:mb-4 text-sm md:text-base"
-                                    >
-                                        Вратарь
-                                    </p>
-                                    <div
-                                        class="grid grid-cols-2 gap-2 md:gap-4 text-xs md:text-sm"
-                                    >
-                                        <div
-                                            class="bg-white/50 rounded-lg p-1 md:p-2"
-                                        >
-                                            <span
-                                                class="block font-bold text-green-600"
-                                            >
-                                                87%
-                                            </span>
-                                            <span
-                                                class="text-gray-600 text-[10px] md:text-xs"
-                                            >
-                                                🛡️ сейвов
-                                            </span>
-                                        </div>
-                                        <div
-                                            class="bg-white/50 rounded-lg p-1 md:p-2"
-                                        >
-                                            <span
-                                                class="block font-bold text-blue-600"
-                                            >
-                                                12
-                                            </span>
-                                            <span
-                                                class="text-gray-600 text-[10px] md:text-xs"
-                                            >
-                                                🚫 "сухих"
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div> -->
-
                     <!-- Team Composition с улучшенными табами -->
                     <div class="mb-8 md:mb-12">
                         <div
@@ -497,14 +300,14 @@
                                 class="text-sm bg-blue-900/30 text-blue-300 px-3 py-1 md:px-4 md:py-2 rounded-full self-start md:self-auto"
                             >
                                 Всего:
-                                {{ totalPlayersCount }}
+                                {{ teamData.players_count }}
                             </div>
                         </div>
 
                         <!-- Улучшенная навигация по табам -->
                         <div
                             class="flex flex-wrap gap-2 md:gap-3 mb-6 md:mb-8 p-1 md:p-2 bg-gray-800 rounded-xl md:rounded-2xl"
-                            v-if="currentPlayers.length > 0"
+                            v-if="teamPlayers.length > 0"
                         >
                             <button
                                 v-for="tab in tabs"
@@ -554,7 +357,7 @@
                             class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
                         >
                             <NuxtLink
-                                v-for="(player, index) in currentPlayers"
+                                v-for="(player, index) in filteredPlayers"
                                 :key="player.id"
                             >
                                 <div
@@ -591,7 +394,7 @@
                                                 class="bg-gradient-to-r from-blue-600 to-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold shadow-lg group-hover:shadow-xl transition-shadow duration-200"
                                             >
                                                 {{
-                                                    player.pivot?.number || '0'
+                                                    player.stats?.number || '0'
                                                 }}
                                             </span>
                                         </div>
@@ -599,11 +402,7 @@
                                         <p
                                             class="text-xs md:text-sm text-gray-400 mb-2 md:mb-3 font-medium"
                                         >
-                                            {{
-                                                player.pivot?.position ||
-                                                player.position ||
-                                                '0'
-                                            }}
+                                            {{ player.position || '0' }}
                                         </p>
 
                                         <div
@@ -617,7 +416,7 @@
                                                         class="font-semibold text-blue-600"
                                                     >
                                                         {{
-                                                            player?.pivot
+                                                            player?.stats
                                                                 ?.gaa || '0'
                                                         }}%
                                                     </div>
@@ -646,7 +445,7 @@
                                                         class="font-bold text-yellow-500"
                                                     >
                                                         {{
-                                                            player.pivot
+                                                            player.stats
                                                                 ?.penalties || 0
                                                         }}
                                                     </div>
@@ -661,7 +460,7 @@
                                                         class="font-bold text-gray-400"
                                                     >
                                                         {{
-                                                            player.pivot
+                                                            player.stats
                                                                 ?.matches || 0
                                                         }}
                                                     </div>
@@ -678,7 +477,7 @@
                                                         class="font-bold text-blue-600"
                                                     >
                                                         {{
-                                                            player?.pivot
+                                                            player?.stats
                                                                 ?.goals || 0
                                                         }}
                                                     </div>
@@ -693,7 +492,7 @@
                                                         class="font-bold text-red-600"
                                                     >
                                                         {{
-                                                            player?.pivot
+                                                            player?.stats
                                                                 ?.assists || 0
                                                         }}
                                                     </div>
@@ -708,7 +507,7 @@
                                                         class="font-bold text-yellow-500"
                                                     >
                                                         {{
-                                                            player?.pivot
+                                                            player?.stats
                                                                 ?.penalties || 0
                                                         }}
                                                     </div>
@@ -723,7 +522,7 @@
                                                         class="font-bold text-gray-400"
                                                     >
                                                         {{
-                                                            player?.pivot
+                                                            player?.stats
                                                                 ?.matches || 0
                                                         }}
                                                     </div>
@@ -790,53 +589,6 @@
                 </div>
             </div>
 
-            <!-- Additional Stats с 3D карточками -->
-            <div
-                class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-8 mb-8 md:mb-12"
-            >
-                <div
-                    v-for="(stat, index) in additionalStats"
-                    :key="`add-stat-${index}`"
-                    class="group bg-gray-900/80 backdrop-blur-xl rounded-2xl md:rounded-3xl p-4 md:p-8 text-center shadow-xl hover:shadow-2xl transition-all duration-500 transform hover:scale-105 hover:-rotate-1 border border-white/20 relative overflow-hidden"
-                    :style="{
-                        animationDelay: `${index * 150}ms`,
-                        animation: isVisible
-                            ? 'slideInUp 0.8s ease-out forwards'
-                            : 'none',
-                    }"
-                >
-                    <!-- Floating background effect -->
-                    <div
-                        class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        :class="`bg-gradient-to-br from-${stat.color}-900/20 to-${stat.color}-800/20`"
-                    ></div>
-
-                    <div class="relative z-10">
-                        <div
-                            class="text-4xl md:text-6xl mb-3 md:mb-4 group-hover:animate-bounce transition-all duration-300"
-                        >
-                            {{ stat.icon }}
-                        </div>
-                        <div
-                            class="text-2xl md:text-4xl font-black mb-2 md:mb-3 group-hover:scale-110 transition-transform duration-300"
-                            :class="`text-${stat.color}-600`"
-                        >
-                            {{ stat.value }}
-                        </div>
-                        <div
-                            class="text-xs md:text-sm text-gray-400 font-bold mb-1 md:mb-2"
-                        >
-                            {{ stat.label }}
-                        </div>
-                        <div
-                            class="text-[10px] md:text-xs text-gray-500 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                        >
-                            {{ stat.description }}
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <!-- Навигация (дубликат) -->
             <div
                 class="flex flex-col sm:flex-row justify-between items-center gap-3 mt-8 md:mt-12"
@@ -884,8 +636,8 @@
                     </button>
                 </div>
                 <p class="text-gray-400 text-xs md:text-sm">
-                    © 2025 {{ tournamentTeamsData.name }} • Все права защищены •
-                    Сделано с ❤️ для болельщиков
+                    © 2025 {{ teamData.name }} • Все права защищены • Сделано с
+                    ❤️ для болельщиков
                 </p>
             </div>
         </div>
@@ -898,74 +650,103 @@ import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { getTeamLogo } from '@/utils/PicturesAdmin'
 
 const route = useRoute()
-const teamId = route.params.id
+const teamId = computed(() => Number(route.params.id))
 
-const { data: teamData, error } = await useAsyncData(`team-${teamId}`, () =>
-    $fetch(`https://api.timeofthestars.ru/api/teams/${teamId}`)
-)
+const { data, error } = await useAsyncData(
+    () => `team-data-${teamId.value}`,
+    async () => {
+        if (!teamId.value) return { teamsList: [], playersList: [] }
 
-const isChampionshipTeam = computed(() => ['7', '8'].includes(teamId))
-const endpoint = computed(() =>
-    isChampionshipTeam.value
-        ? 'https://api.timeofthestars.ru/api/championships'
-        : 'https://api.timeofthestars.ru/api/tournaments'
-)
-const { data: turnirdata } = useFetch(endpoint)
+        const basePath =
+            teamId.value === 3
+                ? 'https://api.timeofthestars.ru/tournaments/1'
+                : 'https://api.timeofthestars.ru/championships/1'
 
-const tournamentTeamsData = computed(() => {
-    if (!turnirdata.value || turnirdata.value.length === 0) {
-        return { games: [], teams: [] }
+        const [teamsList, playersList] = await Promise.all([
+            $fetch(`${basePath}/teams`),
+            $fetch(`${basePath}/players`),
+        ])
+
+        return { teamsList, playersList }
     }
-    return turnirdata.value[0].teams.find(team => team.id == teamId)
+)
+
+if (error.value) {
+    throw createError({
+        statusCode: 500,
+        statusMessage: 'Ошибка при загрузке данных с сервера',
+        fatal: true,
+    })
+}
+
+const teamsList = computed(() => data.value?.teamsList || [])
+const playersList = computed(() => data.value?.playersList || [])
+
+const teamData = computed(() => {
+    return teamsList.value.find(team => team.id === teamId.value)
 })
+
+// This check is crucial and will now work on the server
+if (!teamData.value) {
+    throw createError({
+        statusCode: 404,
+        statusMessage: `Команда с ID ${teamId.value} не найдена`,
+        fatal: true,
+    })
+}
+
+const teamPlayers = computed(() => {
+    if (playersList.value) {
+        return playersList.value.filter(
+            player => player.team_id === teamId.value
+        )
+    } else {
+        console.log('empty')
+        return []
+    }
+})
+
+console.log(playersList.value)
+console.log(teamPlayers.value)
+console.log(teamId.value)
 
 useHead(
     computed(() => ({
-        title: `${tournamentTeamsData.value?.name || 'Команда'} - ВРЕМЯ ЗВЁЗД`,
+        title: `${teamData.value.name} - ВРЕМЯ ЗВЁЗД`,
         meta: [
             {
                 name: 'description',
-                content: `Страница хоккейной команды ${tournamentTeamsData.value?.name}. Состав, статистика, расписание игр и новости команды.`,
+                content: `Страница хоккейной команды ${teamData.value.name}. Состав, статистика, расписание игр и новости команды.`,
             },
             {
                 name: 'keywords',
-                content: `хоккей, команда, ${tournamentTeamsData.value?.name}, ярославль, состав, статистика, игроки, время звезд`,
+                content: `хоккей, команда, ${teamData.value.name}, ярославль, состав, статистика, игроки, время звезд`,
             },
             { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
             {
                 property: 'og:title',
-                content: `${tournamentTeamsData.value?.name} - ВРЕМЯ ЗВЁЗД`,
+                content: `${teamData.value.name} - ВРЕМЯ ЗВЁЗД`,
             },
             {
                 property: 'og:description',
-                content: `Вся информация о хоккейной команде ${tournamentTeamsData.value?.name}: состав, статистика, новости.`,
+                content: `Вся информация о хоккейной команде ${teamData.value.name}: состав, статистика, новости.`,
             },
             { property: 'og:type', content: 'website' },
             {
                 property: 'og:image',
-                content: getTeamLogo(tournamentTeamsData.value.id),
+                content: getTeamLogo(teamData.value.id),
             },
         ],
         link: [
             {
                 rel: 'canonical',
-                href: `https://timeofthestars.ru/teams/${tournamentTeamsData.value.id}`,
+                href: `https://timeofthestars.ru/teams/${teamData.value.id}`,
             },
         ],
     }))
 )
 
-console.log(tournamentTeamsData.value.id)
-
-if (error.value || !tournamentTeamsData.value) {
-    throw createError({
-        statusCode: 404,
-        statusMessage: `Команда не найдена`,
-        fatal: true,
-    })
-}
-
-const teamColors = usePlayerColor(teamId)
+const teamColors = computed(() => usePlayerColor(teamId.value))
 
 // --- Интегрированная логика ---
 
@@ -987,47 +768,26 @@ onUnmounted(() => {
     }
 })
 
-const formattedTime = computed(() => {
-    return currentTime.value.toLocaleTimeString('ru-RU')
-})
-
-const getTrendColor = trend => {
-    return 'text-gray-500'
-}
-
 const teamStats = computed(() => [
     {
         label: 'Победы',
-        value: tournamentTeamsData.value?.pivot?.wins || 0,
+        value: teamData.value?.stats?.wins || 0,
         color: 'green',
         trend: '',
     },
     {
         label: 'Поражения',
-        value: tournamentTeamsData.value?.pivot?.losses || 0,
+        value: teamData.value?.stats?.losses || 0,
         color: 'red',
         trend: '',
     },
     {
         label: 'Игроки',
-        value: totalPlayersCount.value,
+        value: teamData.value?.players_count || 0,
         color: 'blue',
         trend: '',
     },
 ])
-
-// Объединяем игроков из двух массивов
-const allPlayers = computed(() => {
-    const players = [...(teamData.value.tournament_players || [])]
-    // Убираем дубликаты по ID, если они есть
-    const uniquePlayers = new Map()
-    players.forEach(p => uniquePlayers.set(p.id, p))
-    return Array.from(uniquePlayers.values())
-})
-
-console.log(allPlayers.value)
-
-const totalPlayersCount = computed(() => allPlayers.value.length)
 
 // Группируем игроков по позиции
 const playersByPosition = computed(() => {
@@ -1038,7 +798,7 @@ const playersByPosition = computed(() => {
         other: [],
     }
 
-    allPlayers.value.forEach(player => {
+    teamPlayers.value.forEach(player => {
         const pos = (player.position || 'other').toLowerCase()
         if (pos.includes('нападающий') || pos.includes('форвард')) {
             groups.forwards.push(player)
@@ -1058,7 +818,7 @@ const tabs = computed(() =>
         {
             key: 'all',
             label: 'Все',
-            count: totalPlayersCount.value,
+            count: teamData.value?.players_count,
             color: 'yellow',
         },
         {
@@ -1088,63 +848,26 @@ const tabs = computed(() =>
     ].filter(tab => tab.count > 0)
 )
 
-const currentPlayers = computed(() => {
-    if (activeTab.value === 'all') {
-        return allPlayers.value
-    }
-    return playersByPosition.value[activeTab.value] || []
-})
-
 const isGoalkeeper = player => {
     const pos = (player.position || '').toLowerCase()
     return pos.includes('вратарь')
 }
 
-// Статические данные для демонстрации
-const recentMatches = [
-    {
-        opponent: 'СКА',
-        date: '15.12.2024',
-        result: '4:2',
-        status: 'win',
-        venue: 'Дома',
-        attendance: '12,450',
-    },
-    {
-        opponent: 'ЦСКА',
-        date: '12.12.2024',
-        result: '1:3',
-        status: 'loss',
-        venue: 'В гостях',
-        attendance: '8,200',
-    },
-    {
-        opponent: 'Локомотив',
-        date: '08.12.2024',
-        result: '5:1',
-        status: 'win',
-        venue: 'Дома',
-        attendance: '11,800',
-    },
-]
-
-const achievements = [
-    {
-        year: '2023',
-        title: 'Чемпионы Лиги',
-        description: 'Победа в финальной серии',
-    },
-    {
-        year: '2021',
-        title: 'Кубок Победителей',
-        description: 'Лучший клуб сезона',
-    },
-    {
-        year: '2019',
-        title: 'Золотой Шлем',
-        description: 'Рекордная серия побед',
-    },
-]
+const filteredPlayers = computed(() => {
+    switch (activeTab.value) {
+        case 'forwards':
+            return playersByPosition.value.forwards
+        case 'defenders':
+            return playersByPosition.value.defenders
+        case 'goalkeepers':
+            return playersByPosition.value.goalkeepers
+        case 'other':
+            return playersByPosition.value.other
+        case 'all':
+        default:
+            return teamPlayers.value
+    }
+})
 </script>
 
 <style>

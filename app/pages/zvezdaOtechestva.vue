@@ -38,7 +38,7 @@
                             👥
                         </div>
                         <div class="text-4xl font-bold text-gradient">
-                            {{ teamData.teamCount }}
+                            {{ teamData.length }}
                         </div>
                         <div class="text-gray-300">Команд</div>
                     </div>
@@ -51,7 +51,7 @@
                             🏒
                         </div>
                         <div class="text-4xl font-bold text-gradient">
-                            {{ teamData.gamesCount }}
+                            {{ gameData.length }}
                         </div>
                         <div class="text-gray-300">Матчей</div>
                     </div>
@@ -66,7 +66,7 @@
                         <div
                             class="text-3xl md:text-4xl font-bold text-gradient"
                         >
-                            {{ teamData.start_date }}
+                            {{ turnirdata[0]?.start_date }}
                         </div>
                         <div class="text-gray-300">Дата начала турнира</div>
                     </div>
@@ -126,7 +126,7 @@
 
                 <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
                     <NuxtLink
-                        v-for="team in tournamentTeamsData"
+                        v-for="team in teamData"
                         :key="team.id"
                         :to="`/teams/${team.id}`"
                         class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700 block hover:bg-gray-700 transition-colors"
@@ -151,7 +151,7 @@
 
         <!-- Table Tab -->
         <section v-if="activeTab === 'table'" class="py-16 px-4">
-            <Table :turnirData="turnirdata" />
+            <Table :turnirData="teamData" />
         </section>
 
         <!-- Winner Section -->
@@ -224,40 +224,28 @@ useHead({
 // Активная вкладка
 const activeTab = ref('participants')
 
-const { data: turnirdata } = useFetch(
-    'https://api.timeofthestars.ru/api/championships'
-)
+const teamData = ref([])
+const gameData = ref([])
+const turnirdata = ref([])
 
-const tournamentTeamsData = computed(() => {
-    if (
-        !turnirdata.value ||
-        turnirdata.value.length === 0 ||
-        !turnirdata.value[0].teams
-    ) {
-        return []
-    }
-    return turnirdata.value[0].teams
-})
+onMounted(async () => {
+    try {
+        const tournaments = await $fetch(
+            `https://api.timeofthestars.ru/championships/`
+        )
+        turnirdata.value = tournaments
 
-const teamData = computed(() => {
-    if (
-        !turnirdata.value ||
-        turnirdata.value.length === 0 ||
-        !turnirdata.value[0].start_date
-    ) {
-        return { teamCount: 0, gamesCount: 0, start_date: 'Не определена' }
-    } else {
-        const date = new Date(turnirdata.value[0].start_date)
-        const formattedDate = date.toLocaleDateString('ru-RU', {
-            day: 'numeric',
-            month: 'numeric',
-            year: 'numeric',
-        })
-        return {
-            teamCount: turnirdata.value[0].teams.length,
-            gamesCount: turnirdata.value[0].games.length,
-            start_date: formattedDate,
+        if (tournaments.length > 0) {
+            const tournamentId = tournaments[0].id
+            teamData.value = await $fetch(
+                `https://api.timeofthestars.ru/championships/${tournamentId}/teams`
+            )
+            gameData.value = await $fetch(
+                `https://api.timeofthestars.ru/championships/${tournamentId}/games`
+            )
         }
+    } catch (error) {
+        console.error('Ошибка при получении данных:', error)
     }
 })
 </script>

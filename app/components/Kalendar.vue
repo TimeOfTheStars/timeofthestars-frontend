@@ -21,7 +21,7 @@
                             class="text-xs md:text-sm text-gray-400 w-full md:w-32"
                         >
                             <div class="font-medium">
-                                {{ match.date }}
+                                {{ formatDateToRussian(match.date) }}
                             </div>
                             <div>{{ match.time }}</div>
                         </div>
@@ -39,7 +39,11 @@
                                     class="w-6 h-6 md:w-8 md:h-8 relative flex-shrink-0 bg-gray-600 rounded-full flex items-center justify-center"
                                 >
                                     <img
-                                        :src="getTeamLogo(match.team_a_id)"
+                                        :src="
+                                            getTeamLogo(
+                                                getTeamLogoUrl(match.team_a_id)
+                                            )
+                                        "
                                         :alt="getTeamName(match.team_a_id)"
                                         class="object-contain rounded-full w-full h-full"
                                     />
@@ -84,7 +88,11 @@
                                     class="w-6 h-6 md:w-8 md:h-8 relative flex-shrink-0 bg-gray-600 rounded-full flex items-center justify-center"
                                 >
                                     <img
-                                        :src="getTeamLogo(match.team_b_id)"
+                                        :src="
+                                            getTeamLogo(
+                                                getTeamLogoUrl(match.team_b_id)
+                                            )
+                                        "
                                         :alt="getTeamName(match.team_b_id)"
                                         class="object-contain rounded-full w-full h-full"
                                     />
@@ -94,7 +102,8 @@
 
                         <!-- Статус -->
                         <div
-                            class="bg-green-600/20 text-green-400 px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm ml-auto md:ml-0 md:w-32 text-center"
+                            :class="getMatchStatusClass(getMatchStatus(match))"
+                            class="px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm ml-auto md:ml-0 md:w-32 text-center"
                         >
                             {{ getMatchStatus(match) }}
                         </div>
@@ -103,7 +112,7 @@
                     <div class="mt-3 md:mt-4 flex justify-center">
                         <NuxtLink
                             v-if="match.score_team_a"
-                            :to="`/matches/${match.id}`"
+                            :to="`/matches/${match.scan}`"
                             class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-blue text-white text-sm md:text-base font-medium hover:opacity-90 transition"
                         >
                             Смотреть протокол
@@ -176,7 +185,23 @@ function getTeamName(teamId) {
     return team ? team.name : ''
 }
 
+function formatDateToRussian(dateString) {
+    if (!dateString) return ''
+    const [year, month, day] = dateString.split('-').map(Number)
+    const date = new Date(year, month - 1, day)
+    return date
+        .toLocaleDateString('ru-RU', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+        })
+        .replace(' г.', '')
+}
+
 function getMatchStatus(match) {
+    if (match.date === '2025-11-09') {
+        return 'Перенесен'
+    }
     if (match.score_team_a != null) {
         return 'Завершен'
     }
@@ -203,5 +228,25 @@ function getMatchStatus(match) {
     } else {
         return 'В процессе'
     }
+}
+
+function getMatchStatusClass(status) {
+    switch (status) {
+        case 'Завершен':
+            return 'bg-blue-600/20 text-blue-400'
+        case 'Запланирован':
+            return 'bg-green-600/20 text-green-400'
+        case 'В процессе':
+            return 'bg-orange-600/20 text-orange-400'
+        case 'Перенесен':
+            return 'bg-yellow-600/20 text-yellow-400'
+        default:
+            return 'bg-gray-600/20 text-gray-400'
+    }
+}
+
+function getTeamLogoUrl(teamId) {
+    const team = teams.value.find(team => team.id === teamId)
+    return team ? team.logo_url : null
 }
 </script>

@@ -2,7 +2,7 @@
     <div class="flex items-center space-x-4 mb-4">
         <div class="w-16 h-16 relative">
             <img
-                :src="getTeamLogo(team.id)"
+                :src="getTeamLogo(team.logo_url)"
                 :alt="team.name"
                 class="w-full h-full object-contain rounded-full"
             />

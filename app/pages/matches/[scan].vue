@@ -39,33 +39,36 @@ import { getScan } from '../../utils/PicturesAdmin'
 import { useHead } from '#imports'
 
 const route = useRoute()
-const scanIdParam = route.params.id
+const scanIdParam = route.params.scan
 
-const idString =
-    (Array.isArray(scanIdParam) ? scanIdParam[0] : scanIdParam) || ''
-const id = parseInt(idString, 10)
+let scanId: string | null = null
+if (Array.isArray(scanIdParam)) {
+    scanId = scanIdParam[0] || null
+} else if (scanIdParam) {
+    scanId = scanIdParam
+}
 
-const imageSrc = !isNaN(id) ? getScan(id) : ''
+const imageSrc = scanId ? getScan(scanId) : null
 
 useHead({
-    title: `Скан протокола матча №${id} - ВРЕМЯ ЗВЁЗД`,
+    title: `Скан протокола матча №${scanId} - ВРЕМЯ ЗВЁЗД`,
     meta: [
         {
             name: 'description',
-            content: `Скан-копия официального протокола матча №${id} любительской хоккейной лиги "ВРЕМЯ ЗВЁЗД".`,
+            content: `Скан-копия официального протокола матча №${scanId} любительской хоккейной лиги "ВРЕМЯ ЗВЁЗД".`,
         },
         {
             name: 'keywords',
-            content: `хоккей, протокол, матч, скан, №${id}, ярославль, время звезд`,
+            content: `хоккей, протокол, матч, скан, №${scanId}, ярославль, время звезд`,
         },
         { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
         {
             property: 'og:title',
-            content: `Протокол матча №${id} - ВРЕМЯ ЗВЁЗД`,
+            content: `Протокол матча №${scanId} - ВРЕМЯ ЗВЁЗД`,
         },
         {
             property: 'og:description',
-            content: `Официальный протокол матча №${id}.`,
+            content: `Официальный протокол матча №${scanId}.`,
         },
         { property: 'og:type', content: 'article' },
         { property: 'og:image', content: imageSrc },

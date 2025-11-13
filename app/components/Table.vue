@@ -151,7 +151,7 @@ const sortedStandings = computed(() => {
         return {
             id: team.id,
             team: team.name,
-            logo: getTeamLogo(team.id) || '/zvezdalogo.webp',
+            logo: getTeamLogo(team.logo_url) || '/zvezdalogo.webp',
             games: team.stats?.games ?? 0,
             wins: team.stats?.wins ?? 0,
             draws: team.stats?.draws ?? 0,

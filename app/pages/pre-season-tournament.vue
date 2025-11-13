@@ -60,7 +60,7 @@
                         <div
                             class="text-3xl md:text-4xl font-bold text-gradient"
                         >
-                            {{ turnirdata[0]?.start_date }}
+                            {{ formatDateToRussian(turnirdata[0]?.start_date) }}
                         </div>
                         <div class="text-gray-300">Дата начала турнира</div>
                     </div>
@@ -304,6 +304,19 @@ const activeTab = ref('participants')
 const teamData = ref([])
 const gameData = ref([])
 const turnirdata = ref([])
+
+function formatDateToRussian(dateString) {
+    if (!dateString) return ''
+    const [year, month, day] = dateString.split('-').map(Number)
+    const date = new Date(year, month - 1, day)
+    return date
+        .toLocaleDateString('ru-RU', {
+            day: 'numeric',
+            month: 'long',
+            year: 'numeric',
+        })
+        .replace(' г.', '')
+}
 
 onMounted(async () => {
     try {

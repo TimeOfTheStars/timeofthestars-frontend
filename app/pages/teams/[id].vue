@@ -97,7 +97,7 @@
                             class="w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 mx-auto mb-4 md:mb-6"
                         >
                             <img
-                                :src="getTeamLogo(teamData.id)"
+                                :src="getTeamLogo(teamData.logo_url)"
                                 class="w-full h-full object-contain"
                             />
                         </div>
@@ -300,7 +300,7 @@
                                 class="text-sm bg-blue-900/30 text-blue-300 px-3 py-1 md:px-4 md:py-2 rounded-full self-start md:self-auto"
                             >
                                 Всего:
-                                {{ teamData.players_count }}
+                                {{ totalPlayers }}
                             </div>
                         </div>
 
@@ -734,7 +734,7 @@ useHead(
             { property: 'og:type', content: 'website' },
             {
                 property: 'og:image',
-                content: getTeamLogo(teamData.value.id),
+                content: getTeamLogo(teamData.value.logo_url),
             },
         ],
         link: [
@@ -867,6 +867,10 @@ const filteredPlayers = computed(() => {
         default:
             return teamPlayers.value
     }
+})
+
+const totalPlayers = computed(() => {
+    return filteredPlayers.value.length
 })
 </script>
 

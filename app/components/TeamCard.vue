@@ -1,7 +1,7 @@
 <template>
     <div class="w-20 h-20 relative mx-auto mb-4">
         <img
-            :src="getTeamLogo(team.id)"
+            :src="getTeamLogo(team?.logo_url)"
             :alt="team.name"
             class="w-full h-full object-contain rounded-full"
         />

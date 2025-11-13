@@ -1,42 +1,3 @@
-const teamLogos: Record<number, string> = {
-    1: '/pictures/teams/newPereslavl.webp',
-    2: '/pictures/teams/zubr.png',
-    3: '/pictures/teams/vympelv.webp',
-    4: '/pictures/teams/yaroslavich.webp',
-    5: '/pictures/teams/torpedo.webp',
-    6: '/pictures/teams/bgv.webp',
-    7: '/pictures/teams/pvo.png',
-    8: '/pictures/teams/______.png.webp',
-    9: '/pictures/teams/vympelk.png',
-    10: '/pictures/teams/iscra.webp',
-    99: '/pictures/teams/photo.png',
-}
-
-const scans: Record<number, string> = {
-    1: '/pictures/scans/1.jpg',
-    2: '/pictures/scans/2.jpg',
-    3: '/pictures/scans/3.jpg',
-    4: '/pictures/scans/4.jpg',
-    5: '/pictures/scans/5.jpg',
-    6: '/pictures/scans/6.jpg',
-    7: '/pictures/scans/7.jpg',
-    8: '/pictures/scans/8.jpg',
-    9: '/pictures/scans/9.jpg',
-    10: '/pictures/scans/10.jpg',
-    11: '/pictures/scans/11.jpg',
-    12: '/pictures/scans/12.jpg',
-    13: '/pictures/scans/14.jpg',
-    14: '/pictures/scans/15.jpg',
-    15: '/pictures/scans/13.jpg',
-    16: '/pictures/scans/16.jpg',
-    17: '/pictures/scans/17.jpg',
-    18: '/pictures/scans/18.jpg',
-    19: '/pictures/scans/19.jpg',
-    20: '/pictures/scans/20.jpg',
-    22: '/pictures/scans/22.jpg',
-    23: '/pictures/scans/23.jpg',
-}
-
 const playerPhotos: Record<number, string> = {
     //Ярославич
     1: '/заявочные фото/Ярославич/Сазонов.jpg',
@@ -200,8 +161,11 @@ const playerPhotos: Record<number, string> = {
     154: '',
 }
 
-export function getTeamLogo(id: number): string {
-    return teamLogos[id] ?? '/photo.png'
+export function getTeamLogo(logoUrl: string): string {
+    if (!logoUrl) {
+        return '/photo.png'
+    }
+    return `/pictures/teams/${logoUrl}`
 }
 
 export function getPlayerPhoto(id: number): string {
@@ -211,9 +175,9 @@ export function getPlayerPhoto(id: number): string {
     return playerPhotos[id] ?? '/заявочные фото/defaultplayer.jpg'
 }
 
-export function getScan(id: number): string {
-    if (scans[id] === '') {
+export function getScan(scan: string): string {
+    if (!scan) {
         return ''
     }
-    return scans[id] ?? ''
+    return `/pictures/scans/${scan}`
 }

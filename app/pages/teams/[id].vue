@@ -377,7 +377,11 @@
                                     <div class="relative z-10 text-center">
                                         <div class="flex justify-center mb-3">
                                             <img
-                                                :src="getPlayerPhoto(player.id)"
+                                                :src="
+                                                    getPlayerPhoto(
+                                                        player.photo_url
+                                                    )
+                                                "
                                                 :alt="player.full_name"
                                                 class="w-20 h-20 rounded-full object-cover border-4 border-gray-700 group-hover:border-blue-500 transition-all duration-300"
                                             />
@@ -647,7 +651,7 @@
 <script setup>
 import { NuxtLink } from '#components'
 import { ref, computed, onMounted, onUnmounted } from 'vue'
-import { getTeamLogo } from '@/utils/PicturesAdmin'
+import { getTeamLogo, getPlayerPhoto } from '@/utils/PicturesAdmin'
 
 const route = useRoute()
 const teamId = computed(() => Number(route.params.id))
@@ -701,14 +705,9 @@ const teamPlayers = computed(() => {
             player => player.team_id === teamId.value
         )
     } else {
-        console.log('empty')
         return []
     }
 })
-
-console.log(playersList.value)
-console.log(teamPlayers.value)
-console.log(teamId.value)
 
 useHead(
     computed(() => ({

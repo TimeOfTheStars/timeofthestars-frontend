@@ -199,7 +199,7 @@ function formatDateToRussian(dateString) {
 }
 
 function getMatchStatus(match) {
-    if (match.date === '2025-11-09') {
+    if (match.date === '2025-11-09' || match.date === '2025-11-15') {
         return 'Перенесен'
     }
     if (match.score_team_a != null) {

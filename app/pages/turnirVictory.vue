@@ -174,11 +174,11 @@
                             <div
                                 class="w-20 h-20 sm:w-28 sm:h-28 md:w-32 md:h-32 relative mx-auto mb-4 sm:mb-6"
                             >
-                                <img
+                                <!-- <img
                                     src="/photo_53844715688281.png (1).webp"
                                     alt="ХК Зубр"
                                     class="object-contain rounded-full w-full h-full"
-                                />
+                                /> -->
                             </div>
 
                             <!-- Название и город -->

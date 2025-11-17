@@ -196,7 +196,7 @@
                         >
                             <div class="w-32 h-32 relative mx-auto mb-6">
                                 <img
-                                    src="/photo_53844715688281.png (2).webp"
+                                    src="/pictures/teams/vympelv.webp"
                                     alt="ХК Переславль-Залесский"
                                     class="w-full h-full object-contain rounded-full"
                                 />

@@ -102,7 +102,9 @@
                 <div>
                     <h3 class="text-lg font-semibold mb-4">Контакты</h3>
                     <div class="space-y-2 text-gray-400">
-                        
+                        <p>
+                            <a href="mailto:help@timeofthestars.ru" class="hover:text-white transition-colors">help@timeofthestars.ru</a>
+                        </p>
                         <p>📍 Ярославль, Россия</p>
                     </div>
                 </div>

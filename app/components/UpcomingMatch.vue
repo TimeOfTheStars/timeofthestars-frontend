@@ -8,7 +8,7 @@
             {{ match.tournaments[0].name }}
         </div>
         <div class="text-gray-400 text-xs sm:text-sm">
-            {{ match.date }} • {{ match.time }}
+            {{ formatDate(match.date) }} • {{ formatTime(match.time) }}
         </div>
     </div>
 
@@ -58,4 +58,20 @@ defineProps({
     },
 })
 
+function formatTime(timeString) {
+    if (!timeString) return ''
+    const [hours, minutes] = timeString.split(':')
+    return `${hours}:${minutes}`
+}
+
+function formatDate(dateString) {
+    if (!dateString) return ''
+    const [year, month, day] = dateString.split('-').map(Number)
+    const date = new Date(year, month - 1, day)
+    return date
+        .toLocaleDateString('ru-RU', {
+            day: 'numeric',
+            month: 'long',
+        })
+}
 </script>

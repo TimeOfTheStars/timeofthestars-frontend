@@ -1,8 +1,8 @@
 <template>
     <div class="flex flex-col md:flex-row items-center justify-between">
         <div class="text-sm text-gray-400 w-32 order-last md:order-first text-center md:text-left">
-            <div>{{ match.date }}</div>
-            <div>{{ match.time }}</div>
+            <div>{{ formatDate(match.date) }}</div>
+            <div>{{ formatTime(match.time) }}</div>
         </div>
         <div class="flex items-center gap-6 flex-1 justify-center">
             <div class="flex flex-col md:flex-row items-center gap-3">
@@ -33,4 +33,21 @@ defineProps({
         required: true,
     }
 })
+
+function formatTime(timeString) {
+    if (!timeString) return ''
+    const [hours, minutes] = timeString.split(':')
+    return `${hours}:${minutes}`
+}
+
+function formatDate(dateString) {
+    if (!dateString) return ''
+    const [year, month, day] = dateString.split('-').map(Number)
+    const date = new Date(year, month - 1, day)
+    return date
+        .toLocaleDateString('ru-RU', {
+            day: 'numeric',
+            month: 'long',
+        })
+}
 </script>

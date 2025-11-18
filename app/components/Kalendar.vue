@@ -23,7 +23,8 @@
                             <div class="font-medium">
                                 {{ formatDateToRussian(match.date) }}
                             </div>
-                            <div>{{ match.time }}</div>
+                            <div>{{ formatTime(match.time) }}</div>
+                            <div class="text-gray-500">{{ match.location }}</div>
                         </div>
 
                         <!-- Команды и счет -->
@@ -185,6 +186,12 @@ function getTeamName(teamId) {
     return team ? team.name : ''
 }
 
+function formatTime(timeString) {
+    if (!timeString) return ''
+    const [hours, minutes] = timeString.split(':')
+    return `${hours}:${minutes}`
+}
+
 function formatDateToRussian(dateString) {
     if (!dateString) return ''
     const [year, month, day] = dateString.split('-').map(Number)
@@ -193,7 +200,6 @@ function formatDateToRussian(dateString) {
         .toLocaleDateString('ru-RU', {
             day: 'numeric',
             month: 'long',
-            year: 'numeric',
         })
         .replace(' г.', '')
 }

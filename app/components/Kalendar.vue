@@ -221,7 +221,11 @@ function formatDateToRussian(dateString) {
 }
 
 function getMatchStatus(match) {
-    if (match.date === '2025-11-09' || match.date === '2025-11-15' || match.date === '2025-11-18' || match.date === '2025-11-23') {
+    if (
+        match.date === '2025-11-09' ||
+        match.date === '2025-11-15' ||
+        match.date === '2025-11-23'
+    ) {
         return 'Перенесен'
     }
     if (match.score_team_a != null) {

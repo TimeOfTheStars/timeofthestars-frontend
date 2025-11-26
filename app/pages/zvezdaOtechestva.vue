@@ -113,6 +113,18 @@
                     >
                         📊 Таблица
                     </button>
+                    <button
+                        class="w-48 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold shadow-lg"
+                        :class="{
+                            'bg-primary-blue text-white':
+                                activeTab === 'bestPlayers',
+                            'bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors':
+                                activeTab !== 'bestPlayers',
+                        }"
+                        @click="activeTab = 'bestPlayers'"
+                    >
+                        🏆 Лучшие игроки
+                    </button>
                 </div>
             </div>
         </section>
@@ -152,6 +164,18 @@
         <!-- Table Tab -->
         <section v-if="activeTab === 'table'" class="py-16 px-4">
             <Table :turnirData="teamData" />
+        </section>
+
+        <!-- Best Players Tab -->
+        <section v-if="activeTab === 'bestPlayers'" class="py-16 px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl font-bold mb-8 text-center">
+                    🏆 Лучшие игроки чемпионата
+                </h2>
+                <div class="bg-gray-800 rounded-xl p-4 md:p-8 overflow-x-auto">
+                    <BestPlayers />
+                </div>
+            </div>
         </section>
 
         <!-- Winner Section -->
@@ -199,7 +223,7 @@ useHead({
         {
             name: 'keywords',
             content:
-                'хоккей, звезда отечества, чемпионат, ярославль, расписание, таблица, участники, результаты',
+                'хоккей, звезда отечества, чемпионат, ярославль, расписание, таблица, участники, результаты, лучшие игроки',
         },
         { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
         {
@@ -227,6 +251,7 @@ const activeTab = ref('participants')
 const teamData = ref([])
 const gameData = ref([])
 const turnirdata = ref([])
+const playersData = ref([])
 
 onMounted(async () => {
     try {
@@ -243,11 +268,36 @@ onMounted(async () => {
             gameData.value = await $fetch(
                 `https://api.timeofthestars.ru/championships/${tournamentId}/games`
             )
+            playersData.value = await $fetch(
+                `https://api.timeofthestars.ru/championships/${tournamentId}/players-stats`
+            )
         }
     } catch (error) {
         console.error('Ошибка при получении данных:', error)
     }
 })
+
+const bestPlayers = computed(() => {
+    if (!playersData.value || !Array.isArray(playersData.value)) return []
+    return [...playersData.value]
+        .sort((a, b) => {
+            const pointsA = (a.goals || 0) + (a.assists || 0)
+            const pointsB = (b.goals || 0) + (b.assists || 0)
+            if (pointsB !== pointsA) {
+                return pointsB - pointsA
+            }
+            if (b.goals !== a.goals) {
+                return (b.goals || 0) - (a.goals || 0)
+            }
+            return (a.games_played || 0) - (b.games_played || 0)
+        })
+        .slice(0, 20)
+})
+
+function getTeamNameById(teamId) {
+    const team = teamData.value.find(team => team.id === teamId)
+    return team ? team.name : 'Неизвестно'
+}
 
 function formatDateToRussian(dateString) {
     if (!dateString) return ''

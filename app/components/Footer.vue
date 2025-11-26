@@ -22,7 +22,9 @@
                 </div>
 
                 <div>
-                    <h3 class="text-lg font-semibold mb-4">Турниры</h3>
+                    <h3 class="text-lg font-semibold mb-4">
+                        Турниры и чемпионаты
+                    </h3>
                     <ul class="space-y-2 text-gray-400">
                         <li>
                             <NuxtLink
@@ -30,6 +32,14 @@
                                 class="hover:text-white transition-colors"
                             >
                                 Предсезонный турнир
+                            </NuxtLink>
+                        </li>
+                        <li>
+                            <NuxtLink
+                                to="/zvezdaOtechestva"
+                                class="hover:text-white transition-colors"
+                            >
+                                Звезда Отечества
                             </NuxtLink>
                         </li>
                         <!-- <li>
@@ -48,16 +58,6 @@
                                 Звезда Отечества
                             </NuxtLink>
                         </li> -->
-                        <li>
-                            <a
-                                href="https://timeofthestars.tilda.ws/"
-                                target="_blank"
-                                rel="noopener noreferrer"
-                                class="hover:text-white transition-colors"
-                            >
-                                Прошлый сезон
-                            </a>
-                        </li>
                     </ul>
                 </div>
 
@@ -103,7 +103,11 @@
                     <h3 class="text-lg font-semibold mb-4">Контакты</h3>
                     <div class="space-y-2 text-gray-400">
                         <p>
-                            <a href="mailto:help@timeofthestars.ru" class="hover:text-white transition-colors">help@timeofthestars.ru</a>
+                            <a
+                                href="mailto:help@timeofthestars.ru"
+                                class="hover:text-white transition-colors"
+                                >help@timeofthestars.ru</a
+                            >
                         </p>
                         <p>📍 Ярославль, Россия</p>
                     </div>
@@ -122,5 +126,3 @@
 <script lang="ts" setup></script>
 
 <style></style>
-
-

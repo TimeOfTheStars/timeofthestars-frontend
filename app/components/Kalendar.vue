@@ -11,8 +11,14 @@
                 <div
                     v-for="match in games"
                     :key="match.id"
-                    class="bg-gray-800 rounded-lg md:rounded-xl p-4 md:p-6 card-hover"
+                    class="bg-gray-800 rounded-lg md:rounded-xl p-4 md:p-6 card-hover relative"
                 >
+                    <div
+                        :class="getMatchStatusClass(getMatchStatus(match))"
+                        class="absolute top-4 right-4 px-2 py-1 rounded-full text-xs md:hidden text-center"
+                    >
+                        {{ getMatchStatus(match) }}
+                    </div>
                     <div
                         class="flex flex-col md:flex-row md:items-center justify-between gap-3"
                     >
@@ -24,7 +30,9 @@
                                 {{ formatDateToRussian(match.date) }}
                             </div>
                             <div>{{ formatTime(match.time) }}</div>
-                            <div class="text-gray-500">{{ match.location }}</div>
+                            <div class="text-gray-500">
+                                {{ match.location }}
+                            </div>
                         </div>
 
                         <!-- Команды и счет -->
@@ -104,7 +112,7 @@
                         <!-- Статус -->
                         <div
                             :class="getMatchStatusClass(getMatchStatus(match))"
-                            class="px-2 py-1 md:px-3 md:py-1 rounded-full text-xs md:text-sm ml-auto md:ml-0 md:w-32 text-center"
+                            class="hidden md:block px-3 py-1 rounded-full text-sm w-32 text-center"
                         >
                             {{ getMatchStatus(match) }}
                         </div>
@@ -126,6 +134,24 @@
                             title="Протокол будет доступен после завершения матча"
                         >
                             Смотреть протокол
+                        </button>
+                    </div>
+                    <div class="flex items-center justify-center">
+                        <NuxtLink
+                            v-if="match.video_url"
+                            class="inline-flex px-4 mt-3 py-2 rounded-lg bg-primary-blue text-white text-sm md:text-base font-medium hover:opacity-90 transition cursor-pointer"
+                            :to="match.video_url"
+                        >
+                            Смотреть трансляцию
+                        </NuxtLink>
+                        <button
+                            v-else
+                            class="inline-flex items-center justify-center px-4 mt-3 py-2 rounded-lg bg-gray-700 text-gray-400 text-sm md:text-base font-medium cursor-not-allowed"
+                            disabled
+                            aria-disabled="true"
+                            title="Трансляция недоступна"
+                        >
+                            Смотреть трансляцию
                         </button>
                     </div>
                 </div>
@@ -205,7 +231,11 @@ function formatDateToRussian(dateString) {
 }
 
 function getMatchStatus(match) {
-    if (match.date === '2025-11-09' || match.date === '2025-11-15' || match.date === '2025-11-18' || match.date === '2025-11-23') {
+    if (
+        match.date === '2025-11-09' ||
+        match.date === '2025-11-15' ||
+        match.date === '2025-11-23'
+    ) {
         return 'Перенесен'
     }
     if (match.score_team_a != null) {

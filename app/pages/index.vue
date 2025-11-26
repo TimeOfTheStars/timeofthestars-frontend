@@ -195,7 +195,7 @@
                                     class="flex items-center justify-center gap-2"
                                 >
                                     <span>👥</span>
-                                    <span>6 команд учавствуют</span>
+                                    <span>7 команд учавствуют</span>
                                 </div>
                                 <div
                                     class="flex items-center justify-center gap-2"

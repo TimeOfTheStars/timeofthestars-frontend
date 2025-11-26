@@ -15,7 +15,7 @@
                 >
                     <div
                         :class="getMatchStatusClass(getMatchStatus(match))"
-                        class="absolute top-4 left-4 px-2 py-1 rounded-full text-xs md:hidden text-center"
+                        class="absolute top-4 right-4 px-2 py-1 rounded-full text-xs md:hidden text-center"
                     >
                         {{ getMatchStatus(match) }}
                     </div>

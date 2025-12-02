@@ -132,7 +132,10 @@
                     </div>
 
                     <div
-                        class="absolute top-3 right-3 md:top-6 md:right-6 bg-white/20 backdrop-blur-md rounded-xl md:rounded-2xl px-3 py-1 md:px-6 md:py-3 border border-white/30"
+                        class="absolute top-3 right-3 md:top-6 md:right-6 bg-white/20 backdrop-blur-md rounded-xl md:rounded-2xl px-3 py-1 md:px-6 md:py-3 border border-white/30 transition-all duration-300"
+                        :class="{
+                            'opacity-0': isLogoHovered && hasCustomBackground,
+                        }"
                     >
                         <span
                             class="text-white font-bold flex items-center space-x-1 md:space-x-2 text-xs md:text-base"
@@ -798,7 +801,7 @@ const teamBackgroundStyle = computed(() => {
             backgroundImage: `url('/pictures/teams/Переславль_фото_команды.jpg')`,
         }
     }
-    if (teamName.includes('яввк пво')) {
+    if (teamName.includes('явву пво')) {
         return {
             ...baseStyle,
             backgroundImage: `url('/pictures/teams/ПВО_фото_команды.JPG')`,
@@ -809,7 +812,7 @@ const teamBackgroundStyle = computed(() => {
 
 const hasCustomBackground = computed(() => {
     const teamName = teamData.value?.name.toLowerCase()
-    return teamName.includes('переславль') || teamName.includes('яввк пво')
+    return teamName.includes('переславль') || teamName.includes('явву пво')
 })
 
 const teamStats = computed(() => [

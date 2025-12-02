@@ -73,6 +73,9 @@
             >
                 <!-- Team Photo Section с параллакс эффектом -->
                 <div
+                    @mouseenter="isLogoHovered = true"
+                    @mouseleave="isLogoHovered = false"
+                    :style="teamBackgroundStyle"
                     class="relative h-57 md:h-72 lg:h-96 bg-gradient-to-r from-blue-600 via-purple-600 to-red-600 flex items-center justify-center overflow-hidden"
                 >
                     <!-- Анимированные частицы -->
@@ -90,11 +93,18 @@
                         ></div>
                     </div>
 
+                    <!-- Overlay for better text readability -->
+                    <div class="absolute inset-0 bg-black/50"></div>
+
                     <div
                         class="text-center text-white relative z-10 px-4 pb-4 md:pb-0"
                     >
                         <div
-                            class="w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 mx-auto mb-4 md:mb-6"
+                            class="w-32 h-32 md:w-48 md:h-48 lg:w-64 lg:h-64 mx-auto mb-4 md:mb-6 transition-all duration-300"
+                            :class="{
+                                'opacity-0 scale-90':
+                                    isLogoHovered && hasCustomBackground,
+                            }"
                         >
                             <img
                                 :src="getTeamLogo(teamData.logo_url)"
@@ -103,11 +113,19 @@
                         </div>
                         <h2
                             class="text-2xl md:text-4xl lg:text-6xl font-black mb-2 md:mb-3 tracking-wider"
+                            :class="{
+                                'opacity-0':
+                                    isLogoHovered && hasCustomBackground,
+                            }"
                         >
                             {{ teamData.name }}
                         </h2>
                         <p
                             class="text-sm md:text-xl lg:text-2xl opacity-90 font-light"
+                            :class="{
+                                'opacity-0':
+                                    isLogoHovered && hasCustomBackground,
+                            }"
                         >
                             г. {{ teamData.city }}
                         </p>
@@ -752,6 +770,7 @@ const teamColors = computed(() => usePlayerColor(teamId.value))
 const activeTab = ref('all')
 const isVisible = ref(false)
 const currentTime = ref(new Date())
+const isLogoHovered = ref(false)
 let timer = null
 
 onMounted(() => {
@@ -765,6 +784,32 @@ onUnmounted(() => {
     if (timer) {
         clearInterval(timer)
     }
+})
+
+const teamBackgroundStyle = computed(() => {
+    const teamName = teamData.value?.name.toLowerCase()
+    const baseStyle = {
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+    }
+    if (teamName.includes('переславль')) {
+        return {
+            ...baseStyle,
+            backgroundImage: `url('/pictures/teams/Переславль_фото_команды.jpg')`,
+        }
+    }
+    if (teamName.includes('яввк пво')) {
+        return {
+            ...baseStyle,
+            backgroundImage: `url('/pictures/teams/ПВО_фото_команды.JPG')`,
+        }
+    }
+    return {}
+})
+
+const hasCustomBackground = computed(() => {
+    const teamName = teamData.value?.name.toLowerCase()
+    return teamName.includes('переславль') || teamName.includes('яввк пво')
 })
 
 const teamStats = computed(() => [

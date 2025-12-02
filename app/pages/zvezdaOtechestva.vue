@@ -75,7 +75,10 @@
         </section>
 
         <!-- Navigation Tabs -->
-        <section class="py-8 px-4 bg-gray-800 border-b border-gray-700">
+        <section
+            id="tabs-nav"
+            class="py-8 px-4 bg-gray-800 border-b border-gray-700"
+        >
             <div class="max-w-6xl mx-auto">
                 <div class="flex flex-wrap justify-center gap-4">
                     <button
@@ -86,10 +89,16 @@
                             'bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors':
                                 activeTab !== 'participants',
                         }"
-                        @click="activeTab = 'participants'"
+                        @click="
+                            () => {
+                                activeTab = 'participants'
+                                scrollToTabs()
+                            }
+                        "
                     >
                         👥 Участники
                     </button>
+
                     <button
                         class="w-48 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold shadow-lg"
                         :class="{
@@ -98,10 +107,16 @@
                             'bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors':
                                 activeTab !== 'calendar',
                         }"
-                        @click="activeTab = 'calendar'"
+                        @click="
+                            () => {
+                                activeTab = 'calendar'
+                                scrollToTabs()
+                            }
+                        "
                     >
                         📅 Календарь
                     </button>
+
                     <button
                         class="w-48 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold shadow-lg"
                         :class="{
@@ -109,10 +124,16 @@
                             'bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors':
                                 activeTab !== 'table',
                         }"
-                        @click="activeTab = 'table'"
+                        @click="
+                            () => {
+                                activeTab = 'table'
+                                scrollToTabs()
+                            }
+                        "
                     >
                         📊 Таблица
                     </button>
+
                     <button
                         class="w-48 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold shadow-lg"
                         :class="{
@@ -121,7 +142,12 @@
                             'bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors':
                                 activeTab !== 'bestPlayers',
                         }"
-                        @click="activeTab = 'bestPlayers'"
+                        @click="
+                            () => {
+                                activeTab = 'bestPlayers'
+                                scrollToTabs()
+                            }
+                        "
                     >
                         🏆 Лучшие игроки
                     </button>
@@ -208,52 +234,36 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, nextTick } from 'vue'
 import { useHead, useRoute, onMounted } from '#imports'
 
-// Set page title
 useHead({
     title: 'Звезда Отечества - ВРЕМЯ ЗВЁЗД',
-    meta: [
-        {
-            name: 'description',
-            content:
-                'Информация о чемпионате Звезда Отечества по хоккею в Ярославле. Участники, календарь, таблица и результаты.',
-        },
-        {
-            name: 'keywords',
-            content:
-                'хоккей, звезда отечества, чемпионат, ярославль, расписание, таблица, участники, результаты, лучшие игроки',
-        },
-        { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
-        {
-            property: 'og:title',
-            content: 'Звезда Отечества - ВРЕМЯ ЗВЁЗД',
-        },
-        {
-            property: 'og:description',
-            content:
-                'Вся информация о чемпионате Звезда Отечества по хоккею среди любительских команд Ярославля.',
-        },
-        { property: 'og:type', content: 'website' },
-    ],
-    link: [
-        {
-            rel: 'canonical',
-            href: 'https://timeofthestars.ru/zvezdaOtechestva',
-        },
-    ],
 })
 
 // Активная вкладка
 const activeTab = ref('participants')
 
+// плавный скролл к табам
+function scrollToTabs() {
+    const nav = document.getElementById('tabs-nav')
+    if (nav) {
+        nav.scrollIntoView({ behavior: 'smooth', block: 'start' })
+    }
+}
+
+// Применение таба из URL и скролл
 onMounted(() => {
     const route = useRoute()
     const validTabs = ['participants', 'calendar', 'table', 'bestPlayers']
     const tabFromQuery = route.query.tab
+
     if (tabFromQuery && validTabs.includes(tabFromQuery)) {
         activeTab.value = tabFromQuery
+
+        nextTick(() => {
+            scrollToTabs()
+        })
     }
 })
 
@@ -271,6 +281,7 @@ onMounted(async () => {
 
         if (tournaments.length > 0) {
             const tournamentId = tournaments[0].id
+
             teamData.value = await $fetch(
                 `https://api.timeofthestars.ru/championships/${tournamentId}/teams`
             )
@@ -285,28 +296,6 @@ onMounted(async () => {
         console.error('Ошибка при получении данных:', error)
     }
 })
-
-const bestPlayers = computed(() => {
-    if (!playersData.value || !Array.isArray(playersData.value)) return []
-    return [...playersData.value]
-        .sort((a, b) => {
-            const pointsA = (a.goals || 0) + (a.assists || 0)
-            const pointsB = (b.goals || 0) + (b.assists || 0)
-            if (pointsB !== pointsA) {
-                return pointsB - pointsA
-            }
-            if (b.goals !== a.goals) {
-                return (b.goals || 0) - (a.goals || 0)
-            }
-            return (a.games_played || 0) - (b.games_played || 0)
-        })
-        .slice(0, 20)
-})
-
-function getTeamNameById(teamId) {
-    const team = teamData.value.find(team => team.id === teamId)
-    return team ? team.name : 'Неизвестно'
-}
 
 function formatDateToRussian(dateString) {
     if (!dateString) return ''

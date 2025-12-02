@@ -209,7 +209,7 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-import { useHead } from '#imports'
+import { useHead, useRoute, onMounted } from '#imports'
 
 // Set page title
 useHead({
@@ -247,6 +247,15 @@ useHead({
 
 // Активная вкладка
 const activeTab = ref('participants')
+
+onMounted(() => {
+    const route = useRoute()
+    const validTabs = ['participants', 'calendar', 'table', 'bestPlayers']
+    const tabFromQuery = route.query.tab
+    if (tabFromQuery && validTabs.includes(tabFromQuery)) {
+        activeTab.value = tabFromQuery
+    }
+})
 
 const teamData = ref([])
 const gameData = ref([])

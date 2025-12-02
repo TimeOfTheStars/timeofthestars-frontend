@@ -23,7 +23,8 @@
                             >
                             <div class="flex flex-col text-left">
                                 <span
-    tate                            class="text-sm md:text-base text-accent-blue font-semibold"
+                                    tate
+                                    class="text-sm md:text-base text-accent-blue font-semibold"
                                     >Прошлые матчи</span
                                 >
                                 <span class="text-xs md:text-sm text-gray-400"
@@ -628,7 +629,7 @@ const isFutureExpanded = ref(false)
 const pastMatches = computed(() => {
     return games.value
         .filter(m => m.date && getWeekNumber(m.date) < currentWeekNumber.value)
-        .sort((a, b) => new Date(b.date) - new Date(a.date))
+        .sort((a, b) => new Date(a.date) - new Date(b.date))
 })
 
 const currentMatches = computed(() => {

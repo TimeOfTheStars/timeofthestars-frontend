@@ -695,7 +695,6 @@ function formatDateToRussian(dateString) {
 function getMatchStatus(match) {
     if (
         match.date === '2025-11-09' ||
-        match.date === '2025-11-15' ||
         match.date === '2025-11-23' ||
         match.date === '2025-11-29'
     ) {

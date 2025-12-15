@@ -1,227 +1,43 @@
 <template>
-    <div class="space-y-6 md:space-y-8">
-        <div>
+    <div>
+        <div v-if="carousel">
             <h3
-                class="text-xl md:text-2xl font-semibold mb-4 md:mb-6 text-accent-blue flex items-center justify-center mt-8 gap-2"
+                class="text-xl md:text-2xl font-semibold mb-4 md:mb-6 text-accent-blue flex items-center justify-center gap-2"
             >
                 <span class="text-2xl md:text-3xl">🗓️</span>
                 {{ title }}
             </h3>
-
-            <div class="space-y-3 md:space-y-4">
-                <!-- ПAST: кнопка раскрытия -->
-                <div class="flex flex-col gap-2">
-                    <button
-                        @click="isPastExpanded = !isPastExpanded"
-                        class="w-full flex items-center justify-between p-3 md:p-4 bg-gray-800 hover:bg-gray-700 rounded-lg md:rounded-xl transition-colors"
-                    >
-                        <div class="flex items-center gap-3">
-                            <span
-                                class="text-lg md:text-xl transition-transform duration-300"
-                                :class="{ 'rotate-90': isPastExpanded }"
-                                >➤</span
-                            >
-                            <div class="flex flex-col text-left">
-                                <span
-                                    tate
-                                    class="text-sm md:text-base text-accent-blue font-semibold"
-                                    >Прошлые матчи</span
-                                >
-                                <span class="text-xs md:text-sm text-gray-400"
-                                    >Всего: {{ pastMatches.length }}</span
-                                >
-                            </div>
-                        </div>
-                        <span class="text-xs text-gray-400"
-                            >Нажмите, чтобы открыть</span
-                        >
-                    </button>
-
+            <Swiper
+                v-if="carouselMatches.length > 0"
+                :modules="[SwiperNavigation]"
+                :key="initialSlide"
+                :initial-slide="initialSlide"
+                :navigation="{
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                }"
+                :slides-per-view="1"
+                :space-between="16"
+                :breakpoints="{
+                    '768': {
+                        slidesPerView: 2,
+                        spaceBetween: 24,
+                    },
+                }"
+                class="relative"
+            >
+                <SwiperSlide
+                    v-for="match in carouselMatches"
+                    :key="match.id"
+                    class="pb-12"
+                >
                     <div
-                        class="overflow-hidden transition-all duration-300 ease-in-out"
-                        :style="{
-                            maxHeight: isPastExpanded ? '9999px' : '0px',
-                        }"
-                    >
-                        <div class="space-y-3 md:space-y-4 pl-2 md:pl-4">
-                            <div
-                                v-for="match in pastMatches"
-                                :key="`past-${match.id}`"
-                                class="bg-gray-800 rounded-lg md:rounded-xl p-4 md:p-6 card-hover relative"
-                            >
-                                <!-- match card -->
-                                <div
-                                    :class="
-                                        getMatchStatusClass(
-                                            getMatchStatus(match)
-                                        )
-                                    "
-                                    class="absolute top-4 right-4 px-2 py-1 rounded-full text-xs md:hidden text-center"
-                                >
-                                    {{ getMatchStatus(match) }}
-                                </div>
-                                <div
-                                    class="flex flex-col md:flex-row md:items-center justify-between gap-3"
-                                >
-                                    <div
-                                        class="text-xs md:text-sm text-gray-400 w-full md:w-32"
-                                    >
-                                        <div class="font-medium">
-                                            {{
-                                                formatDateToRussian(match.date)
-                                            }}
-                                        </div>
-                                        <div>{{ formatTime(match.time) }}</div>
-                                        <div class="text-gray-500">
-                                            {{ match.location }}
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="flex-1 flex flex-col sm:grid sm:grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6 overflow-hidden"
-                                    >
-                                        <NuxtLink
-                                            :to="`/teams/${match.team_a_id}`"
-                                            class="flex items-center gap-2 md:gap-3 min-w-0 justify-self-start"
-                                        >
-                                            <div
-                                                class="w-6 h-6 md:w-8 md:h-8 relative shrink-0 bg-gray-600 rounded-full flex items-center justify-center"
-                                            >
-                                                <img
-                                                    :src="
-                                                        getTeamLogo(
-                                                            getTeamLogoUrl(
-                                                                match.team_a_id
-                                                            )
-                                                        )
-                                                    "
-                                                    :alt="
-                                                        getTeamName(
-                                                            match.team_a_id
-                                                        )
-                                                    "
-                                                    class="object-contain rounded-full w-full h-full"
-                                                />
-                                            </div>
-                                            <span
-                                                class="font-medium text-sm truncate"
-                                                >{{
-                                                    getTeamName(match.team_a_id)
-                                                }}</span
-                                            >
-                                        </NuxtLink>
-                                        <div
-                                            class="flex flex-col items-center justify-self-center"
-                                        >
-                                            <div
-                                                class="bg-primary-blue px-3 py-1 md:px-4 md:py-2 rounded-lg text-white font-bold text-sm md:text-base whitespace-nowrap text-center md:min-w-24"
-                                            >
-                                                <div>
-                                                    {{
-                                                        match.score_team_a !=
-                                                        null
-                                                            ? `${match.score_team_a} - ${match.score_team_b}`
-                                                            : 'vs'
-                                                    }}
-                                                </div>
-                                                <div
-                                                    v-if="
-                                                        match.bullet_win_team !==
-                                                        null
-                                                    "
-                                                    class="text-base font-normal opacity-90"
-                                                ></div>
-                                            </div>
-                                        </div>
-                                        <NuxtLink
-                                            :to="`/teams/${match.team_b_id}`"
-                                            class="flex items-center gap-2 md:gap-3 min-w-0 justify-end justify-self-end"
-                                        >
-                                            <span
-                                                class="font-medium text-sm truncate"
-                                                >{{
-                                                    getTeamName(match.team_b_id)
-                                                }}</span
-                                            >
-                                            <div
-                                                class="w-6 h-6 md:w-8 md:h-8 relative shrink-0 bg-gray-600 rounded-full flex items-center justify-center"
-                                            >
-                                                <img
-                                                    :src="
-                                                        getTeamLogo(
-                                                            getTeamLogoUrl(
-                                                                match.team_b_id
-                                                            )
-                                                        )
-                                                    "
-                                                    :alt="
-                                                        getTeamName(
-                                                            match.team_b_id
-                                                        )
-                                                    "
-                                                    class="object-contain rounded-full w-full h-full"
-                                                />
-                                            </div>
-                                        </NuxtLink>
-                                    </div>
-                                    <div
-                                        :class="
-                                            getMatchStatusClass(
-                                                getMatchStatus(match)
-                                            )
-                                        "
-                                        class="hidden md:block px-3 py-1 rounded-full text-sm w-32 text-center"
-                                    >
-                                        {{ getMatchStatus(match) }}
-                                    </div>
-                                </div>
-                                <div class="mt-3 md:mt-4 flex justify-center">
-                                    <NuxtLink
-                                        v-if="match.score_team_a"
-                                        :to="`/matches/${match.scan}`"
-                                        class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-blue text-white text-sm md:text-base font-medium hover:opacity-90 transition"
-                                        >Смотреть протокол</NuxtLink
-                                    >
-                                    <button
-                                        v-else
-                                        class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-700 text-gray-400 text-sm md:text-base font-medium cursor-not-allowed"
-                                        disabled
-                                        aria-disabled="true"
-                                        title="Протокол будет доступен после завершения матча"
-                                    >
-                                        Смотреть протокол
-                                    </button>
-                                </div>
-                                <div class="flex items-center justify-center">
-                                    <NuxtLink
-                                        v-if="match.video_url"
-                                        class="inline-flex px-4 mt-3 py-2 rounded-lg bg-primary-blue text-white text-sm md:text-base font-medium hover:opacity-90 transition cursor-pointer"
-                                        :to="match.video_url"
-                                        >Смотреть трансляцию</NuxtLink
-                                    >
-                                    <button
-                                        v-else
-                                        class="inline-flex items-center justify-center px-4 mt-3 py-2 rounded-lg bg-gray-700 text-gray-400 text-sm md:text-base font-medium cursor-not-allowed"
-                                        disabled
-                                        aria-disabled="true"
-                                        title="Трансляция недоступна"
-                                    >
-                                        Смотреть трансляцию
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Текущие матчи -->
-                <div class="space-y-3 md:space-y-4">
-                    <div
-                        v-for="match in currentMatches"
-                        :key="match.id"
-                        class="bg-gray-800 rounded-lg md:rounded-xl p-4 md:p-6 card-hover relative"
+                        class="bg-gray-800 rounded-lg md:rounded-xl p-4 md:p-6 card-hover relative h-full"
                     >
                         <div
-                            :class="getMatchStatusClass(getMatchStatus(match))"
+                            :class="
+                                getMatchStatusClass(getMatchStatus(match))
+                            "
                             class="absolute top-4 right-4 px-2 py-1 rounded-full text-xs md:hidden text-center"
                         >
                             {{ getMatchStatus(match) }}
@@ -240,9 +56,87 @@
                                     {{ match.location }}
                                 </div>
                             </div>
-                            <div
-                                class="flex-1 flex flex-col sm:grid sm:grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6 overflow-hidden"
-                            >
+                            <div v-if="carousel" class="flex-1 flex flex-col items-center gap-2">
+                                <NuxtLink
+                                        :to="`/teams/${match.team_a_id}`"
+                                        class="flex items-center gap-2 md:gap-3 min-w-0"
+                                    >
+                                        <div
+                                            class="w-6 h-6 md:w-8 md:h-8 relative shrink-0 bg-gray-600 rounded-full flex items-center justify-center"
+                                        >
+                                            <img
+                                                :src="
+                                                    getTeamLogo(
+                                                        getTeamLogoUrl(
+                                                            match.team_a_id
+                                                        )
+                                                    )
+                                                "
+                                                :alt="
+                                                    getTeamName(match.team_a_id)
+                                                "
+                                                class="object-contain rounded-full w-full h-full"
+                                            />
+                                        </div>
+                                        <span
+                                            class="font-medium text-sm truncate"
+                                            >{{
+                                                getTeamName(match.team_a_id)
+                                            }}</span
+                                        >
+                                </NuxtLink>
+                                <div
+                                    class="flex flex-col items-center"
+                                >
+                                    <div
+                                        class="bg-primary-blue px-3 py-1 md:px-4 md:py-2 rounded-lg text-white font-bold text-sm md:text-base whitespace-nowrap text-center"
+                                    >
+                                        <div>
+                                            {{
+                                                match.score_team_a != null
+                                                    ? `${match.score_team_a} - ${match.score_team_b}`
+                                                    : 'vs'
+                                            }}
+                                        </div>
+                                        <div
+                                            v-if="
+                                                match.bullet_win_team !==
+                                                null
+                                            "
+                                            class="text-base font-normal opacity-90"
+                                        ></div>
+                                    </div>
+                                </div>
+                                <NuxtLink
+                                    :to="`/teams/${match.team_b_id}`"
+                                    class="flex items-center gap-2 md:gap-3 min-w-0"
+                                >
+                                    <span
+                                        class="font-medium text-sm truncate"
+                                        >{{
+                                            getTeamName(match.team_b_id)
+                                        }}</span
+                                    >
+                                    <div
+                                        class="w-6 h-6 md:w-8 md:h-8 relative shrink-0 bg-gray-600 rounded-full flex items-center justify-center"
+                                    >
+                                        <img
+                                            :src="
+                                                getTeamLogo(
+                                                    getTeamLogoUrl(
+                                                        match.team_b_id
+                                                    )
+                                                )
+                                            "
+                                            :alt="
+                                                getTeamName(match.team_b_id)
+                                            "
+                                            class="object-contain rounded-full w-full h-full"
+                                        />
+                                    </div>
+                                </NuxtLink>
+                            </div>
+                            <div v-else class="flex-1 flex flex-col sm:grid sm:grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6 overflow-hidden">
                                 <NuxtLink
                                     :to="`/teams/${match.team_a_id}`"
                                     class="flex items-center gap-2 md:gap-3 min-w-0 justify-self-start"
@@ -258,7 +152,9 @@
                                                     )
                                                 )
                                             "
-                                            :alt="getTeamName(match.team_a_id)"
+                                            :alt="
+                                                getTeamName(match.team_a_id)
+                                            "
                                             class="object-contain rounded-full w-full h-full"
                                         />
                                     </div>
@@ -284,7 +180,8 @@
                                         </div>
                                         <div
                                             v-if="
-                                                match.bullet_win_team !== null
+                                                match.bullet_win_team !==
+                                                null
                                             "
                                             class="text-base font-normal opacity-90"
                                         ></div>
@@ -311,7 +208,9 @@
                                                     )
                                                 )
                                             "
-                                            :alt="getTeamName(match.team_b_id)"
+                                            :alt="
+                                                getTeamName(match.team_b_id)
+                                            "
                                             class="object-contain rounded-full w-full h-full"
                                         />
                                     </div>
@@ -319,7 +218,9 @@
                             </div>
                             <div
                                 :class="
-                                    getMatchStatusClass(getMatchStatus(match))
+                                    getMatchStatusClass(
+                                        getMatchStatus(match)
+                                    )
                                 "
                                 class="hidden md:block px-3 py-1 rounded-full text-sm w-32 text-center"
                             >
@@ -361,204 +262,615 @@
                             </button>
                         </div>
                     </div>
-                </div>
+                </SwiperSlide>
+                <div class="swiper-button-prev"></div>
+                <div class="swiper-button-next"></div>
+            </Swiper>
+            <div v-else class="text-center py-8 text-gray-400">
+                Нет запланированных матчей.
+            </div>
+        </div>
+        <div v-else class="space-y-6 md:space-y-8">
+            <div>
+                <h3
+                    class="text-xl md:text-2xl font-semibold mb-4 md:mb-6 text-accent-blue flex items-center justify-center gap-2"
+                >
+                    <span class="text-2xl md:text-3xl">🗓️</span>
+                    {{ title }}
+                </h3>
 
-                <!-- FUTURE: кнопка раскрытия -->
-                <div class="flex flex-col gap-2">
-                    <button
-                        @click="isFutureExpanded = !isFutureExpanded"
-                        class="w-full flex items-center justify-between p-3 md:p-4 bg-gray-800 hover:bg-gray-700 rounded-lg md:rounded-xl transition-colors"
-                    >
-                        <div class="flex items-center gap-3">
-                            <span
-                                class="text-lg md:text-xl transition-transform duration-300"
-                                :class="{ 'rotate-90': isFutureExpanded }"
-                                >➤</span
-                            >
-                            <div class="flex flex-col text-left">
-                                <span
-                                    class="text-sm md:text-base text-accent-blue font-semibold"
-                                    >Будущие матчи</span
-                                >
-                                <span class="text-xs md:text-sm text-gray-400"
-                                    >Всего: {{ futureMatches.length }}</span
-                                >
-                            </div>
-                        </div>
-                        <span class="text-xs text-gray-400"
-                            >Нажмите, чтобы открыть</span
+                <div class="space-y-3 md:space-y-4">
+                    <!-- ПAST: кнопка раскрытия -->
+                    <div class="flex flex-col gap-2">
+                        <button
+                            @click="isPastExpanded = !isPastExpanded"
+                            class="w-full flex items-center justify-between p-3 md:p-4 bg-gray-800 hover:bg-gray-700 rounded-lg md:rounded-xl transition-colors"
                         >
-                    </button>
-
-                    <div
-                        class="overflow-hidden transition-all duration-300 ease-in-out"
-                        :style="{
-                            maxHeight: isFutureExpanded ? '9999px' : '0px',
-                        }"
-                    >
-                        <div class="space-y-3 md:space-y-4 pl-2 md:pl-4">
-                            <div
-                                v-for="match in futureMatches"
-                                :key="`future-${match.id}`"
-                                class="bg-gray-800 rounded-lg md:rounded-xl p-4 md:p-6 card-hover relative"
-                            >
-                                <div
-                                    :class="
-                                        getMatchStatusClass(
-                                            getMatchStatus(match)
-                                        )
-                                    "
-                                    class="absolute top-4 right-4 px-2 py-1 rounded-full text-xs md:hidden text-center"
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="text-lg md:text-xl transition-transform duration-300"
+                                    :class="{ 'rotate-90': isPastExpanded }"
+                                    >➤</span
                                 >
-                                    {{ getMatchStatus(match) }}
+                                <div class="flex flex-col text-left">
+                                    <span
+                                        tate
+                                        class="text-sm md:text-base text-accent-blue font-semibold"
+                                        >Прошлые матчи</span
+                                    >
+                                    <span
+                                        class="text-xs md:text-sm text-gray-400"
+                                        >Всего: {{ pastMatches.length }}</span
+                                    >
                                 </div>
+                            </div>
+                            <span class="text-xs text-gray-400"
+                                >Нажмите, чтобы открыть</span
+                            >
+                        </button>
+
+                        <div
+                            class="overflow-hidden transition-all duration-300 ease-in-out"
+                            :style="{
+                                maxHeight: isPastExpanded ? '9999px' : '0px',
+                            }"
+                        >
+                            <div class="space-y-3 md:space-y-4 pl-2 md:pl-4">
                                 <div
-                                    class="flex flex-col md:flex-row md:items-center justify-between gap-3"
+                                    v-for="match in pastMatches"
+                                    :key="`past-${match.id}`"
+                                    class="bg-gray-800 rounded-lg md:rounded-xl p-4 md:p-6 card-hover relative"
                                 >
-                                    <div
-                                        class="text-xs md:text-sm text-gray-400 w-full md:w-32"
-                                    >
-                                        <div class="font-medium">
-                                            {{
-                                                formatDateToRussian(match.date)
-                                            }}
-                                        </div>
-                                        <div>{{ formatTime(match.time) }}</div>
-                                        <div class="text-gray-500">
-                                            {{ match.location }}
-                                        </div>
-                                    </div>
-                                    <div
-                                        class="flex-1 flex flex-col sm:grid sm:grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6 overflow-hidden"
-                                    >
-                                        <NuxtLink
-                                            :to="`/teams/${match.team_a_id}`"
-                                            class="flex items-center gap-2 md:gap-3 min-w-0 justify-self-start"
-                                        >
-                                            <div
-                                                class="w-6 h-6 md:w-8 md:h-8 relative shrink-0 bg-gray-600 rounded-full flex items-center justify-center"
-                                            >
-                                                <img
-                                                    :src="
-                                                        getTeamLogo(
-                                                            getTeamLogoUrl(
-                                                                match.team_a_id
-                                                            )
-                                                        )
-                                                    "
-                                                    :alt="
-                                                        getTeamName(
-                                                            match.team_a_id
-                                                        )
-                                                    "
-                                                    class="object-contain rounded-full w-full h-full"
-                                                />
-                                            </div>
-                                            <span
-                                                class="font-medium text-sm truncate"
-                                                >{{
-                                                    getTeamName(match.team_a_id)
-                                                }}</span
-                                            >
-                                        </NuxtLink>
-                                        <div
-                                            class="flex flex-col items-center justify-self-center"
-                                        >
-                                            <div
-                                                class="bg-primary-blue px-3 py-1 md:px-4 md:py-2 rounded-lg text-white font-bold text-sm md:text-base whitespace-nowrap text-center md:min-w-24"
-                                            >
-                                                <div>
-                                                    {{
-                                                        match.score_team_a !=
-                                                        null
-                                                            ? `${match.score_team_a} - ${match.score_team_b}`
-                                                            : 'vs'
-                                                    }}
-                                                </div>
-                                                <div
-                                                    v-if="
-                                                        match.bullet_win_team !==
-                                                        null
-                                                    "
-                                                    class="text-base font-normal opacity-90"
-                                                ></div>
-                                            </div>
-                                        </div>
-                                        <NuxtLink
-                                            :to="`/teams/${match.team_b_id}`"
-                                            class="flex items-center gap-2 md:gap-3 min-w-0 justify-end justify-self-end"
-                                        >
-                                            <span
-                                                class="font-medium text-sm truncate"
-                                                >{{
-                                                    getTeamName(match.team_b_id)
-                                                }}</span
-                                            >
-                                            <div
-                                                class="w-6 h-6 md:w-8 md:h-8 relative shrink-0 bg-gray-600 rounded-full flex items-center justify-center"
-                                            >
-                                                <img
-                                                    :src="
-                                                        getTeamLogo(
-                                                            getTeamLogoUrl(
-                                                                match.team_b_id
-                                                            )
-                                                        )
-                                                    "
-                                                    :alt="
-                                                        getTeamName(
-                                                            match.team_b_id
-                                                        )
-                                                    "
-                                                    class="object-contain rounded-full w-full h-full"
-                                                />
-                                            </div>
-                                        </NuxtLink>
-                                    </div>
+                                    <!-- match card -->
                                     <div
                                         :class="
                                             getMatchStatusClass(
                                                 getMatchStatus(match)
                                             )
                                         "
-                                        class="hidden md:block px-3 py-1 rounded-full text-sm w-32 text-center"
+                                        class="absolute top-4 right-4 px-2 py-1 rounded-full text-xs md:hidden text-center"
                                     >
                                         {{ getMatchStatus(match) }}
                                     </div>
+                                    <div
+                                        class="flex flex-col md:flex-row md:items-center justify-between gap-3"
+                                    >
+                                        <div
+                                            class="text-xs md:text-sm text-gray-400 w-full md:w-32"
+                                        >
+                                            <div class="font-medium">
+                                                {{
+                                                    formatDateToRussian(
+                                                        match.date
+                                                    )
+                                                }}
+                                            </div>
+                                            <div>
+                                                {{ formatTime(match.time) }}
+                                            </div>
+                                            <div class="text-gray-500">
+                                                {{ match.location }}
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex-1 flex flex-col sm:grid sm:grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6 overflow-hidden"
+                                        >
+                                            <NuxtLink
+                                                :to="`/teams/${match.team_a_id}`"
+                                                class="flex items-center gap-2 md:gap-3 min-w-0 justify-self-start"
+                                            >
+                                                <div
+                                                    class="w-6 h-6 md:w-8 md:h-8 relative shrink-0 bg-gray-600 rounded-full flex items-center justify-center"
+                                                >
+                                                    <img
+                                                        :src="
+                                                            getTeamLogo(
+                                                                getTeamLogoUrl(
+                                                                    match.team_a_id
+                                                                )
+                                                            )
+                                                        "
+                                                        :alt="
+                                                            getTeamName(
+                                                                match.team_a_id
+                                                            )
+                                                        "
+                                                        class="object-contain rounded-full w-full h-full"
+                                                    />
+                                                </div>
+                                                <span
+                                                    class="font-medium text-sm truncate"
+                                                    >{{
+                                                        getTeamName(
+                                                            match.team_a_id
+                                                        )
+                                                    }}</span
+                                                >
+                                            </NuxtLink>
+                                            <div
+                                                class="flex flex-col items-center justify-self-center"
+                                            >
+                                                <div
+                                                    class="bg-primary-blue px-3 py-1 md:px-4 md:py-2 rounded-lg text-white font-bold text-sm md:text-base whitespace-nowrap text-center md:min-w-24"
+                                                >
+                                                    <div>
+                                                        {{
+                                                            match.score_team_a !=
+                                                            null
+                                                                ? `${match.score_team_a} - ${match.score_team_b}`
+                                                                : 'vs'
+                                                        }}
+                                                    </div>
+                                                    <div
+                                                        v-if="
+                                                            match.bullet_win_team !==
+                                                            null
+                                                        "
+                                                        class="text-base font-normal opacity-90"
+                                                    ></div>
+                                                </div>
+                                            </div>
+                                            <NuxtLink
+                                                :to="`/teams/${match.team_b_id}`"
+                                                class="flex items-center gap-2 md:gap-3 min-w-0 justify-end justify-self-end"
+                                            >
+                                                <span
+                                                    class="font-medium text-sm truncate"
+                                                    >{{
+                                                        getTeamName(
+                                                            match.team_b_id
+                                                        )
+                                                    }}</span
+                                                >
+                                                <div
+                                                    class="w-6 h-6 md:w-8 md:h-8 relative shrink-0 bg-gray-600 rounded-full flex items-center justify-center"
+                                                >
+                                                    <img
+                                                        :src="
+                                                            getTeamLogo(
+                                                                getTeamLogoUrl(
+                                                                    match.team_b_id
+                                                                )
+                                                            )
+                                                        "
+                                                        :alt="
+                                                            getTeamName(
+                                                                match.team_b_id
+                                                            )
+                                                        "
+                                                        class="object-contain rounded-full w-full h-full"
+                                                    />
+                                                </div>
+                                            </NuxtLink>
+                                        </div>
+                                        <div
+                                            :class="
+                                                getMatchStatusClass(
+                                                    getMatchStatus(match)
+                                                )
+                                            "
+                                            class="hidden md:block px-3 py-1 rounded-full text-sm w-32 text-center"
+                                        >
+                                            {{ getMatchStatus(match) }}
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="mt-3 md:mt-4 flex justify-center"
+                                    >
+                                        <NuxtLink
+                                            v-if="match.score_team_a"
+                                            :to="`/matches/${match.scan}`"
+                                            class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-blue text-white text-sm md:text-base font-medium hover:opacity-90 transition"
+                                            >Смотреть протокол</NuxtLink
+                                        >
+                                        <button
+                                            v-else
+                                            class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-700 text-gray-400 text-sm md:text-base font-medium cursor-not-allowed"
+                                            disabled
+                                            aria-disabled="true"
+                                            title="Протокол будет доступен после завершения матча"
+                                        >
+                                            Смотреть протокол
+                                        </button>
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-center"
+                                    >
+                                        <NuxtLink
+                                            v-if="match.video_url"
+                                            class="inline-flex px-4 mt-3 py-2 rounded-lg bg-primary-blue text-white text-sm md:text-base font-medium hover:opacity-90 transition cursor-pointer"
+                                            :to="match.video_url"
+                                            >Смотреть трансляцию</NuxtLink
+                                        >
+                                        <button
+                                            v-else
+                                            class="inline-flex items-center justify-center px-4 mt-3 py-2 rounded-lg bg-gray-700 text-gray-400 text-sm md:text-base font-medium cursor-not-allowed"
+                                            disabled
+                                            aria-disabled="true"
+                                            title="Трансляция недоступна"
+                                        >
+                                            Смотреть трансляцию
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="mt-3 md:mt-4 flex justify-center">
-                                    <NuxtLink
-                                        v-if="match.score_team_a"
-                                        :to="`/matches/${match.scan}`"
-                                        class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-blue text-white text-sm md:text-base font-medium hover:opacity-90 transition"
-                                        >Смотреть протокол</NuxtLink
-                                    >
-                                    <button
-                                        v-else
-                                        class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-700 text-gray-400 text-sm md:text-base font-medium cursor-not-allowed"
-                                        disabled
-                                        aria-disabled="true"
-                                        title="Протокол будет доступен после завершения матча"
-                                    >
-                                        Смотреть протокол
-                                    </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Текущие матчи -->
+                    <div class="space-y-3 md:space-y-4">
+                        <div
+                            v-for="match in currentMatches"
+                            :key="match.id"
+                            class="bg-gray-800 rounded-lg md:rounded-xl p-4 md:p-6 card-hover relative"
+                        >
+                            <div
+                                :class="
+                                    getMatchStatusClass(getMatchStatus(match))
+                                "
+                                class="absolute top-4 right-4 px-2 py-1 rounded-full text-xs md:hidden text-center"
+                            >
+                                {{ getMatchStatus(match) }}
+                            </div>
+                            <div
+                                class="flex flex-col md:flex-row md:items-center justify-between gap-3"
+                            >
+                                <div
+                                    class="text-xs md:text-sm text-gray-400 w-full md:w-32"
+                                >
+                                    <div class="font-medium">
+                                        {{ formatDateToRussian(match.date) }}
+                                    </div>
+                                    <div>{{ formatTime(match.time) }}</div>
+                                    <div class="text-gray-500">
+                                        {{ match.location }}
+                                    </div>
                                 </div>
-                                <div class="flex items-center justify-center">
+                                <div
+                                    class="flex-1 flex flex-col sm:grid sm:grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6 overflow-hidden"
+                                >
                                     <NuxtLink
-                                        v-if="match.video_url"
-                                        class="inline-flex px-4 mt-3 py-2 rounded-lg bg-primary-blue text-white text-sm md:text-base font-medium hover:opacity-90 transition cursor-pointer"
-                                        :to="match.video_url"
-                                        >Смотреть трансляцию</NuxtLink
+                                        :to="`/teams/${match.team_a_id}`"
+                                        class="flex items-center gap-2 md:gap-3 min-w-0 justify-self-start"
                                     >
-                                    <button
-                                        v-else
-                                        class="inline-flex items-center justify-center px-4 mt-3 py-2 rounded-lg bg-gray-700 text-gray-400 text-sm md:text-base font-medium cursor-not-allowed"
-                                        disabled
-                                        aria-disabled="true"
-                                        title="Трансляция недоступна"
+                                        <div
+                                            class="w-6 h-6 md:w-8 md:h-8 relative shrink-0 bg-gray-600 rounded-full flex items-center justify-center"
+                                        >
+                                            <img
+                                                :src="
+                                                    getTeamLogo(
+                                                        getTeamLogoUrl(
+                                                            match.team_a_id
+                                                        )
+                                                    )
+                                                "
+                                                :alt="
+                                                    getTeamName(match.team_a_id)
+                                                "
+                                                class="object-contain rounded-full w-full h-full"
+                                            />
+                                        </div>
+                                        <span
+                                            class="font-medium text-sm truncate"
+                                            >{{
+                                                getTeamName(match.team_a_id)
+                                            }}</span
+                                        >
+                                    </NuxtLink>
+                                    <div
+                                        class="flex flex-col items-center justify-self-center"
                                     >
-                                        Смотреть трансляцию
-                                    </button>
+                                        <div
+                                            class="bg-primary-blue px-3 py-1 md:px-4 md:py-2 rounded-lg text-white font-bold text-sm md:text-base whitespace-nowrap text-center md:min-w-24"
+                                        >
+                                            <div>
+                                                {{
+                                                    match.score_team_a != null
+                                                        ? `${match.score_team_a} - ${match.score_team_b}`
+                                                        : 'vs'
+                                                }}
+                                            </div>
+                                            <div
+                                                v-if="
+                                                    match.bullet_win_team !==
+                                                    null
+                                                "
+                                                class="text-base font-normal opacity-90"
+                                            ></div>
+                                        </div>
+                                    </div>
+                                    <NuxtLink
+                                        :to="`/teams/${match.team_b_id}`"
+                                        class="flex items-center gap-2 md:gap-3 min-w-0 justify-end justify-self-end"
+                                    >
+                                        <span
+                                            class="font-medium text-sm truncate"
+                                            >{{
+                                                getTeamName(match.team_b_id)
+                                            }}</span
+                                        >
+                                        <div
+                                            class="w-6 h-6 md:w-8 md:h-8 relative shrink-0 bg-gray-600 rounded-full flex items-center justify-center"
+                                        >
+                                            <img
+                                                :src="
+                                                    getTeamLogo(
+                                                        getTeamLogoUrl(
+                                                            match.team_b_id
+                                                        )
+                                                    )
+                                                "
+                                                :alt="
+                                                    getTeamName(match.team_b_id)
+                                                "
+                                                class="object-contain rounded-full w-full h-full"
+                                            />
+                                        </div>
+                                    </NuxtLink>
+                                </div>
+                                <div
+                                    :class="
+                                        getMatchStatusClass(
+                                            getMatchStatus(match)
+                                        )
+                                    "
+                                    class="hidden md:block px-3 py-1 rounded-full text-sm w-32 text-center"
+                                >
+                                    {{ getMatchStatus(match) }}
+                                </div>
+                            </div>
+                            <div class="mt-3 md:mt-4 flex justify-center">
+                                <NuxtLink
+                                    v-if="match.score_team_a"
+                                    :to="`/matches/${match.scan}`"
+                                    class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-blue text-white text-sm md:text-base font-medium hover:opacity-90 transition"
+                                    >Смотреть протокол</NuxtLink
+                                >
+                                <button
+                                    v-else
+                                    class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-700 text-gray-400 text-sm md:text-base font-medium cursor-not-allowed"
+                                    disabled
+                                    aria-disabled="true"
+                                    title="Протокол будет доступен после завершения матча"
+                                >
+                                    Смотреть протокол
+                                </button>
+                            </div>
+                            <div class="flex items-center justify-center">
+                                <NuxtLink
+                                    v-if="match.video_url"
+                                    class="inline-flex px-4 mt-3 py-2 rounded-lg bg-primary-blue text-white text-sm md:text-base font-medium hover:opacity-90 transition cursor-pointer"
+                                    :to="match.video_url"
+                                    >Смотреть трансляцию</NuxtLink
+                                >
+                                <button
+                                    v-else
+                                    class="inline-flex items-center justify-center px-4 mt-3 py-2 rounded-lg bg-gray-700 text-gray-400 text-sm md:text-base font-medium cursor-not-allowed"
+                                    disabled
+                                    aria-disabled="true"
+                                    title="Трансляция недоступна"
+                                >
+                                    Смотреть трансляцию
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FUTURE: кнопка раскрытия -->
+                    <div class="flex flex-col gap-2">
+                        <button
+                            @click="isFutureExpanded = !isFutureExpanded"
+                            class="w-full flex items-center justify-between p-3 md:p-4 bg-gray-800 hover:bg-gray-700 rounded-lg md:rounded-xl transition-colors"
+                        >
+                            <div class="flex items-center gap-3">
+                                <span
+                                    class="text-lg md:text-xl transition-transform duration-300"
+                                    :class="{
+                                        'rotate-90': isFutureExpanded,
+                                    }"
+                                    >➤</span
+                                >
+                                <div class="flex flex-col text-left">
+                                    <span
+                                        class="text-sm md:text-base text-accent-blue font-semibold"
+                                        >Будущие матчи</span
+                                    >
+                                    <span
+                                        class="text-xs md:text-sm text-gray-400"
+                                        >Всего:
+                                        {{ futureMatches.length }}</span
+                                    >
+                                </div>
+                            </div>
+                            <span class="text-xs text-gray-400"
+                                >Нажмите, чтобы открыть</span
+                            >
+                        </button>
+
+                        <div
+                            class="overflow-hidden transition-all duration-300 ease-in-out"
+                            :style="{
+                                maxHeight: isFutureExpanded
+                                    ? '9999px'
+                                    : '0px',
+                            }"
+                        >
+                            <div class="space-y-3 md:space-y-4 pl-2 md:pl-4">
+                                <div
+                                    v-for="match in futureMatches"
+                                    :key="`future-${match.id}`"
+                                    class="bg-gray-800 rounded-lg md:rounded-xl p-4 md:p-6 card-hover relative"
+                                >
+                                    <div
+                                        :class="
+                                            getMatchStatusClass(
+                                                getMatchStatus(match)
+                                            )
+                                        "
+                                        class="absolute top-4 right-4 px-2 py-1 rounded-full text-xs md:hidden text-center"
+                                    >
+                                        {{ getMatchStatus(match) }}
+                                    </div>
+                                    <div
+                                        class="flex flex-col md:flex-row md:items-center justify-between gap-3"
+                                    >
+                                        <div
+                                            class="text-xs md:text-sm text-gray-400 w-full md:w-32"
+                                        >
+                                            <div class="font-medium">
+                                                {{
+                                                    formatDateToRussian(
+                                                        match.date
+                                                    )
+                                                }}
+                                            </div>
+                                            <div>
+                                                {{ formatTime(match.time) }}
+                                            </div>
+                                            <div class="text-gray-500">
+                                                {{ match.location }}
+                                            </div>
+                                        </div>
+                                        <div
+                                            class="flex-1 flex flex-col sm:grid sm:grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6 overflow-hidden"
+                                        >
+                                            <NuxtLink
+                                                :to="`/teams/${match.team_a_id}`"
+                                                class="flex items-center gap-2 md:gap-3 min-w-0 justify-self-start"
+                                            >
+                                                <div
+                                                    class="w-6 h-6 md:w-8 md:h-8 relative shrink-0 bg-gray-600 rounded-full flex items-center justify-center"
+                                                >
+                                                    <img
+                                                        :src="
+                                                            getTeamLogo(
+                                                                getTeamLogoUrl(
+                                                                    match.team_a_id
+                                                                )
+                                                            )
+                                                        "
+                                                        :alt="
+                                                            getTeamName(
+                                                                match.team_a_id
+                                                            )
+                                                        "
+                                                        class="object-contain rounded-full w-full h-full"
+                                                    />
+                                                </div>
+                                                <span
+                                                    class="font-medium text-sm truncate"
+                                                    >{{
+                                                        getTeamName(
+                                                            match.team_a_id
+                                                        )
+                                                    }}</span
+                                                >
+                                            </NuxtLink>
+                                            <div
+                                                class="flex flex-col items-center justify-self-center"
+                                            >
+                                                <div
+                                                    class="bg-primary-blue px-3 py-1 md:px-4 md:py-2 rounded-lg text-white font-bold text-sm md:text-base whitespace-nowrap text-center md:min-w-24"
+                                                >
+                                                    <div>
+                                                        {{
+                                                            match.score_team_a !=
+                                                            null
+                                                                ? `${match.score_team_a} - ${match.score_team_b}`
+                                                                : 'vs'
+                                                        }}
+                                                    </div>
+                                                    <div
+                                                        v-if="
+                                                            match.bullet_win_team !==
+                                                            null
+                                                        "
+                                                        class="text-base font-normal opacity-90"
+                                                    ></div>
+                                                </div>
+                                            </div>
+                                            <NuxtLink
+                                                :to="`/teams/${match.team_b_id}`"
+                                                class="flex items-center gap-2 md:gap-3 min-w-0 justify-end justify-self-end"
+                                            >
+                                                <span
+                                                    class="font-medium text-sm truncate"
+                                                    >{{
+                                                        getTeamName(
+                                                            match.team_b_id
+                                                        )
+                                                    }}</span
+                                                >
+                                                <div
+                                                    class="w-6 h-6 md:w-8 md:h-8 relative shrink-0 bg-gray-600 rounded-full flex items-center justify-center"
+                                                >
+                                                    <img
+                                                        :src="
+                                                            getTeamLogo(
+                                                                getTeamLogoUrl(
+                                                                    match.team_b_id
+                                                                )
+                                                            )
+                                                        "
+                                                        :alt="
+                                                            getTeamName(
+                                                                match.team_b_id
+                                                            )
+                                                        "
+                                                        class="object-contain rounded-full w-full h-full"
+                                                    />
+                                                </div>
+                                            </NuxtLink>
+                                        </div>
+                                        <div
+                                            :class="
+                                                getMatchStatusClass(
+                                                    getMatchStatus(match)
+                                                )
+                                            "
+                                            class="hidden md:block px-3 py-1 rounded-full text-sm w-32 text-center"
+                                        >
+                                            {{ getMatchStatus(match) }}
+                                        </div>
+                                    </div>
+                                    <div
+                                        class="mt-3 md:mt-4 flex justify-center"
+                                    >
+                                        <NuxtLink
+                                            v-if="match.score_team_a"
+                                            :to="`/matches/${match.scan}`"
+                                            class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-blue text-white text-sm md:text-base font-medium hover:opacity-90 transition"
+                                            >Смотреть протокол</NuxtLink
+                                        >
+                                        <button
+                                            v-else
+                                            class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-gray-700 text-gray-400 text-sm md:text-base font-medium cursor-not-allowed"
+                                            disabled
+                                            aria-disabled="true"
+                                            title="Протокол будет доступен после завершения матча"
+                                        >
+                                            Смотреre протокол
+                                        </button>
+                                    </div>
+                                    <div
+                                        class="flex items-center justify-center"
+                                    >
+                                        <NuxtLink
+                                            v-if="match.video_url"
+                                            class="inline-flex px-4 mt-3 py-2 rounded-lg bg-primary-blue text-white text-sm md:text-base font-medium hover:opacity-90 transition cursor-pointer"
+                                            :to="match.video_url"
+                                            >Смотреть трансляцию</NuxtLink
+                                        >
+                                        <button
+                                            v-else
+                                            class="inline-flex items-center justify-center px-4 mt-3 py-2 rounded-lg bg-gray-700 text-gray-400 text-sm md:text-base font-medium cursor-not-allowed"
+                                            disabled
+                                            aria-disabled="true"
+                                            title="Трансляция недоступна"
+                                        >
+                                            Смотреть трансляцию
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -570,8 +882,12 @@
 </template>
 
 <script setup>
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { getTeamLogo } from '#imports'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Navigation as SwiperNavigation } from 'swiper/modules'
+import 'swiper/css'
+import 'swiper/css/navigation'
 
 const props = defineProps({
     turnirData: {
@@ -582,12 +898,16 @@ const props = defineProps({
         type: String,
         default: 'championship', // 'championship' or 'tournament'
     },
+    carousel: {
+        type: Boolean,
+        default: false,
+    },
 })
 
 const title = computed(() => {
     return props.dataType === 'tournament'
         ? 'Расписание матчей турнира'
-        : 'Расписание матчей чемпионата'
+        : 'Матчи чемпионата'
 })
 
 const games = ref([])
@@ -602,16 +922,6 @@ function getWeekNumber(dateString) {
     return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7)
 }
 
-// Функция для получения первого дня недели
-function getWeekStart(dateString) {
-    const [year, month, day] = dateString.split('-').map(Number)
-    const date = new Date(year, month - 1, day)
-    const dayOfWeek = date.getDay() || 7
-    const diff = date.getDate() - dayOfWeek + 1
-    const weekStart = new Date(date.setDate(diff))
-    return weekStart.toISOString().split('T')[0]
-}
-
 // Получение номера текущей недели
 const currentWeekNumber = computed(() => {
     const now = new Date()
@@ -624,6 +934,43 @@ const currentWeekNumber = computed(() => {
 // Collapsed state for past / future sections
 const isPastExpanded = ref(false)
 const isFutureExpanded = ref(false)
+
+const carouselMatches = computed(() => {
+    const sortFn = (a, b) => {
+        const dateA = new Date(a.date)
+        const dateB = new Date(b.date)
+        if (dateA < dateB) return -1
+        if (dateA > dateB) return 1
+
+        if (a.time && b.time) {
+            return a.time.localeCompare(b.time)
+        }
+        return 0
+    }
+
+    const played = games.value
+        .filter(g => g.score_team_a != null)
+        .sort(sortFn)
+    const upcoming = games.value
+        .filter(g => g.score_team_a == null)
+        .sort(sortFn)
+
+    return [...played, ...upcoming]
+})
+
+const initialSlide = computed(() => {
+    if (!carouselMatches.value.length) return 0
+
+    const lastPlayedIndex = carouselMatches.value.findLastIndex(
+        g => g.score_team_a != null
+    )
+
+    if (lastPlayedIndex !== -1) {
+        return lastPlayedIndex
+    }
+
+    return 0 // Default to first slide if no played matches
+})
 
 // Разделение матчей на прошлые, текущие и будущие по номеру недели
 const pastMatches = computed(() => {
@@ -646,28 +993,39 @@ const futureMatches = computed(() => {
         .sort((a, b) => new Date(a.date) - new Date(b.date))
 })
 
-onMounted(async () => {
-    if (!props.turnirData || props.turnirData.length === 0) {
-        return
-    }
-    const id = props.turnirData[0].id
-    const endpoint = props.dataType + 's'
+watch(
+    () => props.turnirData,
+    async newTurnirData => {
+        if (!newTurnirData || newTurnirData.length === 0) {
+            games.value = []
+            teams.value = []
+            return
+        }
+        const id = newTurnirData[0].id
+        const endpoint = props.dataType + 's'
 
-    try {
-        games.value = await $fetch(
-            `https://api.timeofthestars.ru/${endpoint}/${id}/games`
-        )
-    } catch (error) {
-        console.error(`Ошибка при получении игр ${props.dataType}:`, error)
-    }
-    try {
-        teams.value = await $fetch(
-            `https://api.timeofthestars.ru/${endpoint}/${id}/teams`
-        )
-    } catch (error) {
-        console.error(`Ошибка при получении команд ${props.dataType}:`, error)
-    }
-})
+        try {
+            games.value = await $fetch(
+                `https://api.timeofthestars.ru/${endpoint}/${id}/games`
+            )
+        } catch (error) {
+            console.error(`Ошибка при получении игр ${props.dataType}:`, error)
+            games.value = []
+        }
+        try {
+            teams.value = await $fetch(
+                `https://api.timeofthestars.ru/${endpoint}/${id}/teams`
+            )
+        } catch (error) {
+            console.error(
+                `Ошибка при получении команд ${props.dataType}:`,
+                error
+            )
+            teams.value = []
+        }
+    },
+    { immediate: true, deep: true }
+)
 
 function getTeamName(teamId) {
     const team = teams.value.find(team => team.id === teamId)
@@ -748,3 +1106,39 @@ function getTeamLogoUrl(teamId) {
     return team ? team.logo_url : null
 }
 </script>
+<style>
+.swiper-button-prev,
+.swiper-button-next {
+    display: none;
+    color: #00a1ff;
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: rgba(0, 0, 0, 0.5);
+    backdrop-filter: blur(5px);
+    transition: all 0.3s ease;
+    top: 45%;
+}
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+    background-color: rgba(0, 0, 0, 0.7);
+}
+.swiper-button-prev::after,
+.swiper-button-next::after {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+@media (min-width: 768px) {
+    .swiper-button-prev,
+    .swiper-button-next {
+        display: flex;
+        width: 50px;
+        height: 50px;
+    }
+    .swiper-button-prev::after,
+    .swiper-button-next::after {
+        font-size: 24px;
+    }
+}
+</style>

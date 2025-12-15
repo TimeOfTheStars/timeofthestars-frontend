@@ -2,98 +2,117 @@
     <section class="py-16 px-4">
         <div class="max-w-6xl mx-auto">
             <h2 class="text-3xl font-bold mb-8 text-center">
-                📊 Рейтинг команд
+                📊 Таблица
             </h2>
 
-            <div
-                class="bg-gray-800 rounded-xl overflow-hidden border border-gray-700"
-            >
-                <div class="overflow-x-auto">
-                    <table class="w-full">
-                        <thead class="bg-gray-700">
-                            <tr>
-                                <th
-                                    class="px-4 py-4 text-center font-semibold w-16"
-                                >
-                                    Место
-                                </th>
-                                <th class="px-6 py-4 text-left font-semibold">
-                                    Команда
-                                </th>
-                                <th class="px-6 py-4 text-center font-semibold">
-                                    И
-                                </th>
-                                <th class="px-6 py-4 text-center font-semibold">
-                                    Пб
-                                </th>
-                                <th class="px-6 py-4 text-center font-semibold">
-                                    Н
-                                </th>
-                                <th class="px-6 py-4 text-center font-semibold">
-                                    Пр
-                                </th>
-                                <th class="px-6 py-4 text-center font-semibold">
-                                    Голы
-                                </th>
-                                <th class="px-6 py-4 text-center font-semibold">
-                                    О
-                                </th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr
-                                v-for="team in sortedStandings"
-                                :key="team.id"
-                                :class="`border-t border-gray-700 hover:bg-gray-700/50 transition-colors ${
-                                    '' /*getGradientClass(team.place)*/
-                                }`"
+            <div class="overflow-x-auto">
+                <table class="w-full text-sm sm:text-base">
+                    <thead class="bg-gray-700">
+                        <tr>
+                            <th
+                                class="px-2 py-3 text-center font-semibold sm:px-4 w-12 sm:w-16"
                             >
-                                <td class="px-4 py-4 text-center font-semibold">
-                                    <span>{{ team.place }}</span>
-                                </td>
-                                <td class="px-6 py-4">
-                                    <NuxtLink
-                                        :to="`/teams/${team.id}`"
-                                        class="flex items-center gap-3 hover:text-accent-blue transition-colors"
+                                <span class="sm:hidden">#</span>
+                                <span class="hidden sm:inline">Место</span>
+                            </th>
+                            <th
+                                class="px-2 py-3 text-left font-semibold sm:px-6"
+                            >
+                                Команда
+                            </th>
+                            <th
+                                class="px-2 py-3 text-center font-semibold sm:px-6"
+                            >
+                                И
+                            </th>
+                            <th
+                                class="px-2 py-3 text-center font-semibold sm:px-6"
+                            >
+                                <span class="sm:hidden">В</span>
+                                <span class="hidden sm:inline">Пб</span>
+                            </th>
+                            <th
+                                class="hidden px-6 py-4 text-center font-semibold sm:table-cell"
+                            >
+                                Н
+                            </th>
+                            <th
+                                class="px-2 py-3 text-center font-semibold sm:px-6"
+                            >
+                                <span class="sm:hidden">П</span>
+                                <span class="hidden sm:inline">Пр</span>
+                            </th>
+                            <th
+                                class="hidden px-6 py-4 text-center font-semibold sm:table-cell"
+                            >
+                                Голы
+                            </th>
+                            <th
+                                class="px-2 py-3 text-center font-semibold sm:px-6"
+                            >
+                                О
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr
+                            v-for="team in sortedStandings"
+                            :key="team.id"
+                            class="border-t border-gray-700 transition-colors hover:bg-gray-700/50"
+                        >
+                            <td
+                                class="px-2 py-3 text-center font-semibold sm:px-4"
+                            >
+                                <span>{{ team.place }}</span>
+                            </td>
+                            <td class="px-2 py-3 sm:px-6">
+                                <NuxtLink
+                                    :to="`/teams/${team.id}`"
+                                    class="flex items-center gap-3 transition-colors hover:text-accent-blue"
+                                >
+                                    <div
+                                        class="relative h-8 w-8 hidden sm:block"
                                     >
-                                        <div class="w-8 h-8 relative">
-                                            <img
-                                                :src="team.logo"
-                                                :alt="team.team"
-                                                class="object-contain rounded-full w-full h-full"
-                                            />
-                                        </div>
-                                        <span class="font-medium">{{
-                                            team.team
-                                        }}</span>
-                                    </NuxtLink>
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    {{ team.games }}
-                                </td>
-                                <td
-                                    class="px-6 py-4 text-center text-green-400"
-                                >
-                                    {{ team.wins }}
-                                </td>
-                                <td class="px-6 py-4 text-center text-gray-400">
-                                    {{ team.draws }}
-                                </td>
-                                <td class="px-6 py-4 text-center text-red-400">
-                                    {{ team.losses }}
-                                </td>
-                                <td class="px-6 py-4 text-center">
-                                    {{ team.goals }}
-                                </td>
-                                <td
-                                    class="px-6 py-4 text-center font-bold text-accent-blue text-lg"
-                                >
-                                    {{ team.points }}
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                                        <img
+                                            :src="team.logo"
+                                            :alt="team.team"
+                                            class="h-full w-full rounded-full object-contain"
+                                        />
+                                    </div>
+                                    <span class="font-medium">{{
+                                        team.team
+                                    }}</span>
+                                </NuxtLink>
+                            </td>
+                            <td class="px-2 py-3 text-center sm:px-6">
+                                {{ team.games }}
+                            </td>
+                            <td
+                                class="px-2 py-3 text-center text-green-400 sm:px-6"
+                            >
+                                {{ team.wins }}
+                            </td>
+                            <td
+                                class="hidden px-6 py-4 text-center text-gray-400 sm:table-cell"
+                            >
+                                {{ team.draws }}
+                            </td>
+                            <td
+                                class="px-2 py-3 text-center text-red-400 sm:px-6"
+                            >
+                                {{ team.losses }}
+                            </td>
+                            <td class="hidden px-6 py-4 text-center sm:table-cell">
+                                {{ team.goals }}
+                            </td>
+                            <td
+                                class="px-2 py-3 text-center font-bold text-accent-blue sm:px-6 text-lg"
+                            >
+                                {{ team.points }}
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
         </div>
     </section>

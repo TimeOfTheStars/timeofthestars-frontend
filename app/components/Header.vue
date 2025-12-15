@@ -8,7 +8,7 @@
                 <!-- Лого -->
                 <div class="flex-1 md:mr-20">
                     <NuxtLink to="/" class="flex items-center space-x-2">
-                        <div class="text-2xl">🏒</div>
+                        <img src="/______.png.webp" alt="Логотип" class="h-8 w-auto" />
                         <div
                             class="text-xl font-bold text-gradient whitespace-nowrap"
                         >

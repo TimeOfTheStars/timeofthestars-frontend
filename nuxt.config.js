@@ -10,7 +10,7 @@ export default defineNuxtConfig({
         crawlLinks: true,
     },
     css: ['~/assets/main.css'],
-    modules: ['@nuxt/icon', '@nuxt/image', '@nuxtjs/sitemap'],
+    modules: ['@nuxt/icon', '@nuxt/image', '@nuxtjs/sitemap', 'nuxt-swiper'],
     site: {
         url: 'https://timeofthestars.ru',
     },

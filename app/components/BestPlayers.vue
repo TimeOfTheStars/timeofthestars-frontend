@@ -10,46 +10,86 @@
                     <div
                         v-for="player in topSnipers"
                         :key="player.id"
-                        class="bg-gray-800 rounded-2xl overflow-hidden card-hover border border-primary-blue/30 flex flex-col justify-between"
+                        class="bg-gray-800 rounded-2xl overflow-hidden card-hover border border-primary-blue/30"
                     >
-                        <div class="p-6">
-                            <div class="flex justify-center mb-4">
+                        <div class="p-4 flex items-center sm:flex-col sm:p-6">
+                            <div class="flex-shrink-0 sm:mb-4">
                                 <img
                                     :src="getPlayerPhoto(player.photo_url)"
                                     alt="Player photo"
-                                    class="w-32 h-32 rounded-full object-cover border-4 border-gray-700"
+                                    class="w-16 h-16 rounded-full object-cover border-2 border-gray-700 sm:w-32 sm:h-32 sm:border-4"
+                                    @error="
+                                        $event.target.src =
+                                            '/pictures/players/defaultplayer.jpg'
+                                    "
                                 />
                             </div>
-                            <h4
-                                class="text-2xl font-bold text-center text-white"
-                            >
-                                {{ player.full_name }}
-                            </h4>
                             <div
-                                v-if="player.team"
-                                class="flex flex-col items-center justify-center gap-2 mt-1 text-gray-400"
+                                class="ml-4 sm:ml-0 flex-grow sm:text-center"
                             >
-                                <img
-                                    :src="getTeamLogo(player.team.logo_url)"
-                                    alt=""
-                                    class="w-8 h-8"
-                                />
-                                <span>{{ player.team.name }}</span>
+                                <h4
+                                    class="text-lg font-bold text-white sm:text-2xl"
+                                >
+                                    {{ player.full_name }}
+                                </h4>
+                                <div
+                                    v-if="player.team"
+                                    class="flex items-center gap-2 mt-1 text-gray-400 sm:justify-center"
+                                >
+                                    <img
+                                        :src="
+                                            getTeamLogo(player.team.logo_url)
+                                        "
+                                        alt=""
+                                        class="w-5 h-5 sm:w-8 sm:h-8"
+                                    />
+                                    <span class="text-sm sm:text-base">{{
+                                        player.team.name
+                                    }}</span>
+                                </div>
+                                <div class="mt-2 sm:hidden">
+                                    <div class="flex gap-4 text-left">
+                                        <div>
+                                            <p
+                                                class="text-base font-bold text-white"
+                                            >
+                                                {{ player.stats.matches }}
+                                            </p>
+                                            <p class="text-xs text-gray-400">
+                                                Матчи
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p
+                                                class="text-base font-bold text-white"
+                                            >
+                                                {{ player.stats.goals }}
+                                            </p>
+                                            <p class="text-xs text-gray-400">
+                                                Голы
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="bg-gray-700/50 p-4">
+                        <div class="hidden sm:block bg-gray-700/50 p-4">
                             <div class="flex justify-around text-center">
                                 <div>
-                                    <p class="text-2xl font-bold text-white">
-                                        {{ player.stats.goals }}
-                                    </p>
-                                    <p class="text-sm text-gray-400">Голы</p>
-                                </div>
-                                <div>
-                                    <p class="text-2xl font-bold text-white">
+                                    <p
+                                        class="text-2xl font-bold text-white"
+                                    >
                                         {{ player.stats.matches }}
                                     </p>
                                     <p class="text-sm text-gray-400">Матчи</p>
+                                </div>
+                                <div>
+                                    <p
+                                        class="text-2xl font-bold text-white"
+                                    >
+                                        {{ player.stats.goals }}
+                                    </p>
+                                    <p class="text-sm text-gray-400">Голы</p>
                                 </div>
                             </div>
                         </div>
@@ -66,49 +106,92 @@
                     <div
                         v-for="player in topScorers"
                         :key="player.id"
-                        class="bg-gray-800 rounded-2xl overflow-hidden card-hover border border-primary-red/30 flex flex-col justify-between"
+                        class="bg-gray-800 rounded-2xl overflow-hidden card-hover border border-primary-red/30"
                     >
-                        <div class="p-6">
-                            <div class="flex justify-center mb-4">
+                        <div class="p-4 flex items-center sm:flex-col sm:p-6">
+                            <div class="flex-shrink-0 sm:mb-4">
                                 <img
                                     :src="getPlayerPhoto(player.photo_url)"
                                     alt="Player photo"
-                                    class="w-32 h-32 rounded-full object-cover border-4 border-gray-700"
+                                    class="w-16 h-16 rounded-full object-cover border-2 border-gray-700 sm:w-32 sm:h-32 sm:border-4"
+                                    @error="
+                                        $event.target.src =
+                                            '/pictures/players/defaultplayer.jpg'
+                                    "
                                 />
                             </div>
-                            <h4
-                                class="text-2xl font-bold text-center text-white"
-                            >
-                                {{ player.full_name }}
-                            </h4>
                             <div
-                                v-if="player.team"
-                                class="flex flex-col items-center justify-center gap-2 mt-1 text-gray-400"
+                                class="ml-4 sm:ml-0 flex-grow sm:text-center"
                             >
-                                <img
-                                    :src="getTeamLogo(player.team.logo_url)"
-                                    alt=""
-                                    class="w-8 h-8"
-                                />
-                                <span>{{ player.team.name }}</span>
+                                <h4
+                                    class="text-lg font-bold text-white sm:text-2xl"
+                                >
+                                    {{ player.full_name }}
+                                </h4>
+                                <div
+                                    v-if="player.team"
+                                    class="flex items-center gap-2 mt-1 text-gray-400 sm:justify-center"
+                                >
+                                    <img
+                                        :src="
+                                            getTeamLogo(player.team.logo_url)
+                                        "
+                                        alt=""
+                                        class="w-5 h-5 sm:w-8 sm:h-8"
+                                    />
+                                    <span class="text-sm sm:text-base">{{
+                                        player.team.name
+                                    }}</span>
+                                </div>
+                                <div class="mt-2 sm:hidden">
+                                    <div class="flex gap-4 text-left">
+                                        <div>
+                                            <p
+                                                class="text-base font-bold text-white"
+                                            >
+                                                {{ player.stats.matches }}
+                                            </p>
+                                            <p class="text-xs text-gray-400">
+                                                Матчи
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p
+                                                class="text-base font-bold text-white"
+                                            >
+                                                {{
+                                                    player.stats.goals +
+                                                    player.stats.assists
+                                                }}
+                                            </p>
+                                            <p class="text-xs text-gray-400">
+                                                Очки
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="bg-gray-700/50 p-4">
+                        <div class="hidden sm:block bg-gray-700/50 p-4">
                             <div class="flex justify-around text-center">
                                 <div>
-                                    <p class="text-2xl font-bold text-white">
+                                    <p
+                                        class="text-2xl font-bold text-white"
+                                    >
+                                        {{ player.stats.matches }}
+                                    </p>
+                                    <p class="text-sm text-gray-400">Матчи</p>
+                                </div>
+                                <div>
+                                    <p
+                                        class="text-2xl font-bold text-white"
+                                    >
                                         {{
                                             player.stats.goals +
                                             player.stats.assists
                                         }}
                                     </p>
                                     <p class="text-sm text-gray-400">Очки</p>
-                                </div>
-                                <div>
-                                    <p class="text-2xl font-bold text-white">
-                                        {{ player.stats.matches }}
-                                    </p>
-                                    <p class="text-sm text-gray-400">Матчи</p>
                                 </div>
                             </div>
                         </div>
@@ -125,46 +208,86 @@
                     <div
                         v-for="player in topAssistants"
                         :key="player.id"
-                        class="bg-gray-800 rounded-2xl overflow-hidden card-hover border border-green-500/30 flex flex-col justify-between"
+                        class="bg-gray-800 rounded-2xl overflow-hidden card-hover border border-green-500/30"
                     >
-                        <div class="p-6">
-                            <div class="flex justify-center mb-4">
+                        <div class="p-4 flex items-center sm:flex-col sm:p-6">
+                            <div class="flex-shrink-0 sm:mb-4">
                                 <img
                                     :src="getPlayerPhoto(player.photo_url)"
                                     alt="Player photo"
-                                    class="w-32 h-32 rounded-full object-cover border-4 border-gray-700"
+                                    class="w-16 h-16 rounded-full object-cover border-2 border-gray-700 sm:w-32 sm:h-32 sm:border-4"
+                                    @error="
+                                        $event.target.src =
+                                            '/pictures/players/defaultplayer.jpg'
+                                    "
                                 />
                             </div>
-                            <h4
-                                class="text-2xl font-bold text-center text-white"
-                            >
-                                {{ player.full_name }}
-                            </h4>
                             <div
-                                v-if="player.team"
-                                class="flex flex-col items-center justify-center gap-2 mt-1 text-gray-400"
+                                class="ml-4 sm:ml-0 flex-grow sm:text-center"
                             >
-                                <img
-                                    :src="getTeamLogo(player.team.logo_url)"
-                                    alt=""
-                                    class="w-8 h-8"
-                                />
-                                <span>{{ player.team.name }}</span>
+                                <h4
+                                    class="text-lg font-bold text-white sm:text-2xl"
+                                >
+                                    {{ player.full_name }}
+                                </h4>
+                                <div
+                                    v-if="player.team"
+                                    class="flex items-center gap-2 mt-1 text-gray-400 sm:justify-center"
+                                >
+                                    <img
+                                        :src="
+                                            getTeamLogo(player.team.logo_url)
+                                        "
+                                        alt=""
+                                        class="w-5 h-5 sm:w-8 sm:h-8"
+                                    />
+                                    <span class="text-sm sm:text-base">{{
+                                        player.team.name
+                                    }}</span>
+                                </div>
+                                <div class="mt-2 sm:hidden">
+                                    <div class="flex gap-4 text-left">
+                                        <div>
+                                            <p
+                                                class="text-base font-bold text-white"
+                                            >
+                                                {{ player.stats.matches }}
+                                            </p>
+                                            <p class="text-xs text-gray-400">
+                                                Матчи
+                                            </p>
+                                        </div>
+                                        <div>
+                                            <p
+                                                class="text-base font-bold text-white"
+                                            >
+                                                {{ player.stats.assists }}
+                                            </p>
+                                            <p class="text-xs text-gray-400">
+                                                Пасы
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
-                        <div class="bg-gray-700/50 p-4">
+                        <div class="hidden sm:block bg-gray-700/50 p-4">
                             <div class="flex justify-around text-center">
                                 <div>
-                                    <p class="text-2xl font-bold text-white">
-                                        {{ player.stats.assists }}
-                                    </p>
-                                    <p class="text-sm text-gray-400">Пасы</p>
-                                </div>
-                                <div>
-                                    <p class="text-2xl font-bold text-white">
+                                    <p
+                                        class="text-2xl font-bold text-white"
+                                    >
                                         {{ player.stats.matches }}
                                     </p>
                                     <p class="text-sm text-gray-400">Матчи</p>
+                                </div>
+                                <div>
+                                    <p
+                                        class="text-2xl font-bold text-white"
+                                    >
+                                        {{ player.stats.assists }}
+                                    </p>
+                                    <p class="text-sm text-gray-400">Пасы</p>
                                 </div>
                             </div>
                         </div>
@@ -210,6 +333,13 @@ interface ProcessedPlayer extends Player {
     team: Team | null
 }
 
+const props = defineProps({
+    championshipId: {
+        type: Number,
+        default: 1,
+    },
+})
+
 const playersData = ref<Player[]>([])
 const teamsData = ref<Team[]>([])
 
@@ -217,9 +347,11 @@ onMounted(async () => {
     try {
         const [players, teams] = await Promise.all([
             $fetch<Player[]>(
-                `https://api.timeofthestars.ru/championships/1/players`
+                `https://api.timeofthestars.ru/championships/${props.championshipId}/players`
             ),
-            $fetch<Team[]>(`https://api.timeofthestars.ru/championships/1/teams`),
+            $fetch<Team[]>(
+                `https://api.timeofthestars.ru/championships/${props.championshipId}/teams`
+            ),
         ])
         playersData.value = players
         teamsData.value = teams
@@ -229,7 +361,7 @@ onMounted(async () => {
 })
 
 const getTeamLogo = (logoUrl: string | undefined) => {
-    if (!logoUrl) return '/pictures/teams/default.png'
+    if (!logoUrl) return '/pictures/teams/vremyazvezd.png'
     return logoUrl.startsWith('http') ? logoUrl : `/pictures/teams/${logoUrl}`
 }
 
@@ -270,7 +402,7 @@ const topSnipers = computed(() => {
             }
             return a.stats.matches - b.stats.matches // Fewer matches is better
         })
-        .slice(0, 3)
+        .slice(0, 5)
 })
 
 const topScorers = computed(() => {
@@ -283,7 +415,7 @@ const topScorers = computed(() => {
             }
             return a.stats.matches - b.stats.matches // Fewer matches is better
         })
-        .slice(0, 3)
+        .slice(0, 5)
 })
 
 const topAssistants = computed(() => {
@@ -295,7 +427,7 @@ const topAssistants = computed(() => {
             }
             return a.stats.matches - b.stats.matches // Fewer matches is better
         })
-        .slice(0, 3)
+        .slice(0, 5)
 })
 </script>
 

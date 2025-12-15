@@ -26,53 +26,7 @@
             </div>
         </section>
 
-        <!-- Tournament Stats -->
-        <section class="py-16 px-4 bg-gray-800">
-            <div class="max-w-6xl mx-auto">
-                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-                    <!-- Команды -->
-                    <div class="space-y-2 group">
-                        <div
-                            class="text-5xl group-hover:scale-110 transition-transform"
-                        >
-                            👥
-                        </div>
-                        <div class="text-4xl font-bold text-gradient">
-                            {{ teamData.length }}
-                        </div>
-                        <div class="text-gray-300">Команд</div>
-                    </div>
 
-                    <!-- Матчи -->
-                    <div class="space-y-2 group">
-                        <div
-                            class="text-5xl group-hover:scale-110 transition-transform"
-                        >
-                            🏒
-                        </div>
-                        <div class="text-4xl font-bold text-gradient">
-                            {{ gameData.length }}
-                        </div>
-                        <div class="text-gray-300">Матчей</div>
-                    </div>
-
-                    <!-- Дата начала -->
-                    <div class="space-y-2 group">
-                        <div
-                            class="text-5xl group-hover:scale-110 transition-transform"
-                        >
-                            📅
-                        </div>
-                        <div
-                            class="text-3xl md:text-4xl font-bold text-gradient"
-                        >
-                            {{ formatDateToRussian(turnirdata[0]?.start_date) }}
-                        </div>
-                        <div class="text-gray-300">Дата начала турнира</div>
-                    </div>
-                </div>
-            </div>
-        </section>
 
         <!-- Navigation Tabs -->
         <section
@@ -200,6 +154,54 @@
                 </h2>
                 <div class="bg-gray-800 rounded-xl p-4 md:p-8 overflow-x-auto">
                     <BestPlayers />
+                </div>
+            </div>
+        </section>
+
+        <!-- Tournament Stats -->
+        <section class="py-16 px-4 bg-gray-800">
+            <div class="max-w-6xl mx-auto">
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                    <!-- Команды -->
+                    <div class="space-y-2 group">
+                        <div
+                            class="text-5xl group-hover:scale-110 transition-transform"
+                        >
+                            👥
+                        </div>
+                        <div class="text-4xl font-bold text-gradient">
+                            {{ teamData.length }}
+                        </div>
+                        <div class="text-gray-300">Команд</div>
+                    </div>
+
+                    <!-- Матчи -->
+                    <div class="space-y-2 group">
+                        <div
+                            class="text-5xl group-hover:scale-110 transition-transform"
+                        >
+                            🏒
+                        </div>
+                        <div class="text-4xl font-bold text-gradient">
+                            {{ gameData.length }}
+                        </div>
+                        <div class="text-gray-300">Матчей</div>
+                    </div>
+
+                    <!-- Дата начала -->
+                    <div class="space-y-2 group">
+                        <div
+                            class="text-5xl group-hover:scale-110 transition-transform"
+                        >
+                            📅
+                        </div>
+                        <div
+                            class="text-3xl md:text-4xl font-bold text-gradient"
+                        >
+                            {{ formatDateToRussian(turnirdata[0]?.start_date) }}
+                        </div>
+                        <div class="text-gray-300">Дата начала турнира</div>
+                    </div>
                 </div>
             </div>
         </section>

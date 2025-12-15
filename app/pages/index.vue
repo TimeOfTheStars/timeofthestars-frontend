@@ -9,19 +9,20 @@
             ></div>
             <div class="gradient-bg py-24 px-4 relative">
                 <div class="max-w-6xl mx-auto text-center">
-                    <div
-                        class="sm:mt-6 mb-6 flex justify-center w-full md:w-[600px] h-80 relative mx-auto mt-20"
+                    <!-- <div
+                        class="sm:mt-6 mb-6 flex justify-center w-full md:w-[600px] h-40 sm:h-80 relative mx-auto mt-10"
                     >
                         <img
                             class="w-full h-full object-contain"
                             src="/______.png.webp"
                             alt=""
                         />
-                    </div>
+                    </div> -->
 
                     <p
                         class="text-xl md:text-2xl mb-8 text-white/90 max-w-3xl mx-auto"
                     ></p>
+                    <MatchesCarousel class="mt-30"/>
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
                         <!-- <router-link to="/register">
                             <button
@@ -42,7 +43,7 @@
         </section>
 
         <!-- League Info Section -->
-        <section class="py-16 px-4 bg-gray-800">
+        <!-- <section class="py-16 px-4 bg-gray-800">
             <div class="max-w-6xl mx-auto">
                 <div
                     class="bg-gradient-to-br from-primary-blue/10 to-primary-red/10 rounded-2xl p-8 border border-gray-700"
@@ -71,10 +72,10 @@
                     </div>
                 </div>
             </div>
-        </section>
+        </section> -->
 
         <!-- Stats Section -->
-        <section class="py-16 px-4">
+        <!-- <section class="py-16 px-4">
             <div class="max-w-6xl mx-auto">
                 <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
                     <div class="space-y-2 group">
@@ -114,6 +115,31 @@
                         <div class="text-gray-300">Лет опыта</div>
                     </div>
                 </div>
+            </div>
+        </section> -->
+
+        <!-- Tournament Table Section -->
+        <section class="py-16 px-4">
+            <div class="max-w-6xl mx-auto">
+                <Table :turnirData="tournamentTeams" />
+            </div>
+        </section>
+
+        <!-- Best Players Section -->
+        <section class="py-16 px-4 bg-gray-800">
+            <div class="max-w-6xl mx-auto">
+                <div class="text-center mb-12">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">
+                        🏆 Лучшие игроки
+                    </h2>
+                    <p class="text-xl text-gray-300">
+                        Чемпионат "Звезда Отечества"
+                    </p>
+                </div>
+                <BestPlayers
+                    v-if="championshipId"
+                    :championshipId="championshipId"
+                />
             </div>
         </section>
 
@@ -206,54 +232,6 @@
                             </div>
                         </div>
                     </NuxtLink>
-                </div>
-            </div>
-        </section>
-
-        <!-- Upcoming Matches -->
-        <section class="py-16 px-4 bg-gray-800">
-            <div class="max-w-6xl mx-auto">
-                <div class="flex items-center justify-between mb-8">
-                    <h2 class="text-3xl font-bold">📅 Предстоящие матчи</h2>
-                    <router-link
-                        to="/schedule"
-                        class="text-accent-blue hover:text-accent-red transition-colors"
-                    >
-                        Полное расписание →
-                    </router-link>
-                </div>
-
-                <div>
-                    <div class="bg-gray-700 rounded-xl p-4 md:p-6 card-hover">
-                        <Kalendar
-                            v-if="kalendardata && kalendardata.length > 0"
-                            :turnirData="kalendardata"
-                        />
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Teams Section -->
-        <section class="py-16 px-4 bg-gray-800">
-            <div class="max-w-6xl mx-auto">
-                <div class="text-center mb-12">
-                    <h2 class="text-3xl md:text-4xl font-bold mb-4">
-                        🏒 Наши команды
-                    </h2>
-                    <p class="text-xl text-gray-300">
-                        ⭐ Познакомьтесь с командами нашей лиги 🏆
-                    </p>
-                </div>
-
-                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-                    <div
-                        v-for="team in turnirdata"
-                        :key="team.id"
-                        class="bg-gray-700 rounded-xl p-6 card-hover text-center"
-                    >
-                        <TeamCard :team="team" />
-                    </div>
                 </div>
             </div>
         </section>
@@ -541,7 +519,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useHead } from '#imports'
 import MapInfo from '@/components/MapInfo.vue'
 
@@ -578,14 +556,19 @@ useHead({
     ],
 })
 
-const turnirdata = ref([])
-const kalendardata = ref([])
+const tournamentTeams = ref([])
+const championshipId = ref(null)
 
 onMounted(async () => {
-    turnirdata.value = await $fetch('https://api.timeofthestars.ru/teams/')
-
-    kalendardata.value = await $fetch(
+    const championships = await $fetch(
         'https://api.timeofthestars.ru/championships/'
     )
+    if (championships.length > 0) {
+        const tournamentId = championships[0].id
+        championshipId.value = tournamentId
+        tournamentTeams.value = await $fetch(
+            `https://api.timeofthestars.ru/championships/${tournamentId}/teams`
+        )
+    }
 })
 </script>

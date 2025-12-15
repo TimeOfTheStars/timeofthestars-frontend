@@ -1,9 +1,14 @@
 <template>
-    <div class="min-h-screen bg-gray-900 text-white overflow-x-hidden mt-16">
+    <div class="min-h-screen bg-gray-900 text-white overflow-x-hidden">
         <Header />
 
         <!-- Вставляем компонент календаря -->
-        <Kalendar v-if="turnirdata && turnirdata.length > 0" :turnirData="turnirdata" />
+        <div class="pt-24 px-4">
+            <Kalendar
+                v-if="turnirdata && turnirdata.length > 0"
+                :turnirData="turnirdata"
+            />
+        </div>
     </div>
 </template>
 

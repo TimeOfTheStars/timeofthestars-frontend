@@ -574,62 +574,77 @@ const playerId = route.params.id
 
 const { data: playerData, error } = await useAsyncData(
     `player-${playerId}`,
-    () => $fetch(`https://api.timeofthestars.ru/api/players/${playerId}`)
+    async () => {
+        try {
+            const res = await $fetch(
+                `https://api.timeofthestars.ru/api/players/${playerId}`
+            )
+            return res
+        } catch (err) {
+            // Log and return null so prerender doesn't fail with unhandledRejection
+            console.warn(
+                'Ошибка при получении игрока (prerender-safe):',
+                playerId,
+                err
+            )
+            return null
+        }
+    }
 )
 
-if (error.value || !playerData.value) {
-    throw createError({
-        statusCode: 404,
-        statusMessage: `Игрок не найден`,
-        fatal: true,
-    })
+// Don't throw a fatal error during prerendering. Instead, render a friendly "not found" page.
+const player = error.value || !playerData.value ? null : playerData.value
+
+if (player) {
+    useHead(
+        computed(() => ({
+            title: `${player.full_name || 'Игрок'} - ВРЕМЯ ЗВЁЗД`,
+            meta: [
+                {
+                    name: 'description',
+                    content: `Страница хоккеиста ${player.full_name}. Статистика, биография, и новости.`,
+                },
+                {
+                    name: 'keywords',
+                    content: `хоккей, хоккеист, ${player.full_name}, ярославль, статистика, биография, время звезд`,
+                },
+                { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
+                {
+                    property: 'og:title',
+                    content: `${player.full_name} - ВРЕМЯ ЗВЁЗД`,
+                },
+                {
+                    property: 'og:description',
+                    content: `Вся информация о хоккеисте ${player.full_name}: статистика, биография, и новости.`,
+                },
+                { property: 'og:type', content: 'profile' },
+                { property: 'og:image', content: getPlayerPhoto(player.id) },
+            ],
+            link: [
+                {
+                    rel: 'canonical',
+                    href: `https://timeofthestars.ru/players/${player.id}`,
+                },
+            ],
+        }))
+    )
+} else {
+    // Minimal head for not-found pages to avoid prerender failures
+    useHead({ title: 'Игрок не найден - ВРЕМЯ ЗВЁЗД' })
 }
 
-const player = playerData.value
-
-useHead(computed(() => ({
-    title: `${player.full_name || 'Игрок'} - ВРЕМЯ ЗВЁЗД`,
-    meta: [
-        {
-            name: 'description',
-            content: `Страница хоккеиста ${player.full_name}. Статистика, биография, и новости.`,
-        },
-        {
-            name: 'keywords',
-            content: `хоккей, хоккеист, ${player.full_name}, ярославль, статистика, биография, время звезд`,
-        },
-        { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
-        {
-            property: 'og:title',
-            content: `${player.full_name} - ВРЕМЯ ЗВЁЗД`,
-        },
-        {
-            property: 'og:description',
-            content: `Вся информация о хоккеисте ${player.full_name}: статистика, биография, и новости.`,
-        },
-        { property: 'og:type', content: 'profile' },
-        { property: 'og:image', content: getPlayerPhoto(player.id) },
-    ],
-    link: [
-        {
-            rel: 'canonical',
-            href: `https://timeofthestars.ru/players/${player.id}`,
-        },
-    ],
-})))
-
-// Вычисляемые свойства для статистики
+// Вычисляемые свойства для статистики (guarded with optional chaining)
 const quickStats = computed(() => [
-    { label: '🎂 Возраст', value: player.birth_date, color: 'blue' },
-    { label: '📏 Рост', value: player.height, color: 'red' },
-    { label: '⚖️ Вес', value: player.weight, color: 'green' },
-    { label: '🏳️ Страна', value: player.nationality, color: 'purple' },
-    { label: '💰 Стоимость', value: player.marketValue, color: 'yellow' },
+    { label: '🎂 Возраст', value: player?.birth_date ?? '-', color: 'blue' },
+    { label: '📏 Рост', value: player?.height ?? '-', color: 'red' },
+    { label: '⚖️ Вес', value: player?.weight ?? '-', color: 'green' },
+    { label: '🏳️ Страна', value: player?.nationality ?? '-', color: 'purple' },
     {
-        label: '📄 Контракт',
-        value: '0',
-        color: 'indigo',
+        label: '💰 Стоимость',
+        value: player?.marketValue ?? '-',
+        color: 'yellow',
     },
+    { label: '📄 Контракт', value: '0', color: 'indigo' },
 ])
 
 const statTabs = computed(() => [
@@ -639,36 +654,29 @@ const statTabs = computed(() => [
 ])
 
 const currentSeasonStats = computed(() => [
-    { label: '🏒 Голы', value: player.goals, color: 'blue', trend: '' },
+    { label: '🏒 Голы', value: player?.goals ?? 0, color: 'blue', trend: '' },
     {
         label: '🎯 Передачи',
-        value: player.assists,
+        value: player?.assists ?? 0,
         color: 'red',
         trend: '',
     },
-
     {
         label: '🎮 Игры',
-        value: player.gamesPlayed,
+        value: player?.gamesPlayed ?? 0,
         color: 'purple',
         trend: '',
     },
-
-    {
-        label: '⏱️ ',
-        value: '0 мин',
-        color: 'orange',
-        trend: '',
-    },
+    { label: '⏱️ ', value: '0 мин', color: 'orange', trend: '' },
     {
         label: '🔥 ПП голы',
-        value: player.powerPlayGoals,
+        value: player?.powerPlayGoals ?? 0,
         color: 'indigo',
         trend: '',
     },
     {
         label: '⚡ МН голы',
-        value: player.shortHandedGoals,
+        value: player?.shortHandedGoals ?? 0,
         color: 'pink',
         trend: '',
     },
@@ -677,25 +685,25 @@ const currentSeasonStats = computed(() => [
 const advancedStats = computed(() => [
     {
         label: '🔥 Броски',
-        value: player.shots,
-        description: `Точность: ${player.shootingPercentage}`,
+        value: player?.shots ?? 0,
+        description: `Точность: ${player?.shootingPercentage ?? 0}`,
         color: 'blue',
     },
     {
         label: '⚡ Вбрасывания',
-        value: player.faceoffWins,
+        value: player?.faceoffWins ?? 0,
         description: 'Процент побед',
         color: 'red',
     },
     {
         label: '⏰ Время на льду',
-        value: player.averageTimeOnIce,
+        value: player?.averageTimeOnIce ?? '—',
         description: 'В среднем за игру',
         color: 'green',
     },
     {
         label: '🏆 Решающие голы',
-        value: player.gameWinningGoals,
+        value: player?.gameWinningGoals ?? 0,
         description: 'Победных голов',
         color: 'purple',
     },

@@ -276,8 +276,19 @@
 
 <script setup>
 import { ref, computed } from 'vue'
-const { data: turnirdata } = useFetch(
-    'https://api.timeofthestars.ru/api/tournaments'
+const { data: turnirdata } = await useAsyncData(
+    'turnir-tournaments',
+    async () => {
+        try {
+            const res = await $fetch(
+                'https://api.timeofthestars.ru/api/tournaments'
+            )
+            return Array.isArray(res) ? res : []
+        } catch (err) {
+            console.warn('Ошибка при получении турниров (prerender-safe):', err)
+            return []
+        }
+    }
 )
 
 const teams = computed(() => {

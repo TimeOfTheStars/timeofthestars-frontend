@@ -633,9 +633,7 @@
                                                                 player.photo_url
                                                             )
                                                         "
-                                                        :alt="
-                                                            player.full_name
-                                                        "
+                                                        :alt="player.full_name"
                                                         class="w-20 h-20 rounded-full object-cover border-4 border-gray-700"
                                                     />
                                                 </div>
@@ -675,7 +673,8 @@
                                                                 class="font-semibold text-blue-600"
                                                             >
                                                                 {{
-                                                                    player?.stats
+                                                                    player
+                                                                        ?.stats
                                                                         ?.gaa ||
                                                                     '0'
                                                                 }}%
@@ -748,7 +747,8 @@
                                                                 class="font-bold text-blue-600"
                                                             >
                                                                 {{
-                                                                    player?.stats
+                                                                    player
+                                                                        ?.stats
                                                                         ?.goals ||
                                                                     0
                                                                 }}
@@ -766,7 +766,8 @@
                                                                 class="font-bold text-red-600"
                                                             >
                                                                 {{
-                                                                    player?.stats
+                                                                    player
+                                                                        ?.stats
                                                                         ?.assists ||
                                                                     0
                                                                 }}
@@ -784,7 +785,8 @@
                                                                 class="font-bold text-yellow-500"
                                                             >
                                                                 {{
-                                                                    player?.stats
+                                                                    player
+                                                                        ?.stats
                                                                         ?.penalties ||
                                                                     0
                                                                 }}
@@ -802,7 +804,8 @@
                                                                 class="font-bold text-gray-400"
                                                             >
                                                                 {{
-                                                                    player?.stats
+                                                                    player
+                                                                        ?.stats
                                                                         ?.matches ||
                                                                     0
                                                                 }}
@@ -945,21 +948,29 @@ const { data, error } = await useAsyncData(
                 ? 'https://api.timeofthestars.ru/tournaments/1'
                 : 'https://api.timeofthestars.ru/championships/1'
 
-        const [teamsList, playersList] = await Promise.all([
-            $fetch(`${basePath}/teams`),
-            $fetch(`${basePath}/players`),
-        ])
+        let teamsList = []
+        let playersList = []
+
+        try {
+            teamsList = await $fetch(`${basePath}/teams`)
+        } catch (err) {
+            console.error('Ошибка при получении teams для team page:', err)
+            teamsList = []
+        }
+
+        try {
+            playersList = await $fetch(`${basePath}/players`)
+        } catch (err) {
+            console.error('Ошибка при получении players для team page:', err)
+            playersList = []
+        }
 
         return { teamsList, playersList }
     }
 )
 
 if (error.value) {
-    throw createError({
-        statusCode: 500,
-        statusMessage: 'Ошибка при загрузке данных с сервера',
-        fatal: true,
-    })
+    console.error('useAsyncData error for team-data:', error.value)
 }
 
 const teamsList = computed(() => data.value?.teamsList || [])
@@ -969,57 +980,46 @@ const teamData = computed(() => {
     return teamsList.value.find(team => team.id === teamId.value)
 })
 
-// This check is crucial and will now work on the server
-if (!teamData.value) {
-    throw createError({
-        statusCode: 404,
-        statusMessage: `Команда с ID ${teamId.value} не найдена`,
-        fatal: true,
-    })
-}
-
+// Players that belong to this team
 const teamPlayers = computed(() => {
-    if (playersList.value) {
-        return playersList.value.filter(
-            player => player.team_id === teamId.value
-        )
-    } else {
-        return []
+    if (playersList.value && playersList.value.length) {
+        return playersList.value.filter(p => p.team_id === teamId.value)
     }
+    return []
 })
 
+// If team not found, avoid throwing fatal error during prerender; render a not-found state instead.
+if (!teamData.value) {
+    console.warn(`Команда с ID ${teamId.value} не найдена (prerender-safe)`)
+}
 useHead(
     computed(() => ({
-        title: `${teamData.value.name} - ВРЕМЯ ЗВЁЗД`,
+        title: `${teamData.value?.name || 'Команда'} - ВРЕМЯ ЗВЁЗД`,
         meta: [
             {
                 name: 'description',
-                content: `Страница хоккейной команды ${teamData.value.name}. Состав, статистика, расписание игр и новости команды.`,
+                content: `Страница хоккейной команды ${
+                    teamData.value?.name || ''
+                }. Состав, статистика, расписание игр и новости команды.`,
             },
             {
                 name: 'keywords',
-                content: `хоккей, команда, ${teamData.value.name}, ярославль, состав, статистика, игроки, время звезд`,
+                content: `хоккей, команда, ${
+                    teamData.value?.name || ''
+                }, ярославль, состав, статистика, игроки, время звезд`,
             },
             { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
             {
                 property: 'og:title',
-                content: `${teamData.value.name} - ВРЕМЯ ЗВЁЗД`,
+                content: `${teamData.value?.name || 'Команда'} - ВРЕМЯ ЗВЁЗД`,
             },
             {
                 property: 'og:description',
-                content: `Вся информация о хоккейной команде ${teamData.value.name}: состав, статистика, новости.`,
+                content: `Вся информация о хоккейной команде ${
+                    teamData.value?.name || ''
+                }: состав, статистика, новости.`,
             },
             { property: 'og:type', content: 'website' },
-            {
-                property: 'og:image',
-                content: getTeamLogo(teamData.value.logo_url),
-            },
-        ],
-        link: [
-            {
-                rel: 'canonical',
-                href: `https://timeofthestars.ru/teams/${teamData.value.id}`,
-            },
         ],
     }))
 )
@@ -1183,20 +1183,20 @@ const totalPlayers = computed(() => {
 <style>
 .expand-enter-active,
 .expand-leave-active {
-  transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
-  overflow: hidden;
+    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
+    overflow: hidden;
 }
 
 .expand-enter-from,
 .expand-leave-to {
-  max-height: 0;
-  opacity: 0;
+    max-height: 0;
+    opacity: 0;
 }
 
 .expand-enter-to,
 .expand-leave-from {
-  max-height: 500px; /* Should be higher than the content */
-  opacity: 1;
+    max-height: 500px; /* Should be higher than the content */
+    opacity: 1;
 }
 
 @keyframes fadeInUp {

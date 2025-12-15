@@ -22,7 +22,7 @@
                     <p
                         class="text-xl md:text-2xl mb-8 text-white/90 max-w-3xl mx-auto"
                     ></p>
-                    <MatchesCarousel class="mt-30"/>
+                    <MatchesCarousel class="mt-30" />
                     <div class="flex flex-col sm:flex-row gap-4 justify-center">
                         <!-- <router-link to="/register">
                             <button
@@ -560,15 +560,26 @@ const tournamentTeams = ref([])
 const championshipId = ref(null)
 
 onMounted(async () => {
-    const championships = await $fetch(
-        'https://api.timeofthestars.ru/championships/'
-    )
-    if (championships.length > 0) {
-        const tournamentId = championships[0].id
-        championshipId.value = tournamentId
-        tournamentTeams.value = await $fetch(
-            `https://api.timeofthestars.ru/championships/${tournamentId}/teams`
+    try {
+        const championships = await $fetch(
+            'https://api.timeofthestars.ru/championships/'
         )
+        if (Array.isArray(championships) && championships.length > 0) {
+            const tournamentId = championships[0].id
+            championshipId.value = tournamentId
+            try {
+                tournamentTeams.value = await $fetch(
+                    `https://api.timeofthestars.ru/championships/${tournamentId}/teams`
+                )
+            } catch (err) {
+                console.error('Ошибка при получении команд чемпионата:', err)
+                tournamentTeams.value = []
+            }
+        }
+    } catch (err) {
+        console.error('Ошибка при получении списка чемпионатов:', err)
+        championshipId.value = null
+        tournamentTeams.value = []
     }
 })
 </script>

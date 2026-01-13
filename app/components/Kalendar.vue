@@ -913,84 +913,102 @@ const title = computed(() => {
 const games = ref([])
 const teams = ref([])
 
-// Функция для получения номера недели года
-function getWeekNumber(dateString) {
+// Функция для парсинга даты из строки "YYYY-MM-DD"
+function parseDate(dateString) {
     const [year, month, day] = dateString.split('-').map(Number)
-    const date = new Date(year, month - 1, day)
-    const firstDayOfYear = new Date(year, 0, 1)
-    const pastDaysOfYear = (date - firstDayOfYear) / 86400000
-    return Math.ceil((pastDaysOfYear + firstDayOfYear.getDay() + 1) / 7)
+    return new Date(year, month - 1, day)
 }
 
-// Получение номера текущей недели
-const currentWeekNumber = computed(() => {
+// Получение границ текущей недели (понедельник - воскресенье)
+function getCurrentWeekBounds() {
     const now = new Date()
-    const year = now.getFullYear()
-    const month = String(now.getMonth() + 1).padStart(2, '0')
-    const day = String(now.getDate()).padStart(2, '0')
-    return getWeekNumber(`${year}-${month}-${day}`)
-})
+    const dayOfWeek = now.getDay()
+    // Преобразуем: воскресенье (0) -> 6, понедельник (1) -> 0, и т.д.
+    const adjustedDay = dayOfWeek === 0 ? 6 : dayOfWeek - 1
+    
+    const weekStart = new Date(now)
+    weekStart.setDate(now.getDate() - adjustedDay)
+    weekStart.setHours(0, 0, 0, 0)
+    
+    const weekEnd = new Date(weekStart)
+    weekEnd.setDate(weekStart.getDate() + 6)
+    weekEnd.setHours(23, 59, 59, 999)
+    
+    return { weekStart, weekEnd }
+}
+
+const currentWeekBounds = computed(() => getCurrentWeekBounds())
 
 // Collapsed state for past / future sections
 const isPastExpanded = ref(false)
 const isFutureExpanded = ref(false)
 
+// Все матчи отсортированные строго по дате (от старых к новым)
 const carouselMatches = computed(() => {
-    const sortFn = (a, b) => {
-        const dateA = new Date(a.date)
-        const dateB = new Date(b.date)
+    return [...games.value].sort((a, b) => {
+        const dateA = parseDate(a.date)
+        const dateB = parseDate(b.date)
         if (dateA < dateB) return -1
         if (dateA > dateB) return 1
 
+        // Если даты равны - сортируем по времени
         if (a.time && b.time) {
             return a.time.localeCompare(b.time)
         }
         return 0
-    }
-
-    const played = games.value
-        .filter(g => g.score_team_a != null)
-        .sort(sortFn)
-    const upcoming = games.value
-        .filter(g => g.score_team_a == null)
-        .sort(sortFn)
-
-    return [...played, ...upcoming]
+    })
 })
 
+// Начальный слайд - показываем самый свежий матч относительно текущей даты
 const initialSlide = computed(() => {
     if (!carouselMatches.value.length) return 0
 
-    const lastPlayedIndex = carouselMatches.value.findLastIndex(
-        g => g.score_team_a != null
-    )
+    const now = new Date()
+    now.setHours(0, 0, 0, 0)
 
-    if (lastPlayedIndex !== -1) {
-        return lastPlayedIndex
+    // Находим индекс первого матча, который ещё не прошёл (дата >= сегодня)
+    const firstUpcomingIndex = carouselMatches.value.findIndex(match => {
+        const matchDate = parseDate(match.date)
+        return matchDate >= now
+    })
+
+    // Если есть предстоящие матчи - показываем последний прошедший (если есть) или первый предстоящий
+    if (firstUpcomingIndex > 0) {
+        // Показываем последний прошедший матч (слайд перед первым будущим)
+        return firstUpcomingIndex - 1
+    } else if (firstUpcomingIndex === 0) {
+        // Все матчи в будущем - показываем первый
+        return 0
+    } else {
+        // Все матчи в прошлом - показываем последний
+        return carouselMatches.value.length - 1
     }
-
-    return 0 // Default to first slide if no played matches
 })
 
-// Разделение матчей на прошлые, текущие и будущие по номеру недели
+// Разделение матчей на прошлые, текущие и будущие по полной дате
 const pastMatches = computed(() => {
+    const { weekStart } = currentWeekBounds.value
     return games.value
-        .filter(m => m.date && getWeekNumber(m.date) < currentWeekNumber.value)
-        .sort((a, b) => new Date(a.date) - new Date(b.date))
+        .filter(m => m.date && parseDate(m.date) < weekStart)
+        .sort((a, b) => parseDate(a.date) - parseDate(b.date))
 })
 
 const currentMatches = computed(() => {
+    const { weekStart, weekEnd } = currentWeekBounds.value
     return games.value
-        .filter(
-            m => m.date && getWeekNumber(m.date) === currentWeekNumber.value
-        )
-        .sort((a, b) => new Date(a.date) - new Date(b.date))
+        .filter(m => {
+            if (!m.date) return false
+            const matchDate = parseDate(m.date)
+            return matchDate >= weekStart && matchDate <= weekEnd
+        })
+        .sort((a, b) => parseDate(a.date) - parseDate(b.date))
 })
 
 const futureMatches = computed(() => {
+    const { weekEnd } = currentWeekBounds.value
     return games.value
-        .filter(m => m.date && getWeekNumber(m.date) > currentWeekNumber.value)
-        .sort((a, b) => new Date(a.date) - new Date(b.date))
+        .filter(m => m.date && parseDate(m.date) > weekEnd)
+        .sort((a, b) => parseDate(a.date) - parseDate(b.date))
 })
 
 watch(

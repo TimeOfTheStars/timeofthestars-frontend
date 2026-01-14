@@ -1076,7 +1076,8 @@ function getMatchStatus(match) {
         match.date === '2025-12-14' ||
         match.date === '2025-12-16' ||
         match.date === '2025-12-19' ||
-        match.date === '2025-12-20'
+        match.date === '2025-12-20' ||
+        match.date === '2026-01-16'
     ) {
         return 'Перенесен'
     }

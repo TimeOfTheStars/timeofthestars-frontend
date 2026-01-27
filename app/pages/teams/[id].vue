@@ -280,7 +280,7 @@
                                                 <img
                                                     :src="
                                                         getPlayerPhoto(
-                                                            player.photo_url
+                                                            player.photo_url,
                                                         )
                                                     "
                                                     :alt="player.full_name"
@@ -384,6 +384,22 @@
                                                 <template v-else>
                                                     <div class="text-center">
                                                         <div
+                                                            class="font-bold text-green-600"
+                                                        >
+                                                            {{
+                                                                getPlayerPoints(
+                                                                    player,
+                                                                )
+                                                            }}
+                                                        </div>
+                                                        <div
+                                                            class="text-[10px] text-gray-400"
+                                                        >
+                                                            Очки
+                                                        </div>
+                                                    </div>
+                                                    <div class="text-center">
+                                                        <div
                                                             class="font-bold text-blue-600"
                                                         >
                                                             {{
@@ -477,7 +493,7 @@
                                                 <img
                                                     :src="
                                                         getPlayerPhoto(
-                                                            player.photo_url
+                                                            player.photo_url,
                                                         )
                                                     "
                                                     :alt="player.full_name"
@@ -495,7 +511,7 @@
                                                         <template
                                                             v-if="
                                                                 isGoalkeeper(
-                                                                    player
+                                                                    player,
                                                                 )
                                                             "
                                                         >
@@ -550,6 +566,22 @@
                                                             </div>
                                                         </template>
                                                         <template v-else>
+                                                            <div
+                                                                class="flex items-center"
+                                                            >
+                                                                <span
+                                                                    class="font-mono text-green-400 mr-1"
+                                                                    >О:</span
+                                                                >
+                                                                <span
+                                                                    class="font-bold text-white"
+                                                                    >{{
+                                                                        getPlayerPoints(
+                                                                            player,
+                                                                        )
+                                                                    }}</span
+                                                                >
+                                                            </div>
                                                             <div
                                                                 class="flex items-center"
                                                             >
@@ -630,7 +662,7 @@
                                                     <img
                                                         :src="
                                                             getPlayerPhoto(
-                                                                player.photo_url
+                                                                player.photo_url,
                                                             )
                                                         "
                                                         :alt="player.full_name"
@@ -740,6 +772,24 @@
                                                         </div>
                                                     </template>
                                                     <template v-else>
+                                                        <div
+                                                            class="text-center"
+                                                        >
+                                                            <div
+                                                                class="font-bold text-green-600"
+                                                            >
+                                                                {{
+                                                                    getPlayerPoints(
+                                                                        player,
+                                                                    )
+                                                                }}
+                                                            </div>
+                                                            <div
+                                                                class="text-[10px] text-gray-400"
+                                                            >
+                                                                Очки
+                                                            </div>
+                                                        </div>
                                                         <div
                                                             class="text-center"
                                                         >
@@ -966,7 +1016,7 @@ const { data, error } = await useAsyncData(
         }
 
         return { teamsList, playersList }
-    }
+    },
 )
 
 if (error.value) {
@@ -1021,7 +1071,7 @@ useHead(
             },
             { property: 'og:type', content: 'website' },
         ],
-    }))
+    })),
 )
 
 const teamColors = computed(() => usePlayerColor(teamId.value))
@@ -1151,12 +1201,17 @@ const tabs = computed(() =>
             count: playersByPosition.value.other.length,
             color: 'gray',
         },
-    ].filter(tab => tab.count > 0)
+    ].filter(tab => tab.count > 0),
 )
 
 const isGoalkeeper = player => {
     const pos = (player.position || '').toLowerCase()
     return pos.includes('вратарь')
+}
+
+const getPlayerPoints = player => {
+    if (!player?.stats) return 0
+    return (player.stats.goals || 0) + (player.stats.assists || 0)
 }
 
 const filteredPlayers = computed(() => {
@@ -1171,7 +1226,10 @@ const filteredPlayers = computed(() => {
             return playersByPosition.value.other
         case 'all':
         default:
-            return teamPlayers.value
+            // Сортируем по очкам от лучшего к худшему
+            return [...teamPlayers.value].sort((a, b) => {
+                return getPlayerPoints(b) - getPlayerPoints(a)
+            })
     }
 })
 

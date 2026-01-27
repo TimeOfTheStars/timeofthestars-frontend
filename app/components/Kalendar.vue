@@ -229,7 +229,7 @@
                         </div>
                         <div class="mt-3 md:mt-4 flex justify-center">
                             <NuxtLink
-                                v-if="match.score_team_a"
+                                v-if="match.score_team_a != null && match.scan"
                                 :to="`/matches/${match.scan}`"
                                 class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-blue text-white text-sm md:text-base font-medium hover:opacity-90 transition"
                                 >Смотреть протокол</NuxtLink
@@ -458,7 +458,7 @@
                                         class="mt-3 md:mt-4 flex justify-center"
                                     >
                                         <NuxtLink
-                                            v-if="match.score_team_a"
+                                            v-if="match.score_team_a != null && match.scan"
                                             :to="`/matches/${match.scan}`"
                                             class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-blue text-white text-sm md:text-base font-medium hover:opacity-90 transition"
                                             >Смотреть протокол</NuxtLink
@@ -621,7 +621,7 @@
                             </div>
                             <div class="mt-3 md:mt-4 flex justify-center">
                                 <NuxtLink
-                                    v-if="match.score_team_a"
+                                    v-if="match.score_team_a != null && match.scan"
                                     :to="`/matches/${match.scan}`"
                                     class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-blue text-white text-sm md:text-base font-medium hover:opacity-90 transition"
                                     >Смотреть протокол</NuxtLink
@@ -837,7 +837,7 @@
                                         class="mt-3 md:mt-4 flex justify-center"
                                     >
                                         <NuxtLink
-                                            v-if="match.score_team_a"
+                                            v-if="match.score_team_a != null && match.scan"
                                             :to="`/matches/${match.scan}`"
                                             class="inline-flex items-center justify-center px-4 py-2 rounded-lg bg-primary-blue text-white text-sm md:text-base font-medium hover:opacity-90 transition"
                                             >Смотреть протокол</NuxtLink
@@ -849,7 +849,7 @@
                                             aria-disabled="true"
                                             title="Протокол будет доступен после завершения матча"
                                         >
-                                            Смотреre протокол
+                                            Смотреть протокол
                                         </button>
                                     </div>
                                     <div

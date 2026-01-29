@@ -6,7 +6,7 @@ export default defineNuxtConfig({
     devtools: { enabled: true },
     ssr: true,
     nitro: {
-        preset: 'static',
+        preset: 'node',
         crawlLinks: true,
     },
     css: ['~/assets/main.css'],

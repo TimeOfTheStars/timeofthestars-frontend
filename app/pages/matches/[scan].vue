@@ -3,7 +3,7 @@
         <!-- Sticky button to go home -->
         <NuxtLink
             v-if="showImage && imageSrc"
-            to="/"
+            to="/schedule"
             class="btn-home-sticky btn-primary-professional"
         >
             На главную
@@ -34,9 +34,9 @@
                     загружена.
                 </p>
                 <NuxtLink
-                    to="/"
+                    to="/schedule"
                     class="btn-primary-professional not-found-button"
-                    >Вернуться на главную</NuxtLink
+                    >В расписание</NuxtLink
                 >
             </div>
         </div>

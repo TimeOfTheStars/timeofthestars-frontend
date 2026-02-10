@@ -57,7 +57,7 @@
                             <NuxtLink
                                 v-for="tournament in tournamentsdata"
                                 :key="tournament.id"
-                                to="/pre-season-tournament"
+                                :to="`/pre-season-tournament?id=${tournament.id}`"
                                 class="flex items-center px-4 py-3 hover:bg-gray-700 transition-colors"
                                 @click="closeAllDropdowns"
                             >
@@ -207,8 +207,8 @@
                     <div v-if="activeDropdown === 'friendly'" class="pl-4">
                         <NuxtLink
                             v-for="tournament in tournamentsdata"
-                            :key="tournament.index"
-                            to="/pre-season-tournament"
+                            :key="tournament.id"
+                            :to="`/pre-season-tournament?id=${tournament.id}`"
                             class="flex items-center py-2 text-gray-300 hover:text-white transition-colors"
                             @click="closeMobileMenu"
                         >

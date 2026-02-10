@@ -11,7 +11,7 @@
                 <div class="max-w-6xl mx-auto text-center">
                     <div class="text-7xl mb-6">🏆</div>
                     <h1 class="text-4xl md:text-6xl font-bold mb-4 text-white">
-                        Предсезонный турнир
+                        {{ tournamentTitle }}
                     </h1>
                     <p class="text-xl text-white/90 mb-8">
                         среди любительских спорткоманд
@@ -103,14 +103,14 @@
                     📅 Календарь турнира
                 </h2>
                 <div class="bg-gray-800 rounded-xl p-8 text-center">
-                    <Kalendar :turnirData="turnirdata" dataType="tournament" />
+                    <Kalendar :turnirData="selectedTournament ? [selectedTournament] : []" dataType="tournament" />
                 </div>
             </div>
         </section>
 
         <!-- Table Tab -->
         <section v-if="activeTab === 'table'" class="py-16 px-4">
-            <Table />
+            <Table :turnirData="teamData" />
         </section>
 
         <!-- Tournament Stats -->
@@ -153,7 +153,7 @@
                         <div
                             class="text-3xl md:text-4xl font-bold text-gradient"
                         >
-                            {{ formatDateToRussian(turnirdata[0]?.start_date) }}
+                            {{ formatDateToRussian(selectedTournament?.start_date) }}
                         </div>
                         <div class="text-gray-300">Дата начала турнира</div>
                     </div>
@@ -264,48 +264,69 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, watch } from 'vue'
+import { useRoute } from 'vue-router'
 import { useHead } from '#imports'
 
-// Set page title
-useHead({
-    title: 'Предсезонный турнир - ВРЕМЯ ЗВЁЗД',
-    meta: [
-        {
-            name: 'description',
-            content:
-                'Информация о предсезонном турнире по хоккею в Ярославле. Участники, календарь, таблица и результаты.',
-        },
-        {
-            name: 'keywords',
-            content:
-                'хоккей, предсезонный турнир, ярославль, расписание, таблица, участники, результаты',
-        },
-        { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
-        {
-            property: 'og:title',
-            content: 'Предсезонный турнир - ВРЕМЯ ЗВЁЗД',
-        },
-        {
-            property: 'og:description',
-            content:
-                'Вся информация о предсезонном турнире по хоккею среди любительских команд Ярославля.',
-        },
-        { property: 'og:type', content: 'website' },
-    ],
-    link: [
-        {
-            rel: 'canonical',
-            href: 'https://timeofthestars.ru/pre-season-tournament',
-        },
-    ],
+const route = useRoute()
+
+// Выбранный турнир: из query.id или первый из списка
+const turnirdata = ref([])
+const currentTournamentId = computed(() => {
+    const list = turnirdata.value
+    const q = route.query.id
+    if (q && list?.length) {
+        const t = list.find(t => t.id === Number(q))
+        if (t) return t.id
+    }
+    return list?.[0]?.id ?? null
 })
+const selectedTournament = computed(() => {
+    const id = currentTournamentId.value
+    if (!id) return null
+    return turnirdata.value?.find(t => t.id === id) ?? null
+})
+
+const tournamentTitle = computed(() => selectedTournament.value?.name ?? 'Предсезонный турнир')
+
+// Set page title (dynamic by tournament)
+useHead(
+    computed(() => {
+        const title = `${tournamentTitle.value} - ВРЕМЯ ЗВЁЗД`
+        return {
+            title,
+            meta: [
+                {
+                    name: 'description',
+                    content: `Информация о турнире «${tournamentTitle.value}» по хоккею в Ярославле. Участники, календарь, таблица и результаты.`,
+                },
+                {
+                    name: 'keywords',
+                    content:
+                        'хоккей, предсезонный турнир, ярославль, расписание, таблица, участники, результаты',
+                },
+                { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
+                { property: 'og:title', content: title },
+                {
+                    property: 'og:description',
+                    content: `Вся информация о турнире «${tournamentTitle.value}» по хоккею среди любительских команд Ярославля.`,
+                },
+                { property: 'og:type', content: 'website' },
+            ],
+            link: [
+                {
+                    rel: 'canonical',
+                    href: `https://timeofthestars.ru/pre-season-tournament${route.query.id ? `?id=${route.query.id}` : ''}`,
+                },
+            ],
+        }
+    })
+)
 
 // Активная вкладка
 const activeTab = ref('participants')
 const teamData = ref([])
 const gameData = ref([])
-const turnirdata = ref([])
 
 function formatDateToRussian(dateString) {
     if (!dateString) return ''
@@ -320,24 +341,40 @@ function formatDateToRussian(dateString) {
         .replace(' г.', '')
 }
 
+// Загрузка списка турниров
 onMounted(async () => {
     try {
         const tournaments = await $fetch(
             `https://api.timeofthestars.ru/tournaments/`
         )
-        turnirdata.value = tournaments
+        turnirdata.value = tournaments ?? []
+    } catch (error) {
+        console.error('Ошибка при получении списка турниров:', error)
+    }
+})
 
-        if (tournaments.length > 0) {
-            const tournamentId = tournaments[0].id
+// Загрузка команд и матчей выбранного турнира
+watch(
+    currentTournamentId,
+    async (tournamentId) => {
+        if (!tournamentId) {
+            teamData.value = []
+            gameData.value = []
+            return
+        }
+        try {
             teamData.value = await $fetch(
                 `https://api.timeofthestars.ru/tournaments/${tournamentId}/teams`
             )
             gameData.value = await $fetch(
                 `https://api.timeofthestars.ru/tournaments/${tournamentId}/games`
             )
+        } catch (error) {
+            console.error('Ошибка при получении данных турнира:', error)
+            teamData.value = []
+            gameData.value = []
         }
-    } catch (error) {
-        console.error('Ошибка при получении данных:', error)
-    }
-})
+    },
+    { immediate: true }
+)
 </script>

@@ -22,7 +22,7 @@
                         class="print-cell"
                     >
                         <div class="cell-header">
-                            <span class="cell-num">№{{ player.stats?.number ?? '—' }}</span>
+                            <span class="cell-num">№ <span class="cell-num-placeholder"></span></span>
                             <span class="cell-pos">{{ positionShort(player.position) }}</span>
                         </div>
                         <div class="cell-photo">
@@ -217,6 +217,13 @@ useHead(
 .cell-num,
 .cell-pos {
     line-height: 1.2;
+}
+
+.cell-num-placeholder {
+    display: inline-block;
+    min-width: 1.2em;
+    border-bottom: 1px solid #000;
+    vertical-align: bottom;
 }
 
 .cell-photo {

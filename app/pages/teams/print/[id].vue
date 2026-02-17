@@ -53,14 +53,36 @@ import { getPlayerPhoto } from '@/utils/PicturesAdmin'
 const route = useRoute()
 const teamId = computed(() => Number(route.params.id))
 
+const championshipsUrl = 'https://api.timeofthestars.ru/championships/1'
+
 const { data } = await useAsyncData(
     () => `team-print-${teamId.value}`,
     async () => {
         if (!teamId.value) return { teamsList: [], playersList: [] }
-        const basePath =
-            teamId.value === 3
-                ? 'https://api.timeofthestars.ru/tournaments/1'
-                : 'https://api.timeofthestars.ru/championships/1'
+        let basePath = championshipsUrl
+        try {
+            const championshipTeams = await $fetch(`${championshipsUrl}/teams`)
+            const inChampionship = Array.isArray(championshipTeams) && championshipTeams.some(t => t.id === teamId.value)
+            if (!inChampionship) {
+                const tournaments = await $fetch('https://api.timeofthestars.ru/tournaments/')
+                const list = Array.isArray(tournaments) ? tournaments : []
+                for (const tour of list) {
+                    const id = tour?.id ?? tour
+                    if (id == null) continue
+                    try {
+                        const tournamentTeams = await $fetch(`https://api.timeofthestars.ru/tournaments/${id}/teams`)
+                        if (Array.isArray(tournamentTeams) && tournamentTeams.some(t => t.id === teamId.value)) {
+                            basePath = `https://api.timeofthestars.ru/tournaments/${id}`
+                            break
+                        }
+                    } catch {
+                        continue
+                    }
+                }
+            }
+        } catch {
+            basePath = championshipsUrl
+        }
         let teamsList = []
         let playersList = []
         try {

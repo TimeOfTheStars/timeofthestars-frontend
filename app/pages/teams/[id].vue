@@ -107,7 +107,7 @@
                             }"
                         >
                             <img
-                                :src="getTeamLogo(teamData.logo_url)"
+                                :src="getTeamLogo(teamData?.logo_url)"
                                 class="w-full h-full object-contain"
                             />
                         </div>
@@ -118,7 +118,7 @@
                                     isLogoHovered && hasCustomBackground,
                             }"
                         >
-                            {{ teamData.name }}
+                            {{ teamData?.name }}
                         </h2>
                         <p
                             class="text-sm md:text-xl lg:text-2xl opacity-90 font-light"
@@ -127,7 +127,7 @@
                                     isLogoHovered && hasCustomBackground,
                             }"
                         >
-                            г. {{ teamData.city }}
+                            г. {{ teamData?.city }}
                         </p>
                     </div>
 
@@ -1175,7 +1175,7 @@
                         </button>
                     </div>
                     <p class="text-gray-400 text-xs md:text-sm">
-                        © 2025 {{ teamData.name }} • Все права защищены •
+                        © 2025 {{ teamData?.name }} • Все права защищены •
                         Сделано с ❤️ для болельщиков
                     </p>
                 </div>
@@ -1192,16 +1192,41 @@ import { getTeamLogo, getPlayerPhoto } from '@/utils/PicturesAdmin'
 const route = useRoute()
 const teamId = computed(() => Number(route.params.id))
 
+const championshipsUrl = 'https://api.timeofthestars.ru/championships/1'
+
 const { data, error } = await useAsyncData(
     () => `team-data-${teamId.value}`,
     async () => {
         if (!teamId.value)
             return { teamsList: [], playersList: [], gamesList: [] }
 
-        const basePath =
-            teamId.value === 3
-                ? 'https://api.timeofthestars.ru/tournaments/1'
-                : 'https://api.timeofthestars.ru/championships/1'
+        let basePath = championshipsUrl
+        try {
+            const championshipTeams = await $fetch(`${championshipsUrl}/teams`)
+            const inChampionship = Array.isArray(championshipTeams) && championshipTeams.some(t => t.id === teamId.value)
+            if (inChampionship) {
+                basePath = championshipsUrl
+            } else {
+                const tournaments = await $fetch('https://api.timeofthestars.ru/tournaments/')
+                const list = Array.isArray(tournaments) ? tournaments : []
+                for (const tour of list) {
+                    const id = tour?.id ?? tour
+                    if (id == null) continue
+                    try {
+                        const tournamentTeams = await $fetch(`https://api.timeofthestars.ru/tournaments/${id}/teams`)
+                        if (Array.isArray(tournamentTeams) && tournamentTeams.some(t => t.id === teamId.value)) {
+                            basePath = `https://api.timeofthestars.ru/tournaments/${id}`
+                            break
+                        }
+                    } catch {
+                        continue
+                    }
+                }
+            }
+        } catch (err) {
+            console.error('Ошибка при определении источника данных команды:', err)
+            basePath = championshipsUrl
+        }
 
         let teamsList = []
         let playersList = []
@@ -1353,7 +1378,7 @@ onUnmounted(() => {
 })
 
 const teamBackgroundStyle = computed(() => {
-    const teamName = teamData.value?.name.toLowerCase()
+    const teamName = (teamData.value?.name ?? '').toLowerCase()
     const baseStyle = {
         backgroundSize: 'cover',
         backgroundPosition: 'center',
@@ -1374,7 +1399,7 @@ const teamBackgroundStyle = computed(() => {
 })
 
 const hasCustomBackground = computed(() => {
-    const teamName = teamData.value?.name.toLowerCase()
+    const teamName = (teamData.value?.name ?? '').toLowerCase()
     return teamName.includes('переславль') || teamName.includes('явву пво')
 })
 

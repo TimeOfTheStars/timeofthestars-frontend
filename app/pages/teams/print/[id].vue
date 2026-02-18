@@ -52,36 +52,54 @@ import { getPlayerPhoto, onImageError } from '@/utils/PicturesAdmin'
 
 const route = useRoute()
 const teamId = computed(() => Number(route.params.id))
+const contextKey = computed(() => {
+    const q = route.query.context
+    return Array.isArray(q) ? q[0] : (q ?? '')
+})
 
-const championshipsUrl = 'https://api.timeofthestars.ru/championships/1'
+const apiBase = 'https://api.timeofthestars.ru'
+const championshipsUrl = `${apiBase}/championships/1`
 
 const { data } = await useAsyncData(
-    () => `team-print-${teamId.value}`,
+    () => `team-print-${teamId.value}-${contextKey.value || 'auto'}`,
     async () => {
         if (!teamId.value) return { teamsList: [], playersList: [] }
-        let basePath = championshipsUrl
-        try {
-            const championshipTeams = await $fetch(`${championshipsUrl}/teams`)
-            const inChampionship = Array.isArray(championshipTeams) && championshipTeams.some(t => t.id === teamId.value)
-            if (!inChampionship) {
-                const tournaments = await $fetch('https://api.timeofthestars.ru/tournaments/')
-                const list = Array.isArray(tournaments) ? tournaments : []
-                for (const tour of list) {
-                    const id = tour?.id ?? tour
-                    if (id == null) continue
-                    try {
-                        const tournamentTeams = await $fetch(`https://api.timeofthestars.ru/tournaments/${id}/teams`)
-                        if (Array.isArray(tournamentTeams) && tournamentTeams.some(t => t.id === teamId.value)) {
-                            basePath = `https://api.timeofthestars.ru/tournaments/${id}`
-                            break
+        let basePath = null
+        const key = contextKey.value
+        if (key && typeof key === 'string') {
+            const championshipMatch = key.match(/^championship-(\d+)$/)
+            const tournamentMatch = key.match(/^tournament-(\d+)$/)
+            if (championshipMatch) {
+                basePath = `${apiBase}/championships/${championshipMatch[1]}`
+            } else if (tournamentMatch) {
+                basePath = `${apiBase}/tournaments/${tournamentMatch[1]}`
+            }
+        }
+        if (!basePath) {
+            basePath = championshipsUrl
+            try {
+                const championshipTeams = await $fetch(`${championshipsUrl}/teams`)
+                const inChampionship = Array.isArray(championshipTeams) && championshipTeams.some(t => t.id === teamId.value)
+                if (!inChampionship) {
+                    const tournaments = await $fetch(`${apiBase}/tournaments/`)
+                    const list = Array.isArray(tournaments) ? tournaments : []
+                    for (const tour of list) {
+                        const id = tour?.id ?? tour
+                        if (id == null) continue
+                        try {
+                            const tournamentTeams = await $fetch(`${apiBase}/tournaments/${id}/teams`)
+                            if (Array.isArray(tournamentTeams) && tournamentTeams.some(t => t.id === teamId.value)) {
+                                basePath = `${apiBase}/tournaments/${id}`
+                                break
+                            }
+                        } catch {
+                            continue
                         }
-                    } catch {
-                        continue
                     }
                 }
+            } catch {
+                basePath = championshipsUrl
             }
-        } catch {
-            basePath = championshipsUrl
         }
         let teamsList = []
         let playersList = []

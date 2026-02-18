@@ -207,7 +207,7 @@
                                 </div>
                                 <a
                                     v-if="teamPlayers.length > 0"
-                                    :href="`/teams/print/${teamId}`"
+                                    :href="`/teams/print/${teamId}${selectedContextKey ? `?context=${selectedContextKey}` : ''}`"
                                     target="_blank"
                                     rel="noopener noreferrer"
                                     class="inline-flex items-center justify-center px-3 py-1.5 md:px-4 md:py-2 rounded-full text-sm font-medium bg-gray-700 text-gray-200 hover:bg-gray-600 transition-colors"

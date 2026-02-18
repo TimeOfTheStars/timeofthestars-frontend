@@ -67,7 +67,7 @@
                             </td>
                             <td class="px-2 py-3 sm:px-6">
                                 <NuxtLink
-                                    :to="`/teams/${team.id}`"
+                                    :to="`/teams/${team.id}${props.contextKey ? `?context=${props.contextKey}` : ''}`"
                                     class="flex items-center gap-3 transition-colors hover:text-accent-blue"
                                 >
                                     <div
@@ -126,6 +126,11 @@ const props = defineProps({
         type: Object,
         required: false,
         default: null,
+    },
+    /** When set, team links include ?context=... so team page opens with this tab selected */
+    contextKey: {
+        type: String,
+        default: '',
     },
 })
 

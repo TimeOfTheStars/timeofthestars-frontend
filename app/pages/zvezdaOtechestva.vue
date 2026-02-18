@@ -120,7 +120,7 @@
                     <NuxtLink
                         v-for="team in teamData"
                         :key="team.id"
-                        :to="`/teams/${team.id}`"
+                        :to="`/teams/${team.id}${championshipContextKey ? `?context=${championshipContextKey}` : ''}`"
                         class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700 block hover:bg-gray-700 transition-colors"
                     >
                         <TurnirParticipants :team="team" />
@@ -136,14 +136,20 @@
                     📅 Календарь чемпионата
                 </h2>
                 <div class="bg-gray-800 rounded-xl p-8 text-center">
-                    <Kalendar :turnirData="turnirdata" />
+                    <Kalendar
+                    :turnirData="turnirdata"
+                    :context-key="championshipContextKey"
+                />
                 </div>
             </div>
         </section>
 
         <!-- Table Tab -->
         <section v-if="activeTab === 'table'" class="py-16 px-4">
-            <Table :turnirData="teamData" />
+            <Table
+                    :turnirData="teamData"
+                    :context-key="championshipContextKey"
+                />
         </section>
 
         <!-- Best Players Tab -->
@@ -273,6 +279,11 @@ const teamData = ref([])
 const gameData = ref([])
 const turnirdata = ref([])
 const playersData = ref([])
+
+const championshipContextKey = computed(() => {
+    const c = turnirdata.value?.[0]
+    return c?.id != null ? `championship-${c.id}` : ''
+})
 
 onMounted(async () => {
     try {

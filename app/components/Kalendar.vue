@@ -64,7 +64,7 @@
                             </div>
                             <div v-if="carousel" class="flex-1 flex flex-col items-center gap-2">
                                 <NuxtLink
-                                        :to="`/teams/${match.team_a_id}`"
+                                        :to="teamLink(match.team_a_id)"
                                         class="flex items-center gap-2 md:gap-3 min-w-0"
                                     >
                                         <div
@@ -114,7 +114,7 @@
                                     </div>
                                 </div>
                                 <NuxtLink
-                                    :to="`/teams/${match.team_b_id}`"
+                                    :to="teamLink(match.team_b_id)"
                                     class="flex items-center gap-2 md:gap-3 min-w-0"
                                 >
                                     <span
@@ -144,7 +144,7 @@
                             </div>
                             <div v-else class="flex-1 flex flex-col sm:grid sm:grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6 overflow-hidden">
                                 <NuxtLink
-                                    :to="`/teams/${match.team_a_id}`"
+                                    :to="teamLink(match.team_a_id)"
                                     class="flex items-center gap-2 md:gap-3 min-w-0 justify-self-start"
                                 >
                                     <div
@@ -194,7 +194,7 @@
                                     </div>
                                 </div>
                                 <NuxtLink
-                                    :to="`/teams/${match.team_b_id}`"
+                                    :to="teamLink(match.team_b_id)"
                                     class="flex items-center gap-2 md:gap-3 min-w-0 justify-end justify-self-end"
                                 >
                                     <span
@@ -368,7 +368,7 @@
                                             class="flex-1 flex flex-col sm:grid sm:grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6 overflow-hidden"
                                         >
                                             <NuxtLink
-                                                :to="`/teams/${match.team_a_id}`"
+                                                :to="teamLink(match.team_a_id)"
                                                 class="flex items-center gap-2 md:gap-3 min-w-0 justify-self-start"
                                             >
                                                 <div
@@ -423,7 +423,7 @@
                                                 </div>
                                             </div>
                                             <NuxtLink
-                                                :to="`/teams/${match.team_b_id}`"
+                                                :to="teamLink(match.team_b_id)"
                                                 class="flex items-center gap-2 md:gap-3 min-w-0 justify-end justify-self-end"
                                             >
                                                 <span
@@ -548,7 +548,7 @@
                                     class="flex-1 flex flex-col sm:grid sm:grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6 overflow-hidden"
                                 >
                                     <NuxtLink
-                                        :to="`/teams/${match.team_a_id}`"
+                                        :to="teamLink(match.team_a_id)"
                                         class="flex items-center gap-2 md:gap-3 min-w-0 justify-self-start"
                                     >
                                         <div
@@ -598,7 +598,7 @@
                                         </div>
                                     </div>
                                     <NuxtLink
-                                        :to="`/teams/${match.team_b_id}`"
+                                        :to="teamLink(match.team_b_id)"
                                         class="flex items-center gap-2 md:gap-3 min-w-0 justify-end justify-self-end"
                                     >
                                         <span
@@ -759,7 +759,7 @@
                                             class="flex-1 flex flex-col sm:grid sm:grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6 overflow-hidden"
                                         >
                                             <NuxtLink
-                                                :to="`/teams/${match.team_a_id}`"
+                                                :to="teamLink(match.team_a_id)"
                                                 class="flex items-center gap-2 md:gap-3 min-w-0 justify-self-start"
                                             >
                                                 <div
@@ -814,7 +814,7 @@
                                                 </div>
                                             </div>
                                             <NuxtLink
-                                                :to="`/teams/${match.team_b_id}`"
+                                                :to="teamLink(match.team_b_id)"
                                                 class="flex items-center gap-2 md:gap-3 min-w-0 justify-end justify-self-end"
                                             >
                                                 <span
@@ -934,7 +934,17 @@ const props = defineProps({
         type: Object,
         default: () => ({}),
     },
+    /** When set, team links include ?context=... so team page opens with this tab selected */
+    contextKey: {
+        type: String,
+        default: '',
+    },
 })
+
+function teamLink(teamId) {
+    const base = `/teams/${teamId}`
+    return props.contextKey ? `${base}?context=${props.contextKey}` : base
+}
 
 const title = computed(() => {
     const useAllGames =

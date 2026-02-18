@@ -87,7 +87,7 @@
                     <NuxtLink
                         v-for="team in teamData"
                         :key="team.id"
-                        :to="`/teams/${team.id}`"
+                        :to="`/teams/${team.id}${currentTournamentId ? `?context=tournament-${currentTournamentId}` : ''}`"
                         class="bg-gray-800 rounded-xl p-6 card-hover border border-gray-700 block hover:bg-gray-700 transition-colors"
                     >
                         <TurnirParticipants :team="team" />
@@ -103,14 +103,21 @@
                     📅 Календарь турнира
                 </h2>
                 <div class="bg-gray-800 rounded-xl p-8 text-center">
-                    <Kalendar :turnirData="selectedTournament ? [selectedTournament] : []" dataType="tournament" />
+                    <Kalendar
+                    :turnirData="selectedTournament ? [selectedTournament] : []"
+                    dataType="tournament"
+                    :context-key="currentTournamentId ? `tournament-${currentTournamentId}` : ''"
+                />
                 </div>
             </div>
         </section>
 
         <!-- Table Tab -->
         <section v-if="activeTab === 'table'" class="py-16 px-4">
-            <Table :turnirData="teamData" />
+            <Table
+                    :turnirData="teamData"
+                    :context-key="currentTournamentId ? `tournament-${currentTournamentId}` : ''"
+                />
         </section>
 
         <!-- Tournament Stats -->

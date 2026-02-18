@@ -324,7 +324,7 @@
                                                 class="flex flex-1 flex-col sm:grid sm:grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6"
                                             >
                                                 <NuxtLink
-                                                    :to="`/teams/${match.team_a_id}`"
+                                                    :to="`/teams/${match.team_a_id}${selectedContextKey ? `?context=${selectedContextKey}` : ''}`"
                                                     class="flex items-center gap-2 md:gap-3 min-w-0 justify-self-start"
                                                 >
                                                     <div
@@ -371,7 +371,7 @@
                                                     </div>
                                                 </div>
                                                 <NuxtLink
-                                                    :to="`/teams/${match.team_b_id}`"
+                                                    :to="`/teams/${match.team_b_id}${selectedContextKey ? `?context=${selectedContextKey}` : ''}`"
                                                     class="flex items-center gap-2 md:gap-3 min-w-0 justify-self-end flex-row-reverse md:flex-row"
                                                 >
                                                     <div
@@ -1427,7 +1427,16 @@ const teamColors = computed(() => usePlayerColor(teamId.value))
 watch(
     contexts,
     (list) => {
-        if (list?.length > 0 && selectedContextKey.value == null) {
+        if (!list?.length) return
+        const queryContext = route.query.context
+        const validKey =
+            typeof queryContext === 'string' &&
+            list.some((c) => c.key === queryContext)
+                ? queryContext
+                : null
+        if (validKey) {
+            selectedContextKey.value = validKey
+        } else if (selectedContextKey.value == null) {
             selectedContextKey.value = list[0].key
         }
     },
@@ -1445,8 +1454,15 @@ let timer = null
 
 onMounted(() => {
     isVisible.value = true
-    if (contexts.value?.length > 0 && selectedContextKey.value == null) {
-        selectedContextKey.value = contexts.value[0].key
+    const list = contexts.value
+    if (list?.length > 0 && selectedContextKey.value == null) {
+        const queryContext = route.query.context
+        const validKey =
+            typeof queryContext === 'string' &&
+            list.some((c) => c.key === queryContext)
+                ? queryContext
+                : null
+        selectedContextKey.value = validKey ?? list[0].key
     }
     timer = setInterval(() => {
         currentTime.value = new Date()
@@ -1488,19 +1504,19 @@ const hasCustomBackground = computed(() => {
 const teamStats = computed(() => [
     {
         label: 'Победы',
-        value: teamData.value?.stats?.wins || 0,
+        value: teamData.value?.stats?.wins ?? 0,
         color: 'green',
         trend: '',
     },
     {
         label: 'Поражения',
-        value: teamData.value?.stats?.losses || 0,
+        value: teamData.value?.stats?.losses ?? 0,
         color: 'red',
         trend: '',
     },
     {
         label: 'Игроки',
-        value: teamData.value?.players_count || 0,
+        value: teamPlayers.value?.length ?? 0,
         color: 'blue',
         trend: '',
     },

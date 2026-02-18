@@ -217,6 +217,27 @@
                             </div>
                         </div>
 
+                        <!-- Табы выбора турнира/чемпионата (по центру над составом) -->
+                        <div
+                            v-if="contexts.length > 0"
+                            class="flex flex-wrap justify-center gap-2 md:gap-3 mb-6 md:mb-8"
+                        >
+                            <button
+                                v-for="ctx in contexts"
+                                :key="ctx.key"
+                                type="button"
+                                @click="selectedContextKey = ctx.key"
+                                class="px-4 py-2 md:px-6 md:py-3 rounded-lg md:rounded-xl font-semibold text-sm md:text-base transition-all duration-300"
+                                :class="
+                                    selectedContextKey === ctx.key
+                                        ? 'bg-primary-blue text-white shadow-lg'
+                                        : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+                                "
+                            >
+                                {{ ctx.name }}
+                            </button>
+                        </div>
+
                         <!-- Улучшенная навигация по табам -->
                         <div
                             class="flex flex-wrap gap-2 md:gap-3 mb-6 md:mb-8 p-1 md:p-2 bg-gray-800 rounded-xl md:rounded-2xl"
@@ -1186,74 +1207,109 @@
 
 <script setup>
 import { NuxtLink } from '#components'
-import { ref, computed, onMounted, onUnmounted } from 'vue'
+import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
 import { getTeamLogo, getPlayerPhoto } from '@/utils/PicturesAdmin'
 
 const route = useRoute()
 const teamId = computed(() => Number(route.params.id))
 
-const championshipsUrl = 'https://api.timeofthestars.ru/championships/1'
+const apiBase = 'https://api.timeofthestars.ru'
 
 const { data, error } = await useAsyncData(
     () => `team-data-${teamId.value}`,
     async () => {
         if (!teamId.value)
-            return { teamsList: [], playersList: [], gamesList: [] }
+            return { contexts: [], contextData: {} }
 
-        let basePath = championshipsUrl
+        const contexts = []
+        const contextData = {}
+
+        const tid = teamId.value
+
         try {
-            const championshipTeams = await $fetch(`${championshipsUrl}/teams`)
-            const inChampionship = Array.isArray(championshipTeams) && championshipTeams.some(t => t.id === teamId.value)
-            if (inChampionship) {
-                basePath = championshipsUrl
-            } else {
-                const tournaments = await $fetch('https://api.timeofthestars.ru/tournaments/')
-                const list = Array.isArray(tournaments) ? tournaments : []
-                for (const tour of list) {
-                    const id = tour?.id ?? tour
-                    if (id == null) continue
-                    try {
-                        const tournamentTeams = await $fetch(`https://api.timeofthestars.ru/tournaments/${id}/teams`)
-                        if (Array.isArray(tournamentTeams) && tournamentTeams.some(t => t.id === teamId.value)) {
-                            basePath = `https://api.timeofthestars.ru/tournaments/${id}`
-                            break
-                        }
-                    } catch {
-                        continue
+            const championships = await $fetch(`${apiBase}/championships/`).catch(() => [])
+            const championshipsList = Array.isArray(championships) ? championships : []
+            for (const c of championshipsList) {
+                const id = c?.id ?? c
+                if (id == null) continue
+                try {
+                    const teams = await $fetch(`${apiBase}/championships/${id}/teams`)
+                    if (Array.isArray(teams) && teams.some(t => t.id === tid)) {
+                        const key = `championship-${id}`
+                        contexts.push({ key, name: c.name || `Чемпионат ${id}`, type: 'championship' })
+                        const basePath = `${apiBase}/championships/${id}`
+                        let teamsList = []
+                        let playersList = []
+                        let gamesList = []
+                        try {
+                            teamsList = await $fetch(`${basePath}/teams`)
+                        } catch { teamsList = [] }
+                        try {
+                            playersList = await $fetch(`${basePath}/players`)
+                        } catch { playersList = [] }
+                        try {
+                            gamesList = await $fetch(`${basePath}/games`)
+                        } catch { gamesList = [] }
+                        contextData[key] = { teamsList, playersList, gamesList }
                     }
+                } catch {
+                    continue
+                }
+            }
+
+            const tournaments = await $fetch(`${apiBase}/tournaments/`).catch(() => [])
+            const tournamentsList = Array.isArray(tournaments) ? tournaments : []
+            for (const t of tournamentsList) {
+                const id = t?.id ?? t
+                if (id == null) continue
+                try {
+                    const teams = await $fetch(`${apiBase}/tournaments/${id}/teams`)
+                    if (Array.isArray(teams) && teams.some(team => team.id === tid)) {
+                        const key = `tournament-${id}`
+                        contexts.push({ key, name: t.name || `Турнир ${id}`, type: 'tournament' })
+                        const basePath = `${apiBase}/tournaments/${id}`
+                        let teamsList = []
+                        let playersList = []
+                        let gamesList = []
+                        try {
+                            teamsList = await $fetch(`${basePath}/teams`)
+                        } catch { teamsList = [] }
+                        try {
+                            playersList = await $fetch(`${basePath}/players`)
+                        } catch { playersList = [] }
+                        try {
+                            gamesList = await $fetch(`${basePath}/games`)
+                        } catch { gamesList = [] }
+                        contextData[key] = { teamsList, playersList, gamesList }
+                    }
+                } catch {
+                    continue
                 }
             }
         } catch (err) {
-            console.error('Ошибка при определении источника данных команды:', err)
-            basePath = championshipsUrl
+            console.error('Ошибка при определении контекстов команды:', err)
         }
 
-        let teamsList = []
-        let playersList = []
-        let gamesList = []
-
-        try {
-            teamsList = await $fetch(`${basePath}/teams`)
-        } catch (err) {
-            console.error('Ошибка при получении teams для team page:', err)
-            teamsList = []
+        if (contexts.length === 0) {
+            const fallbackKey = 'championship-1'
+            contexts.push({ key: fallbackKey, name: 'Звезда Отечества', type: 'championship' })
+            const basePath = `${apiBase}/championships/1`
+            let teamsList = []
+            let playersList = []
+            let gamesList = []
+            try {
+                teamsList = await $fetch(`${basePath}/teams`)
+            } catch { teamsList = [] }
+            try {
+                playersList = await $fetch(`${basePath}/players`)
+            } catch { playersList = [] }
+            try {
+                gamesList = await $fetch(`${basePath}/games`)
+            } catch { gamesList = [] }
+            contextData[fallbackKey] = { teamsList, playersList, gamesList }
         }
 
-        try {
-            playersList = await $fetch(`${basePath}/players`)
-        } catch (err) {
-            console.error('Ошибка при получении players для team page:', err)
-            playersList = []
-        }
-
-        try {
-            gamesList = await $fetch(`${basePath}/games`)
-        } catch (err) {
-            console.error('Ошибка при получении games для team page:', err)
-            gamesList = []
-        }
-
-        return { teamsList, playersList, gamesList }
+        return { contexts, contextData }
     },
 )
 
@@ -1261,9 +1317,19 @@ if (error.value) {
     console.error('useAsyncData error for team-data:', error.value)
 }
 
-const teamsList = computed(() => data.value?.teamsList || [])
-const playersList = computed(() => data.value?.playersList || [])
-const gamesList = computed(() => data.value?.gamesList || [])
+const contexts = computed(() => data.value?.contexts || [])
+const selectedContextKey = ref(null)
+
+const currentContextData = computed(() => {
+    const key = selectedContextKey.value
+    const cd = data.value?.contextData
+    if (!key || !cd) return null
+    return cd[key] || null
+})
+
+const teamsList = computed(() => currentContextData.value?.teamsList ?? [])
+const playersList = computed(() => currentContextData.value?.playersList ?? [])
+const gamesList = computed(() => currentContextData.value?.gamesList ?? [])
 
 const teamData = computed(() => {
     return teamsList.value.find(team => team.id === teamId.value)
@@ -1355,6 +1421,16 @@ useHead(
 
 const teamColors = computed(() => usePlayerColor(teamId.value))
 
+watch(
+    contexts,
+    (list) => {
+        if (list?.length > 0 && selectedContextKey.value == null) {
+            selectedContextKey.value = list[0].key
+        }
+    },
+    { immediate: true },
+)
+
 // --- Интегрированная логика ---
 
 const activeTab = ref('all')
@@ -1366,6 +1442,9 @@ let timer = null
 
 onMounted(() => {
     isVisible.value = true
+    if (contexts.value?.length > 0 && selectedContextKey.value == null) {
+        selectedContextKey.value = contexts.value[0].key
+    }
     timer = setInterval(() => {
         currentTime.value = new Date()
     }, 1000)

@@ -55,6 +55,12 @@
                                 <div class="text-gray-500">
                                     {{ match.location }}
                                 </div>
+                                <div
+                                    v-if="gameTournamentNames[match.id]"
+                                    class="text-primary-blue/90 text-xs mt-1 font-medium"
+                                >
+                                    {{ gameTournamentNames[match.id] }}
+                                </div>
                             </div>
                             <div v-if="carousel" class="flex-1 flex flex-col items-center gap-2">
                                 <NuxtLink
@@ -312,7 +318,7 @@
                         <div
                             class="overflow-hidden transition-all duration-300 ease-in-out"
                             :style="{
-                                maxHeight: isPastExpanded ? '9999px' : '0px',
+                                maxHeight: isPastExpanded ? 'none' : '0px',
                             }"
                         >
                             <div class="space-y-3 md:space-y-4 pl-2 md:pl-4">
@@ -350,6 +356,12 @@
                                             </div>
                                             <div class="text-gray-500">
                                                 {{ match.location }}
+                                            </div>
+                                            <div
+                                                v-if="gameTournamentNames[match.id]"
+                                                class="text-primary-blue/90 text-xs mt-1 font-medium"
+                                            >
+                                                {{ gameTournamentNames[match.id] }}
                                             </div>
                                         </div>
                                         <div
@@ -525,6 +537,12 @@
                                     <div class="text-gray-500">
                                         {{ match.location }}
                                     </div>
+                                    <div
+                                        v-if="gameTournamentNames[match.id]"
+                                        class="text-primary-blue/90 text-xs mt-1 font-medium"
+                                    >
+                                        {{ gameTournamentNames[match.id] }}
+                                    </div>
                                 </div>
                                 <div
                                     class="flex-1 flex flex-col sm:grid sm:grid-cols-[1fr_auto_1fr] items-center gap-3 md:gap-6 overflow-hidden"
@@ -691,7 +709,7 @@
                             class="overflow-hidden transition-all duration-300 ease-in-out"
                             :style="{
                                 maxHeight: isFutureExpanded
-                                    ? '9999px'
+                                    ? 'none'
                                     : '0px',
                             }"
                         >
@@ -729,6 +747,12 @@
                                             </div>
                                             <div class="text-gray-500">
                                                 {{ match.location }}
+                                            </div>
+                                            <div
+                                                v-if="gameTournamentNames[match.id]"
+                                                class="text-primary-blue/90 text-xs mt-1 font-medium"
+                                            >
+                                                {{ gameTournamentNames[match.id] }}
                                             </div>
                                         </div>
                                         <div
@@ -891,20 +915,33 @@ import 'swiper/css/navigation'
 
 const props = defineProps({
     turnirData: {
-        type: Object,
-        required: true,
+        type: Array,
+        default: () => [],
     },
     dataType: {
         type: String,
         default: 'championship', // 'championship' or 'tournament'
     },
+    externalGames: {
+        type: Array,
+        default: () => null,
+    },
     carousel: {
         type: Boolean,
         default: false,
     },
+    gameTournamentNames: {
+        type: Object,
+        default: () => ({}),
+    },
 })
 
 const title = computed(() => {
+    const useAllGames =
+        props.externalGames &&
+        Array.isArray(props.externalGames) &&
+        props.externalGames.length > 0
+    if (useAllGames) return 'Расписание матчей'
     return props.dataType === 'tournament'
         ? 'Расписание матчей турнира'
         : 'Матчи чемпионата'
@@ -1012,8 +1049,26 @@ const futureMatches = computed(() => {
 })
 
 watch(
-    () => props.turnirData,
-    async newTurnirData => {
+    () => [props.externalGames, props.turnirData],
+    async ([external, newTurnirData]) => {
+        const useExternal =
+            external &&
+            Array.isArray(external) &&
+            external.length > 0
+
+        if (useExternal) {
+            games.value = [...external]
+            try {
+                teams.value = await $fetch(
+                    'https://api.timeofthestars.ru/teams/'
+                )
+            } catch (error) {
+                console.error('Ошибка при получении списка команд:', error)
+                teams.value = []
+            }
+            return
+        }
+
         if (!newTurnirData || newTurnirData.length === 0) {
             games.value = []
             teams.value = []

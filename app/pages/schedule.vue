@@ -5,8 +5,9 @@
         <!-- Вставляем компонент календаря -->
         <div class="pt-24 px-4">
             <Kalendar
-                v-if="turnirdata && turnirdata.length > 0"
-                :turnirData="turnirdata"
+                v-if="allGames && allGames.length > 0"
+                :externalGames="allGames"
+                :gameTournamentNames="gameTournamentNames"
             />
         </div>
     </div>
@@ -19,12 +20,12 @@ import { onMounted, ref } from '#imports'
 import Kalendar from '@/components/Kalendar.vue'
 
 useHead({
-    title: 'Расписание матчей чемпионата - ВРЕМЯ ЗВЁЗД',
+    title: 'Расписание матчей - ВРЕМЯ ЗВЁЗД',
     meta: [
         {
             name: 'description',
             content:
-                'Расписание матчей чемпионата "Звезда Отечества" любительской хоккейной лиги "ВРЕМЯ ЗВЁЗД" в Ярославле. Даты, время и место проведения игр.',
+                'Общее расписание матчей всех турниров любительской хоккейной лиги "ВРЕМЯ ЗВЁЗД" в Ярославле. Даты, время и место проведения игр.',
         },
         {
             name: 'keywords',
@@ -34,12 +35,12 @@ useHead({
         { name: 'author', content: 'ВРЕМЯ ЗВЁЗД' },
         {
             property: 'og:title',
-            content: 'Расписание матчей чемпионата - ВРЕМЯ ЗВЁЗД',
+            content: 'Расписание матчей - ВРЕМЯ ЗВЁЗД',
         },
         {
             property: 'og:description',
             content:
-                'Актуальное расписание матчей чемпионата "Звезда Отечества" любительской хоккейной лиги "ВРЕМЯ ЗВЁЗД".',
+                'Актуальное расписание матчей всех турниров любительской хоккейной лиги "ВРЕМЯ ЗВЁЗД".',
         },
         { property: 'og:type', content: 'website' },
     ],
@@ -50,16 +51,40 @@ useHead({
         },
     ],
 })
-const turnirdata = ref([])
+const allGames = ref([])
+const gameTournamentNames = ref({})
+
 onMounted(async () => {
     try {
-        turnirdata.value = await $fetch(
-            'https://api.timeofthestars.ru/championships/'
+        allGames.value = await $fetch(
+            'https://api.timeofthestars.ru/games/'
         )
-        console.log('dasdasdasdas', turnirdata.value)
+        const map = {}
+        const championships = await $fetch(
+            'https://api.timeofthestars.ru/championships/'
+        ).catch(() => [])
+        for (const c of championships) {
+            const games = await $fetch(
+                `https://api.timeofthestars.ru/championships/${c.id}/games`
+            ).catch(() => [])
+            for (const g of games) {
+                if (g && g.id != null) map[g.id] = c.name
+            }
+        }
+        const tournaments = await $fetch(
+            'https://api.timeofthestars.ru/tournaments/'
+        ).catch(() => [])
+        for (const t of tournaments) {
+            const games = await $fetch(
+                `https://api.timeofthestars.ru/tournaments/${t.id}/games`
+            ).catch(() => [])
+            for (const g of games) {
+                if (g && g.id != null) map[g.id] = t.name
+            }
+        }
+        gameTournamentNames.value = map
     } catch (error) {
-        console.error('Ошибка при получении данных чемпионата:', error)
+        console.error('Ошибка при получении расписания:', error)
     }
 })
-// Получаем данные чемпионата
 </script>

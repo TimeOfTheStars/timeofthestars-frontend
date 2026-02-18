@@ -1,6 +1,12 @@
+const PLAYER_PLACEHOLDER_SVG =
+    'data:image/svg+xml,' +
+    encodeURIComponent(
+        '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" fill="#4b5563"><circle cx="50" cy="35" r="18"/><path d="M20 92c0-16 13-30 30-30s30 14 30 30z"/></svg>'
+    )
+
 const FALLBACKS = {
     team: '/photo.png',
-    player: '/pictures/players/defaultplayer.jpg',
+    player: PLAYER_PLACEHOLDER_SVG,
     scan: '',
     generic: '/photo.png',
 }

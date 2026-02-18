@@ -18,10 +18,7 @@
                                     :src="getPlayerPhoto(player.photo_url)"
                                     alt="Player photo"
                                     class="w-16 h-16 rounded-full object-cover border-2 border-gray-700 sm:w-32 sm:h-32 sm:border-4"
-                                    @error="
-                                        $event.target.src =
-                                            '/pictures/players/defaultplayer.jpg'
-                                    "
+                                    @error="onImageError($event, 'player')"
                                 />
                             </div>
                             <div
@@ -114,10 +111,7 @@
                                     :src="getPlayerPhoto(player.photo_url)"
                                     alt="Player photo"
                                     class="w-16 h-16 rounded-full object-cover border-2 border-gray-700 sm:w-32 sm:h-32 sm:border-4"
-                                    @error="
-                                        $event.target.src =
-                                            '/pictures/players/defaultplayer.jpg'
-                                    "
+                                    @error="onImageError($event, 'player')"
                                 />
                             </div>
                             <div
@@ -216,10 +210,7 @@
                                     :src="getPlayerPhoto(player.photo_url)"
                                     alt="Player photo"
                                     class="w-16 h-16 rounded-full object-cover border-2 border-gray-700 sm:w-32 sm:h-32 sm:border-4"
-                                    @error="
-                                        $event.target.src =
-                                            '/pictures/players/defaultplayer.jpg'
-                                    "
+                                    @error="onImageError($event, 'player')"
                                 />
                             </div>
                             <div
@@ -300,6 +291,7 @@
 
 <script setup lang="ts">
 import { ref, computed, onMounted } from 'vue'
+import { onImageError } from '@/utils/PicturesAdmin'
 
 interface Player {
     full_name: string

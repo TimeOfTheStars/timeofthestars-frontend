@@ -469,6 +469,7 @@
                                                         "
                                                         :alt="player.full_name"
                                                         class="w-20 h-20 rounded-full object-cover border-4 border-gray-700 group-hover:border-blue-500 transition-all duration-300"
+                                                        @error="onImageError($event, 'player')"
                                                     />
                                                 </div>
                                                 <div
@@ -710,6 +711,7 @@
                                                         "
                                                         :alt="player.full_name"
                                                         class="w-12 h-12 rounded-full object-cover border-2 border-gray-600"
+                                                        @error="onImageError($event, 'player')"
                                                     />
                                                     <div class="flex-1">
                                                         <h4
@@ -884,6 +886,7 @@
                                                                 player.full_name
                                                             "
                                                             class="w-20 h-20 rounded-full object-cover border-4 border-gray-700"
+                                                            @error="onImageError($event, 'player')"
                                                         />
                                                     </div>
                                                     <div
@@ -1208,7 +1211,7 @@
 <script setup>
 import { NuxtLink } from '#components'
 import { ref, computed, watch, onMounted, onUnmounted } from 'vue'
-import { getTeamLogo, getPlayerPhoto } from '@/utils/PicturesAdmin'
+import { getTeamLogo, getPlayerPhoto, onImageError } from '@/utils/PicturesAdmin'
 
 const route = useRoute()
 const teamId = computed(() => Number(route.params.id))

@@ -31,7 +31,7 @@
                                 :src="getPlayerPhoto(player.photo_url)"
                                 :alt="player.full_name"
                                 class="cell-photo-img"
-                                @error="onPhotoError"
+                                @error="onImageError($event, 'player')"
                             />
                             <div v-else class="cell-photo-placeholder">Фото</div>
                         </div>
@@ -48,7 +48,7 @@
 </template>
 
 <script setup>
-import { getPlayerPhoto } from '@/utils/PicturesAdmin'
+import { getPlayerPhoto, onImageError } from '@/utils/PicturesAdmin'
 
 const route = useRoute()
 const teamId = computed(() => Number(route.params.id))
@@ -142,16 +142,6 @@ function formattedBirthDate(value) {
 
 function onPrint() {
     window.print()
-}
-
-function onPhotoError(e) {
-    const el = e.target
-    if (el && el.parentElement) {
-        const placeholder = document.createElement('div')
-        placeholder.className = 'cell-photo-placeholder'
-        placeholder.textContent = 'Фото'
-        el.parentElement.replaceChild(placeholder, el)
-    }
 }
 
 useHead(

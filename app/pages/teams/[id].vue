@@ -1493,12 +1493,19 @@ const teamBackgroundStyle = computed(() => {
             backgroundImage: `url('/pictures/teams/ПВО_фото_команды.JPG')`,
         }
     }
+    if (teamName.includes('барс')) {
+        return {
+            ...baseStyle,
+            backgroundPosition: 'center 35%',
+            backgroundImage: `url('/pictures/teams/Барс_фото_команды.png')`,
+        }
+    }
     return {}
 })
 
 const hasCustomBackground = computed(() => {
     const teamName = (teamData.value?.name ?? '').toLowerCase()
-    return teamName.includes('переславль') || teamName.includes('явву пво')
+    return teamName.includes('переславль') || teamName.includes('явву пво') || teamName.includes('барс')
 })
 
 const teamStats = computed(() => [

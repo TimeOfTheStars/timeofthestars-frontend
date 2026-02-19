@@ -206,7 +206,7 @@
                             <div class="w-32 h-32 relative mx-auto mb-6">
                                 <img
                                     src="/pictures/teams/vympelv.webp"
-                                    alt="ХК Переславль-Залесский"
+                                    alt="ХК Вымпел-V"
                                     class="w-full h-full object-contain rounded-full"
                                 />
                             </div>

@@ -32,7 +32,7 @@
                                 <span class="hidden sm:inline">Пб</span>
                             </th>
                             <th
-                                class="hidden px-6 py-4 text-center font-semibold sm:table-cell"
+                                class="px-2 py-3 text-center font-semibold sm:px-6"
                             >
                                 Н
                             </th>
@@ -93,7 +93,7 @@
                                 {{ team.wins }}
                             </td>
                             <td
-                                class="hidden px-6 py-4 text-center text-gray-400 sm:table-cell"
+                                class="px-2 py-3 text-center text-gray-400 sm:px-6"
                             >
                                 {{ team.draws }}
                             </td>

@@ -15,12 +15,18 @@
         </div>
     </div>
 
-    <div class="grid grid-cols-4 gap-4 text-center">
+    <div class="grid grid-cols-2 sm:grid-cols-5 gap-4 text-center">
         <div>
             <div class="text-xl font-bold text-green-400">
                 {{ team.stats.wins || 0 }}
             </div>
             <div class="text-xs text-gray-400">Победы</div>
+        </div>
+        <div>
+            <div class="text-xl font-bold text-yellow-300">
+                {{ team.stats.draws || 0 }}
+            </div>
+            <div class="text-xs text-gray-400">Ничьи</div>
         </div>
         <div>
             <div class="text-xl font-bold text-red-400">

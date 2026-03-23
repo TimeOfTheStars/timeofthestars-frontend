@@ -692,7 +692,7 @@
                                                     playersByGames.topCount -
                                                         1
                                             "
-                                            class="col-span-2 lg:col-span-3 h-px bg-gray-700"
+                                            class="col-span-2 lg:col-span-3 h-px bg-red-600"
                                         ></div>
                                     </template>
                                 </div>
@@ -1126,7 +1126,7 @@
                                                     playersByGames.topCount -
                                                         1
                                             "
-                                            class="h-px bg-gray-700"
+                                            class="h-px bg-red-600"
                                         ></div>
                                     </template>
                                 </div>

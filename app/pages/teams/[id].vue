@@ -438,256 +438,276 @@
                                 <div
                                     class="hidden md:grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6"
                                 >
-                                    <NuxtLink
+                                    <template
                                         v-for="(
                                             player, index
-                                        ) in filteredPlayers"
+                                        ) in playersByGames.ordered"
                                         :key="player.id"
-                                        :to="`/players/${player.id}`"
                                     >
-                                        <div
-                                            class="group bg-gray-800 rounded-xl md:rounded-2xl p-3 md:p-5 hover:shadow-2xl transition-all duration-300 cursor-pointer hover:scale-105 border border-gray-700 hover:border-blue-600 relative overflow-hidden"
-                                            :style="{
-                                                animationDelay: `${index * 100}ms`,
-                                                animation: isVisible
-                                                    ? 'slideInUp 0.6s ease-out forwards'
-                                                    : 'none',
-                                            }"
+                                        <NuxtLink
+                                            :to="`/players/${player.id}`"
                                         >
-                                            <!-- Player card content from original grid -->
                                             <div
-                                                class="relative z-10 text-center"
+                                                class="group bg-gray-800 rounded-xl md:rounded-2xl p-3 md:p-5 hover:shadow-2xl transition-all duration-300 cursor-pointer hover:scale-105 border border-gray-700 hover:border-blue-600 relative overflow-hidden"
+                                                :style="{
+                                                    animationDelay: `${index * 100}ms`,
+                                                    animation: isVisible
+                                                        ? 'slideInUp 0.6s ease-out forwards'
+                                                        : 'none',
+                                                }"
                                             >
+                                                <!-- Player card content from original grid -->
                                                 <div
-                                                    class="flex justify-center mb-3"
+                                                    class="relative z-10 text-center"
                                                 >
-                                                    <img
-                                                        :src="
-                                                            getPlayerPhoto(
-                                                                player.photo_url,
-                                                            )
-                                                        "
-                                                        :alt="player.full_name"
-                                                        class="w-20 h-20 rounded-full object-cover border-4 border-gray-700 group-hover:border-blue-500 transition-all duration-300"
-                                                        @error="onImageError($event, 'player')"
-                                                    />
-                                                </div>
-                                                <div
-                                                    class="flex flex-col items-center mb-2 md:mb-3"
-                                                >
-                                                    <h5
-                                                        class="font-bold text-gray-200 text-base md:text-lg group-hover:text-blue-600 transition-colors duration-200 mb-2"
+                                                    <div
+                                                        class="flex justify-center mb-3"
                                                     >
-                                                        {{ player.full_name }}
-                                                    </h5>
-                                                    <span
-                                                        class="bg-gradient-to-r from-blue-600 to-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold shadow-lg group-hover:shadow-xl transition-shadow duration-200"
+                                                        <img
+                                                            :src="
+                                                                getPlayerPhoto(
+                                                                    player.photo_url,
+                                                                )
+                                                            "
+                                                            :alt="player.full_name"
+                                                            class="w-20 h-20 rounded-full object-cover border-4 border-gray-700 group-hover:border-blue-500 transition-all duration-300"
+                                                            @error="onImageError($event, 'player')"
+                                                        />
+                                                    </div>
+                                                    <div
+                                                        class="flex flex-col items-center mb-2 md:mb-3"
                                                     >
-                                                        {{
-                                                            player.stats
-                                                                ?.number || '0'
-                                                        }}
-                                                    </span>
-                                                </div>
+                                                        <h5
+                                                            class="font-bold text-gray-200 text-base md:text-lg group-hover:text-blue-600 transition-colors duration-200 mb-2"
+                                                        >
+                                                            {{
+                                                                player.full_name
+                                                            }}
+                                                        </h5>
+                                                        <span
+                                                            class="bg-gradient-to-r from-blue-600 to-red-600 text-white rounded-full w-8 h-8 flex items-center justify-center text-xs font-bold shadow-lg group-hover:shadow-xl transition-shadow duration-200"
+                                                        >
+                                                            {{
+                                                                player.stats
+                                                                    ?.number || '0'
+                                                            }}
+                                                        </span>
+                                                    </div>
 
-                                                <p
-                                                    class="text-xs md:text-sm text-gray-400 mb-2 md:mb-3 font-medium"
-                                                >
-                                                    {{ player.position || '0' }}
-                                                </p>
-
-                                                <div
-                                                    class="grid grid-cols-2 gap-x-2 gap-y-3 text-xs md:text-sm"
-                                                >
-                                                    <template
-                                                        v-if="
-                                                            isGoalkeeper(player)
-                                                        "
+                                                    <p
+                                                        class="text-xs md:text-sm text-gray-400 mb-2 md:mb-3 font-medium"
                                                     >
-                                                        <div
-                                                            class="text-center"
+                                                        {{ player.position || '0' }}
+                                                    </p>
+
+                                                    <div
+                                                        class="grid grid-cols-2 gap-x-2 gap-y-3 text-xs md:text-sm"
+                                                    >
+                                                        <template
+                                                            v-if="
+                                                                isGoalkeeper(
+                                                                    player,
+                                                                )
+                                                            "
                                                         >
                                                             <div
-                                                                class="font-semibold text-blue-600"
+                                                                class="text-center"
                                                             >
-                                                                {{
-                                                                    player
-                                                                        ?.stats
-                                                                        ?.gaa ||
-                                                                    '0'
-                                                                }}%
+                                                                <div
+                                                                    class="font-semibold text-blue-600"
+                                                                >
+                                                                    {{
+                                                                        player
+                                                                            ?.stats
+                                                                            ?.gaa ||
+                                                                        '0'
+                                                                    }}%
+                                                                </div>
+                                                                <div
+                                                                    class="text-[10px] text-gray-400"
+                                                                >
+                                                                    К/Н
+                                                                </div>
                                                             </div>
                                                             <div
-                                                                class="text-[10px] text-gray-400"
+                                                                class="text-center"
                                                             >
-                                                                К/Н
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="text-center"
-                                                        >
-                                                            <div
-                                                                class="font-semibold text-blue-400"
-                                                            >
-                                                                {{
-                                                                    player.shutouts ||
-                                                                    0
-                                                                }}
-                                                            </div>
-                                                            <div
-                                                                class="text-[10px] text-gray-400"
-                                                            >
-                                                                Сухие матчи
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="text-center"
-                                                        >
-                                                            <div
-                                                                class="font-bold text-yellow-500"
-                                                            >
-                                                                {{
-                                                                    player.stats
-                                                                        ?.penalties ||
-                                                                    0
-                                                                }}
+                                                                <div
+                                                                    class="font-semibold text-blue-400"
+                                                                >
+                                                                    {{
+                                                                        player.shutouts ||
+                                                                        0
+                                                                    }}
+                                                                </div>
+                                                                <div
+                                                                    class="text-[10px] text-gray-400"
+                                                                >
+                                                                    Сухие матчи
+                                                                </div>
                                                             </div>
                                                             <div
-                                                                class="text-[10px] text-gray-400"
+                                                                class="text-center"
                                                             >
-                                                                Штрафы
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="text-center"
-                                                        >
-                                                            <div
-                                                                class="font-bold text-gray-400"
-                                                            >
-                                                                {{
-                                                                    player.stats
-                                                                        ?.matches ||
-                                                                    0
-                                                                }}
-                                                            </div>
-                                                            <div
-                                                                class="text-[10px] text-gray-400"
-                                                            >
-                                                                Игры
-                                                            </div>
-                                                        </div>
-                                                    </template>
-                                                    <template v-else>
-                                                        <div
-                                                            class="text-center"
-                                                        >
-                                                            <div
-                                                                class="font-bold text-green-600"
-                                                            >
-                                                                {{
-                                                                    getPlayerPoints(
-                                                                        player,
-                                                                    )
-                                                                }}
+                                                                <div
+                                                                    class="font-bold text-yellow-500"
+                                                                >
+                                                                    {{
+                                                                        player.stats
+                                                                            ?.penalties ||
+                                                                        0
+                                                                    }}
+                                                                </div>
+                                                                <div
+                                                                    class="text-[10px] text-gray-400"
+                                                                >
+                                                                    Штрафы
+                                                                </div>
                                                             </div>
                                                             <div
-                                                                class="text-[10px] text-gray-400"
+                                                                class="text-center"
                                                             >
-                                                                Очки
+                                                                <div
+                                                                    class="font-bold text-gray-400"
+                                                                >
+                                                                    {{
+                                                                        player.stats
+                                                                            ?.matches ||
+                                                                        0
+                                                                    }}
+                                                                </div>
+                                                                <div
+                                                                    class="text-[10px] text-gray-400"
+                                                                >
+                                                                    Игры
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div
-                                                            class="text-center"
-                                                        >
+                                                        </template>
+                                                        <template v-else>
                                                             <div
-                                                                class="font-bold text-blue-600"
+                                                                class="text-center"
                                                             >
-                                                                {{
-                                                                    player
-                                                                        ?.stats
-                                                                        ?.goals ||
-                                                                    0
-                                                                }}
-                                                            </div>
-                                                            <div
-                                                                class="text-[10px] text-gray-400"
-                                                            >
-                                                                Голы
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="text-center"
-                                                        >
-                                                            <div
-                                                                class="font-bold text-red-600"
-                                                            >
-                                                                {{
-                                                                    player
-                                                                        ?.stats
-                                                                        ?.assists ||
-                                                                    0
-                                                                }}
-                                                            </div>
-                                                            <div
-                                                                class="text-[10px] text-gray-400"
-                                                            >
-                                                                Передачи
-                                                            </div>
-                                                        </div>
-                                                        <div
-                                                            class="text-center"
-                                                        >
-                                                            <div
-                                                                class="font-bold text-yellow-500"
-                                                            >
-                                                                {{
-                                                                    player
-                                                                        ?.stats
-                                                                        ?.penalties ||
-                                                                    0
-                                                                }}
+                                                                <div
+                                                                    class="font-bold text-green-600"
+                                                                >
+                                                                    {{
+                                                                        getPlayerPoints(
+                                                                            player,
+                                                                        )
+                                                                    }}
+                                                                </div>
+                                                                <div
+                                                                    class="text-[10px] text-gray-400"
+                                                                >
+                                                                    Очки
+                                                                </div>
                                                             </div>
                                                             <div
-                                                                class="text-[10px] text-gray-400"
+                                                                class="text-center"
                                                             >
-                                                                Штрафы
+                                                                <div
+                                                                    class="font-bold text-blue-600"
+                                                                >
+                                                                    {{
+                                                                        player
+                                                                            ?.stats
+                                                                            ?.goals ||
+                                                                        0
+                                                                    }}
+                                                                </div>
+                                                                <div
+                                                                    class="text-[10px] text-gray-400"
+                                                                >
+                                                                    Голы
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                        <div
-                                                            class="text-center"
-                                                        >
                                                             <div
-                                                                class="font-bold text-gray-400"
+                                                                class="text-center"
                                                             >
-                                                                {{
-                                                                    player
-                                                                        ?.stats
-                                                                        ?.matches ||
-                                                                    0
-                                                                }}
+                                                                <div
+                                                                    class="font-bold text-red-600"
+                                                                >
+                                                                    {{
+                                                                        player
+                                                                            ?.stats
+                                                                            ?.assists ||
+                                                                        0
+                                                                    }}
+                                                                </div>
+                                                                <div
+                                                                    class="text-[10px] text-gray-400"
+                                                                >
+                                                                    Передачи
+                                                                </div>
                                                             </div>
                                                             <div
-                                                                class="text-[10px] text-gray-400"
+                                                                class="text-center"
                                                             >
-                                                                Игры
+                                                                <div
+                                                                    class="font-bold text-yellow-500"
+                                                                >
+                                                                    {{
+                                                                        player
+                                                                            ?.stats
+                                                                            ?.penalties ||
+                                                                        0
+                                                                    }}
+                                                                </div>
+                                                                <div
+                                                                    class="text-[10px] text-gray-400"
+                                                                >
+                                                                    Штрафы
+                                                                </div>
                                                             </div>
-                                                        </div>
-                                                    </template>
+                                                            <div
+                                                                class="text-center"
+                                                            >
+                                                                <div
+                                                                    class="font-bold text-gray-400"
+                                                                >
+                                                                    {{
+                                                                        player
+                                                                            ?.stats
+                                                                            ?.matches ||
+                                                                        0
+                                                                    }}
+                                                                </div>
+                                                                <div
+                                                                    class="text-[10px] text-gray-400"
+                                                                >
+                                                                    Игры
+                                                                </div>
+                                                            </div>
+                                                        </template>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </NuxtLink>
+                                        </NuxtLink>
+                                        <div
+                                            v-if="
+                                                playersByGames.topCount > 0 &&
+                                                playersByGames.bottomCount >
+                                                    0 &&
+                                                index ===
+                                                    playersByGames.topCount -
+                                                        1
+                                            "
+                                            class="col-span-2 lg:col-span-3 h-px bg-gray-700"
+                                        ></div>
+                                    </template>
                                 </div>
 
                                 <!-- Mobile Accordion -->
                                 <div class="space-y-2 md:hidden">
-                                    <div
+                                    <template
                                         v-for="(
                                             player, index
-                                        ) in filteredPlayers"
+                                        ) in playersByGames.ordered"
                                         :key="player.id"
-                                        class="bg-gray-800 rounded-lg overflow-hidden border border-gray-700"
                                     >
+                                        <div
+                                            class="bg-gray-800 rounded-lg overflow-hidden border border-gray-700"
+                                        >
                                         <button
                                             @click="
                                                 openedPlayer =
@@ -1097,6 +1117,18 @@
                                             </div>
                                         </transition>
                                     </div>
+                                        <div
+                                            v-if="
+                                                playersByGames.topCount > 0 &&
+                                                playersByGames.bottomCount >
+                                                    0 &&
+                                                index ===
+                                                    playersByGames.topCount -
+                                                        1
+                                            "
+                                            class="h-px bg-gray-700"
+                                        ></div>
+                                    </template>
                                 </div>
                             </template>
                         </div>
@@ -1625,6 +1657,26 @@ const filteredPlayers = computed(() => {
 
 const totalPlayers = computed(() => {
     return filteredPlayers.value.length
+})
+
+// Игроки с количеством сыгранных игр: сверху `>4`, снизу `<=4`.
+const playersByGames = computed(() => {
+    const top = []
+    const bottom = []
+
+    for (const player of filteredPlayers.value) {
+        const gamesPlayed = player?.stats?.matches ?? 0
+        if (gamesPlayed > 4) top.push(player)
+        else bottom.push(player)
+    }
+
+    return {
+        top,
+        bottom,
+        ordered: [...top, ...bottom],
+        topCount: top.length,
+        bottomCount: bottom.length,
+    }
 })
 </script>
 

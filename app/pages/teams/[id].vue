@@ -1666,7 +1666,7 @@ const playersByGames = computed(() => {
 
     for (const player of filteredPlayers.value) {
         const gamesPlayed = player?.stats?.matches ?? 0
-        if (gamesPlayed > 4) top.push(player)
+        if (gamesPlayed > 2) top.push(player)
         else bottom.push(player)
     }
 

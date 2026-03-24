@@ -581,10 +581,9 @@
                                                                     class="font-bold text-gray-400"
                                                                 >
                                                                     {{
-                                                                        player
-                                                                            .stats
-                                                                            ?.matches ||
-                                                                        0
+                                                                        getDisplayMatches(
+                                                                            player,
+                                                                        )
                                                                     }}
                                                                 </div>
                                                                 <div
@@ -677,10 +676,9 @@
                                                                     class="font-bold text-gray-400"
                                                                 >
                                                                     {{
-                                                                        player
-                                                                            ?.stats
-                                                                            ?.matches ||
-                                                                        0
+                                                                        getDisplayMatches(
+                                                                            player,
+                                                                        )
                                                                     }}
                                                                 </div>
                                                                 <div
@@ -778,10 +776,9 @@
                                                                         <span
                                                                             class="font-bold text-white"
                                                                             >{{
-                                                                                player
-                                                                                    .stats
-                                                                                    ?.matches ||
-                                                                                0
+                                                                                getDisplayMatches(
+                                                                                    player,
+                                                                                )
                                                                             }}</span
                                                                         >
                                                                     </div>
@@ -847,10 +844,9 @@
                                                                         <span
                                                                             class="font-bold text-white"
                                                                             >{{
-                                                                                player
-                                                                                    .stats
-                                                                                    ?.matches ||
-                                                                                0
+                                                                                getDisplayMatches(
+                                                                                    player,
+                                                                                )
                                                                             }}</span
                                                                         >
                                                                     </div>
@@ -1030,10 +1026,9 @@
                                                                         class="font-bold text-gray-400"
                                                                     >
                                                                         {{
-                                                                            player
-                                                                                .stats
-                                                                                ?.matches ||
-                                                                            0
+                                                                            getDisplayMatches(
+                                                                                player,
+                                                                            )
                                                                         }}
                                                                     </div>
                                                                     <div
@@ -1126,10 +1121,9 @@
                                                                         class="font-bold text-gray-400"
                                                                     >
                                                                         {{
-                                                                            player
-                                                                                ?.stats
-                                                                                ?.matches ||
-                                                                            0
+                                                                            getDisplayMatches(
+                                                                                player,
+                                                                            )
                                                                         }}
                                                                     </div>
                                                                     <div
@@ -1714,6 +1708,12 @@ const getPlayerPoints = player => {
     return (player.stats.goals || 0) + (player.stats.assists || 0)
 }
 
+const getDisplayMatches = player => {
+    const m = player?.stats?.matches ?? 0
+    if (player?.stats?.contract === true) return Math.max(m, 5)
+    return m
+}
+
 const filteredPlayers = computed(() => {
     switch (activeTab.value) {
         case 'forwards':
@@ -1737,16 +1737,13 @@ const totalPlayers = computed(() => {
     return filteredPlayers.value.length
 })
 
-// Разбиение по черте: сравнение с порогом 4 игр. У contract для этого учёта
-// минимум 5 матчей (фактические `stats.matches` в карточке не меняем).
+// Разбиение по черте: порог 4 игры по числу матчей из getDisplayMatches (contract).
 const playersByGames = computed(() => {
     const top = []
     const bottom = []
 
     for (const player of filteredPlayers.value) {
-        const m = player?.stats?.matches ?? 0
-        const contract = player?.stats?.contract === true
-        const effectiveM = contract ? Math.max(m, 5) : m
+        const effectiveM = getDisplayMatches(player)
         const inTop = effectiveM > 4
         if (inTop) top.push(player)
         else bottom.push(player)

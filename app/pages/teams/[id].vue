@@ -1737,14 +1737,14 @@ const totalPlayers = computed(() => {
     return filteredPlayers.value.length
 })
 
-// Разбиение по черте: порог 4 игры по числу матчей из getDisplayMatches (contract).
+// Разбиение по черте: под чертой при ≤2 матчах (по getDisplayMatches), иначе сверху.
 const playersByGames = computed(() => {
     const top = []
     const bottom = []
 
     for (const player of filteredPlayers.value) {
         const effectiveM = getDisplayMatches(player)
-        const inTop = effectiveM > 4
+        const inTop = effectiveM > 2
         if (inTop) top.push(player)
         else bottom.push(player)
     }

@@ -1659,14 +1659,18 @@ const totalPlayers = computed(() => {
     return filteredPlayers.value.length
 })
 
-// Игроки с количеством сыгранных игр: сверху `>4`, снизу `<=4`.
+// Разбиение по черте: сравнение с порогом 4 игр. У contract для этого учёта
+// минимум 5 матчей (фактические `stats.matches` в карточке не меняем).
 const playersByGames = computed(() => {
     const top = []
     const bottom = []
 
     for (const player of filteredPlayers.value) {
-        const gamesPlayed = player?.stats?.matches ?? 0
-        if (gamesPlayed > 4) top.push(player)
+        const m = player?.stats?.matches ?? 0
+        const contract = player?.stats?.contract === true
+        const effectiveM = contract ? Math.max(m, 5) : m
+        const inTop = effectiveM > 4
+        if (inTop) top.push(player)
         else bottom.push(player)
     }
 

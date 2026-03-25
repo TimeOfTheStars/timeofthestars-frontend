@@ -271,6 +271,30 @@
             </div>
         </section>
 
+        <!-- PDF download -->
+        <section class="py-12 px-4 bg-gray-800 border-t border-gray-700">
+            <div class="max-w-4xl mx-auto">
+                <div
+                    class="bg-gray-900 rounded-xl p-6 border border-gray-700 flex items-center justify-between gap-6"
+                >
+                    <div class="flex items-center gap-4">
+                        <div class="text-3xl leading-none">📄</div>
+                        <div class="text-lg md:text-xl font-semibold text-white/95">
+                            Положение чемпионата “Звезда Отечества”
+                        </div>
+                    </div>
+
+                    <a
+                        :href="zvezdaOtechestvaPdfUrl"
+                        download
+                        class="px-6 py-3 rounded-xl bg-primary-blue hover:bg-primary-blue/90 transition-colors font-semibold text-center"
+                    >
+                        Скачать
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <Footer />
     </div>
 </template>
@@ -364,6 +388,12 @@ function formatDateToRussian(dateString) {
         })
         .replace(' г.', '')
 }
+
+const zvezdaOtechestvaPdfFileName =
+    'ПОЛОЖЕНИЕ «ЗВЕЗДА ОТЕЧЕСТВА».pdf'
+const zvezdaOtechestvaPdfUrl = computed(() =>
+    `/${encodeURIComponent(zvezdaOtechestvaPdfFileName)}`
+)
 </script>
 
 <style scoped>

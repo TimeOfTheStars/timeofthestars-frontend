@@ -1737,14 +1737,17 @@ const totalPlayers = computed(() => {
     return filteredPlayers.value.length
 })
 
-// Разбиение по черте: под чертой при ≤2 матчах (по getDisplayMatches), иначе сверху.
+// Разбиение по черте:
+// - `contract === true`: над линией только если в БД `matches >= 5`, иначе под линией.
+// - остальные: над линией при `matches > 2`, иначе под линией.
 const playersByGames = computed(() => {
     const top = []
     const bottom = []
 
     for (const player of filteredPlayers.value) {
-        const effectiveM = getDisplayMatches(player)
-        const inTop = effectiveM > 2
+        const m = player?.stats?.matches ?? 0
+        const contract = player?.stats?.contract === true
+        const inTop = contract ? m >= 5 : m > 2
         if (inTop) top.push(player)
         else bottom.push(player)
     }

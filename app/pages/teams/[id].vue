@@ -1710,7 +1710,6 @@ const getPlayerPoints = player => {
 
 const getDisplayMatches = player => {
     const m = player?.stats?.matches ?? 0
-    if (player?.stats?.contract === true) return Math.max(m, 5)
     return m
 }
 

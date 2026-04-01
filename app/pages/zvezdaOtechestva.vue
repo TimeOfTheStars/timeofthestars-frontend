@@ -92,6 +92,24 @@
                         class="w-48 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold shadow-lg"
                         :class="{
                             'bg-primary-blue text-white':
+                                activeTab === 'bracket',
+                            'bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors':
+                                activeTab !== 'bracket',
+                        }"
+                        @click="
+                            () => {
+                                activeTab = 'bracket'
+                                scrollToTabs()
+                            }
+                        "
+                    >
+                        🏒 Сетка
+                    </button>
+
+                    <button
+                        class="w-48 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold shadow-lg"
+                        :class="{
+                            'bg-primary-blue text-white':
                                 activeTab === 'bestPlayers',
                             'bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors':
                                 activeTab !== 'bestPlayers',
@@ -150,6 +168,22 @@
                     :turnirData="teamData"
                     :context-key="championshipContextKey"
                 />
+        </section>
+
+        <!-- Playoff bracket -->
+        <section v-if="activeTab === 'bracket'" class="py-16 px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl font-bold mb-8 text-center">
+                    🏒 Турнирная сетка
+                </h2>
+                <PlayoffBracket
+                    v-if="championshipId != null"
+                    :championship-id="championshipId"
+                />
+                <p v-else class="text-center text-gray-400 py-12">
+                    Загрузка данных чемпионата…
+                </p>
+            </div>
         </section>
 
         <!-- Best Players Tab -->
@@ -237,6 +271,30 @@
             </div>
         </section>
 
+        <!-- PDF download -->
+        <section class="py-12 px-4 bg-gray-800 border-t border-gray-700">
+            <div class="max-w-4xl mx-auto">
+                <div
+                    class="bg-gray-900 rounded-xl p-6 border border-gray-700 flex items-center justify-between gap-6"
+                >
+                    <div class="flex items-center gap-4">
+                        <div class="text-3xl leading-none">📄</div>
+                        <div class="text-lg md:text-xl font-semibold text-white/95">
+                            Положение чемпионата “Звезда Отечества”
+                        </div>
+                    </div>
+
+                    <a
+                        :href="zvezdaOtechestvaPdfUrl"
+                        download
+                        class="px-6 py-3 rounded-xl bg-primary-blue hover:bg-primary-blue/90 transition-colors font-semibold text-center"
+                    >
+                        Скачать
+                    </a>
+                </div>
+            </div>
+        </section>
+
         <Footer />
     </div>
 </template>
@@ -263,7 +321,13 @@ function scrollToTabs() {
 // Применение таба из URL и скролл
 onMounted(() => {
     const route = useRoute()
-    const validTabs = ['participants', 'calendar', 'table', 'bestPlayers']
+    const validTabs = [
+        'participants',
+        'calendar',
+        'table',
+        'bracket',
+        'bestPlayers',
+    ]
     const tabFromQuery = route.query.tab
 
     if (tabFromQuery && validTabs.includes(tabFromQuery)) {
@@ -284,6 +348,8 @@ const championshipContextKey = computed(() => {
     const c = turnirdata.value?.[0]
     return c?.id != null ? `championship-${c.id}` : ''
 })
+
+const championshipId = computed(() => turnirdata.value?.[0]?.id ?? null)
 
 onMounted(async () => {
     try {
@@ -322,6 +388,12 @@ function formatDateToRussian(dateString) {
         })
         .replace(' г.', '')
 }
+
+const zvezdaOtechestvaPdfFileName =
+    'ПОЛОЖЕНИЕ «ЗВЕЗДА ОТЕЧЕСТВА».pdf'
+const zvezdaOtechestvaPdfUrl = computed(() =>
+    `/${encodeURIComponent(zvezdaOtechestvaPdfFileName)}`
+)
 </script>
 
 <style scoped>

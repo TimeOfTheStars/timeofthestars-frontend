@@ -20,7 +20,6 @@
             </div>
         </section>
 
-
         <!-- Navigation Tabs -->
         <section class="py-8 px-4 bg-gray-800 border-b border-gray-700">
             <div class="max-w-6xl mx-auto">
@@ -104,10 +103,16 @@
                 </h2>
                 <div class="bg-gray-800 rounded-xl p-8 text-center">
                     <Kalendar
-                    :turnirData="selectedTournament ? [selectedTournament] : []"
-                    dataType="tournament"
-                    :context-key="currentTournamentId ? `tournament-${currentTournamentId}` : ''"
-                />
+                        :turnirData="
+                            selectedTournament ? [selectedTournament] : []
+                        "
+                        dataType="tournament"
+                        :context-key="
+                            currentTournamentId
+                                ? `tournament-${currentTournamentId}`
+                                : ''
+                        "
+                    />
                 </div>
             </div>
         </section>
@@ -115,9 +120,13 @@
         <!-- Table Tab -->
         <section v-if="activeTab === 'table'" class="py-16 px-4">
             <Table
-                    :turnirData="teamData"
-                    :context-key="currentTournamentId ? `tournament-${currentTournamentId}` : ''"
-                />
+                :turnirData="teamData"
+                :context-key="
+                    currentTournamentId
+                        ? `tournament-${currentTournamentId}`
+                        : ''
+                "
+            />
         </section>
 
         <!-- Tournament Stats -->
@@ -160,7 +169,11 @@
                         <div
                             class="text-3xl md:text-4xl font-bold text-gradient"
                         >
-                            {{ formatDateToRussian(selectedTournament?.start_date) }}
+                            {{
+                                formatDateToRussian(
+                                    selectedTournament?.start_date,
+                                )
+                            }}
                         </div>
                         <div class="text-gray-300">Дата начала турнира</div>
                     </div>
@@ -187,7 +200,7 @@
         </section> -->
 
         <!-- Winner Section -->
-        <section class="py-20 px-4">
+        <section v-if="route.query.id === '1'" class="py-20 px-4">
             <div class="max-w-4xl mx-auto text-center">
                 <h2 class="text-4xl font-bold mb-12">
                     🏆 Победитель товарищеского турнира
@@ -294,7 +307,9 @@ const selectedTournament = computed(() => {
     return turnirdata.value?.find(t => t.id === id) ?? null
 })
 
-const tournamentTitle = computed(() => selectedTournament.value?.name ?? 'Предсезонный турнир')
+const tournamentTitle = computed(
+    () => selectedTournament.value?.name ?? 'Предсезонный турнир',
+)
 
 // Set page title (dynamic by tournament)
 useHead(
@@ -327,7 +342,7 @@ useHead(
                 },
             ],
         }
-    })
+    }),
 )
 
 // Активная вкладка
@@ -352,7 +367,7 @@ function formatDateToRussian(dateString) {
 onMounted(async () => {
     try {
         const tournaments = await $fetch(
-            `https://api.timeofthestars.ru/tournaments/`
+            `https://api.timeofthestars.ru/tournaments/`,
         )
         turnirdata.value = tournaments ?? []
     } catch (error) {
@@ -363,7 +378,7 @@ onMounted(async () => {
 // Загрузка команд и матчей выбранного турнира
 watch(
     currentTournamentId,
-    async (tournamentId) => {
+    async tournamentId => {
         if (!tournamentId) {
             teamData.value = []
             gameData.value = []
@@ -371,10 +386,10 @@ watch(
         }
         try {
             teamData.value = await $fetch(
-                `https://api.timeofthestars.ru/tournaments/${tournamentId}/teams`
+                `https://api.timeofthestars.ru/tournaments/${tournamentId}/teams`,
             )
             gameData.value = await $fetch(
-                `https://api.timeofthestars.ru/tournaments/${tournamentId}/games`
+                `https://api.timeofthestars.ru/tournaments/${tournamentId}/games`,
             )
         } catch (error) {
             console.error('Ошибка при получении данных турнира:', error)
@@ -382,6 +397,6 @@ watch(
             gameData.value = []
         }
     },
-    { immediate: true }
+    { immediate: true },
 )
 </script>

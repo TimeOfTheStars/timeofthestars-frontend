@@ -164,10 +164,22 @@
 
         <!-- Table Tab -->
         <section v-if="activeTab === 'table'" class="py-16 px-4">
-            <Table
-                    :turnirData="teamData"
-                    :context-key="championshipContextKey"
-                />
+            <div class="max-w-6xl mx-auto">
+                <div class="mb-10">
+                    <h2 class="text-3xl font-bold mb-8 text-center">
+                        🏒 Турнирная сетка
+                    </h2>
+                    <PlayoffBracket
+                        v-if="championshipId != null"
+                        :championship-id="championshipId"
+                    />
+                    <p v-else class="text-center text-gray-400 py-12">
+                        Загрузка данных чемпионата…
+                    </p>
+                </div>
+
+                <Table :turnirData="teamData" :context-key="championshipContextKey" />
+            </div>
         </section>
 
         <!-- Playoff bracket -->

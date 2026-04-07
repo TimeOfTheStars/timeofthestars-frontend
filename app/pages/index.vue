@@ -121,6 +121,23 @@
         <!-- Tournament Table Section -->
         <section class="py-16 px-4">
             <div class="max-w-6xl mx-auto">
+                <div class="mb-10">
+                    <div class="text-center mb-8">
+                        <h2 class="text-3xl md:text-4xl font-bold mb-2">
+                            🏒 Турнирная сетка
+                        </h2>
+                        <p class="text-gray-300">
+                            Чемпионат "Звезда Отечества"
+                        </p>
+                    </div>
+                    <PlayoffBracket
+                        v-if="championshipId != null"
+                        :championship-id="championshipId"
+                    />
+                    <p v-else class="text-center text-gray-400 py-12">
+                        Загрузка данных чемпионата…
+                    </p>
+                </div>
                 <Table :turnirData="tournamentTeams" />
             </div>
         </section>

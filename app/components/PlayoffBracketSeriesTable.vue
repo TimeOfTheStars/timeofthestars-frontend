@@ -9,7 +9,15 @@
             :class="headerClass"
             aria-hidden="true"
         />
-        <table class="w-full border-collapse text-sm">
+        <table class="w-full table-fixed border-collapse text-sm">
+            <colgroup>
+                <col class="w-auto" />
+                <col class="w-12 sm:w-14" />
+                <col class="w-12 sm:w-14" />
+                <col class="w-12 sm:w-14" />
+                <col class="w-12 sm:w-14" />
+                <col class="w-12 sm:w-14" />
+            </colgroup>
             <thead>
                 <tr class="border-b border-gray-600 bg-gray-900/50">
                     <th
@@ -27,8 +35,18 @@
                     >
                         Игра 2
                     </th>
-                    <th class="px-2 py-2 text-center font-medium text-gray-300">
+                    <th
+                        class="border-r border-gray-600 px-2 py-2 text-center font-medium text-gray-300"
+                    >
                         Игра 3
+                    </th>
+                    <th
+                        class="border-r border-gray-600 px-2 py-2 text-center font-medium text-gray-300"
+                    >
+                        Игра 4
+                    </th>
+                    <th class="px-2 py-2 text-center font-medium text-gray-300">
+                        Игра 5
                     </th>
                 </tr>
             </thead>
@@ -44,7 +62,13 @@
                     <td
                         class="border-r border-gray-600 px-2 py-2 font-medium text-gray-100"
                     >
-                        {{ teamsById[teamId] ?? `Команда #${teamId}` }}
+                        <span
+                            class="block min-w-0 truncate leading-tight"
+                            :class="teamNameClass(teamId)"
+                            :title="teamsById[teamId] ?? `Команда #${teamId}`"
+                        >
+                            {{ teamsById[teamId] ?? `Команда #${teamId}` }}
+                        </span>
                     </td>
                     <td
                         v-for="(slot, colIdx) in series.gameSlots"
@@ -67,6 +91,17 @@ const props = defineProps({
     headerClass: { type: String, required: true },
     ariaLabel: { type: String, default: 'Серия плей-офф' },
 })
+
+function teamNameClass(teamId) {
+    const name = props.teamsById?.[teamId] ?? `Команда #${teamId}`
+    const len = typeof name === 'string' ? name.trim().length : 0
+
+    // Длинные названия не должны “съедать” колонки со счётом.
+    // Логика простая: чем длиннее, тем меньше кегль.
+    if (len >= 22) return 'text-[0.72rem] sm:text-xs'
+    if (len >= 16) return 'text-xs sm:text-sm'
+    return 'text-sm'
+}
 
 function cellDisplay(slot, teamId) {
     if (!slot.played) return '—'

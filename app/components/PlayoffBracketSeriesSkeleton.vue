@@ -9,7 +9,15 @@
             :class="headerClass"
             aria-hidden="true"
         />
-        <table class="w-full border-collapse text-sm">
+        <table class="w-full table-fixed border-collapse text-sm">
+            <colgroup>
+                <col class="w-auto" />
+                <col class="w-12 sm:w-14" />
+                <col class="w-12 sm:w-14" />
+                <col class="w-12 sm:w-14" />
+                <col class="w-12 sm:w-14" />
+                <col class="w-12 sm:w-14" />
+            </colgroup>
             <thead>
                 <tr class="border-b border-gray-600 bg-gray-900/50">
                     <th
@@ -27,8 +35,18 @@
                     >
                         Игра 2
                     </th>
-                    <th class="px-2 py-2 text-center font-medium text-gray-300">
+                    <th
+                        class="border-r border-gray-600 px-2 py-2 text-center font-medium text-gray-300"
+                    >
                         Игра 3
+                    </th>
+                    <th
+                        class="border-r border-gray-600 px-2 py-2 text-center font-medium text-gray-300"
+                    >
+                        Игра 4
+                    </th>
+                    <th class="px-2 py-2 text-center font-medium text-gray-300">
+                        Игра 5
                     </th>
                 </tr>
             </thead>
@@ -44,7 +62,7 @@
                         &nbsp;
                     </td>
                     <td
-                        v-for="c in 3"
+                        v-for="c in 5"
                         :key="c"
                         class="border-r border-gray-600 px-2 py-2 text-center text-gray-500 last:border-r-0"
                     >

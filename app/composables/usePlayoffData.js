@@ -69,7 +69,7 @@ function seriesWinnerFromGames(sortedGames) {
 
 function buildGameSlots(sortedGames, teamMin, teamMax) {
     const slots = []
-    for (let i = 0; i < 3; i++) {
+    for (let i = 0; i < 5; i++) {
         const game = sortedGames[i] ?? null
         if (!game) {
             slots.push({

@@ -14,7 +14,7 @@
                         {{ tournamentTitle }}
                     </h1>
                     <p class="text-xl text-white/90 mb-8">
-                        среди любительских спорткоманд
+                        среди хоккейных спорткоманд
                     </p>
                 </div>
             </div>

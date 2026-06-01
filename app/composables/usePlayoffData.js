@@ -151,26 +151,14 @@ export function usePlayoffData(options) {
                     }
                 }
             } else if (tid != null) {
+                // Эндпоинт /games/?tournament_id=… игнорирует фильтр и
+                // возвращает все игры, поэтому берём игры турнира напрямую.
                 try {
-                    const withQuery = await $fetch(`${API_BASE}/games/`, {
-                        query: { tournament_id: tid },
-                    })
-                    const arr = Array.isArray(withQuery) ? withQuery : []
-                    if (arr.length > 0) {
-                        rawGames = arr
-                    } else {
-                        rawGames = await $fetch(
-                            `${API_BASE}/tournaments/${tid}/games`
-                        )
-                    }
+                    rawGames = await $fetch(
+                        `${API_BASE}/tournaments/${tid}/games`
+                    )
                 } catch {
-                    try {
-                        rawGames = await $fetch(
-                            `${API_BASE}/tournaments/${tid}/games`
-                        )
-                    } catch {
-                        rawGames = []
-                    }
+                    rawGames = []
                 }
             } else {
                 try {

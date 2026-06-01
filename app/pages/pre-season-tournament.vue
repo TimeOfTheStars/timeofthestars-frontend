@@ -59,6 +59,19 @@
                     >
                         📊 Таблица
                     </button>
+                    <button
+                        v-if="showBracket"
+                        class="w-48 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold shadow-lg"
+                        :class="{
+                            'bg-primary-blue text-white':
+                                activeTab === 'bracket',
+                            'bg-gray-700 text-gray-300 hover:bg-gray-600 transition-colors':
+                                activeTab !== 'bracket',
+                        }"
+                        @click="activeTab = 'bracket'"
+                    >
+                        🏒 Сетка
+                    </button>
                     <!-- <button
                         class="w-48 flex items-center justify-center gap-2 px-6 py-3 rounded-xl font-semibold shadow-lg"
                         :class="{
@@ -127,6 +140,22 @@
                         : ''
                 "
             />
+        </section>
+
+        <!-- Bracket Tab -->
+        <section v-if="activeTab === 'bracket'" class="py-16 px-4">
+            <div class="max-w-6xl mx-auto">
+                <h2 class="text-3xl font-bold mb-8 text-center">
+                    🏒 Турнирная сетка
+                </h2>
+                <TournamentPlayoffBracket
+                    v-if="currentTournamentId != null"
+                    :tournament-id="currentTournamentId"
+                />
+                <p v-else class="text-center text-gray-400 py-12">
+                    Загрузка данных турнира…
+                </p>
+            </div>
         </section>
 
         <!-- Tournament Stats -->
@@ -310,6 +339,9 @@ const selectedTournament = computed(() => {
 const tournamentTitle = computed(
     () => selectedTournament.value?.name ?? 'Предсезонный турнир',
 )
+
+// Турнирная сетка показывается только для турнира с id=4
+const showBracket = computed(() => currentTournamentId.value === 4)
 
 // Set page title (dynamic by tournament)
 useHead(

@@ -229,10 +229,10 @@
         </section> -->
 
         <!-- Winner Section -->
-        <section v-if="route.query.id === '1'" class="py-20 px-4">
+        <section v-if="winnerTeam" class="py-20 px-4">
             <div class="max-w-4xl mx-auto text-center">
                 <h2 class="text-4xl font-bold mb-12">
-                    🏆 Победитель товарищеского турнира
+                    🏆 Победитель турнира
                 </h2>
 
                 <div class="relative">
@@ -247,16 +247,19 @@
                         >
                             <div class="w-32 h-32 relative mx-auto mb-6">
                                 <img
-                                    src="/pictures/teams/vympelv.webp"
-                                    alt="ХК Вымпел-V"
+                                    :src="getTeamLogo(winnerTeam.logo_url)"
+                                    :alt="winnerTeam.name"
                                     class="w-full h-full object-contain rounded-full"
                                 />
                             </div>
                             <h3 class="text-3xl font-bold mb-2 text-white">
-                                ХК Вымпел-V
+                                {{ winnerTeam.name }}
                             </h3>
-                            <p class="text-white/80 mb-8 text-lg">
-                                г. Ярославль
+                            <p
+                                v-if="winnerTeam.city"
+                                class="text-white/80 mb-8 text-lg"
+                            >
+                                г. {{ winnerTeam.city }}
                             </p>
 
                             <div class="mt-8">
@@ -316,8 +319,17 @@
 import { ref, computed, watch } from 'vue'
 import { useRoute } from 'vue-router'
 import { useHead } from '#imports'
+import { getTeamLogo } from '@/utils/PicturesAdmin.ts'
 
 const route = useRoute()
+
+// Победители турниров: id турнира -> id команды-победителя
+const tournamentWinners = {
+    1: 3, // Вымпел-V
+    2: 12, // Барс
+    3: 14, // Русич
+    4: 3, // Вымпел-V
+}
 
 // Выбранный турнир: из query.id или первый из списка
 const turnirdata = ref([])
@@ -342,6 +354,13 @@ const tournamentTitle = computed(
 
 // Турнирная сетка показывается только для турнира с id=4
 const showBracket = computed(() => currentTournamentId.value === 4)
+
+// Команда-победитель текущего турнира (из участников турнира)
+const winnerTeam = computed(() => {
+    const winnerId = tournamentWinners[currentTournamentId.value]
+    if (!winnerId) return null
+    return teamData.value?.find(t => t.id === winnerId) ?? null
+})
 
 // Set page title (dynamic by tournament)
 useHead(

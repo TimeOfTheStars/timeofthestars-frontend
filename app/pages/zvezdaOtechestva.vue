@@ -260,6 +260,34 @@
                         class="bg-gradient-to-br from-primary-blue to-primary-red p-12 rounded-2xl relative"
                     >
                         <div
+                            v-if="winnerTeam"
+                            class="bg-white/10 backdrop-blur-sm rounded-xl p-8"
+                        >
+                            <div class="w-32 h-32 relative mx-auto mb-6">
+                                <img
+                                    :src="getTeamLogo(winnerTeam.logo_url)"
+                                    :alt="winnerTeam.name"
+                                    class="w-full h-full object-contain rounded-full"
+                                />
+                            </div>
+                            <h3 class="text-3xl font-bold mb-2 text-white">
+                                {{ winnerTeam.name }}
+                            </h3>
+                            <p
+                                v-if="winnerTeam.city"
+                                class="text-white/80 mb-8 text-lg"
+                            >
+                                г. {{ winnerTeam.city }}
+                            </p>
+
+                            <div class="mt-8">
+                                <div class="text-white/80 text-lg">
+                                    Поздравляем победителей!
+                                </div>
+                            </div>
+                        </div>
+                        <div
+                            v-else
                             class="bg-white/10 backdrop-blur-sm rounded-xl p-8"
                         >
                             Информация о победителе отобразиться здесь по
@@ -301,10 +329,14 @@
 <script setup>
 import { ref, computed, nextTick } from 'vue'
 import { useHead, useRoute, onMounted } from '#imports'
+import { getTeamLogo } from '@/utils/PicturesAdmin.ts'
 
 useHead({
     title: 'Звезда Отечества - ВРЕМЯ ЗВЁЗД',
 })
+
+// id команды-победителя чемпионата
+const CHAMPIONSHIP_WINNER_ID = 1
 
 // Активная вкладка
 const activeTab = ref('participants')
@@ -349,6 +381,11 @@ const championshipContextKey = computed(() => {
 })
 
 const championshipId = computed(() => turnirdata.value?.[0]?.id ?? null)
+
+// Команда-победитель чемпионата (из участников)
+const winnerTeam = computed(
+    () => teamData.value?.find(t => t.id === CHAMPIONSHIP_WINNER_ID) ?? null,
+)
 
 onMounted(async () => {
     try {

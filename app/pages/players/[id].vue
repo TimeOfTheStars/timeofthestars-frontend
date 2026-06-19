@@ -563,7 +563,7 @@ const goBackToTeam = () => {
         router.push(fromPath)
     } else {
         // Fallback если параметр отсутствует
-        router.push('/teams')
+        router.push('/teamsPage')
     }
 }
 

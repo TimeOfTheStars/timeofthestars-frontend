@@ -26,7 +26,6 @@ export default defineNuxtConfig({
             const staticRoutes = [
                 '/',
                 '/schedule',
-                '/teams',
                 '/pre-season-tournament',
                 '/teamsPage',
             ]

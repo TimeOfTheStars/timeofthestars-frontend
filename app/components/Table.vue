@@ -139,7 +139,7 @@ const turnirdata = ref([])
 
 onMounted(async () => {
     try {
-        const tournaments = await $fetch(
+        const tournaments = await apiGet(
             `https://api.timeofthestars.ru/tournaments/${1}/teams`
         )
         turnirdata.value = tournaments

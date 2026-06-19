@@ -578,14 +578,14 @@ const championshipId = ref(null)
 
 onMounted(async () => {
     try {
-        const championships = await $fetch(
+        const championships = await apiGet(
             'https://api.timeofthestars.ru/championships/'
         )
         if (Array.isArray(championships) && championships.length > 0) {
             const tournamentId = championships[0].id
             championshipId.value = tournamentId
             try {
-                tournamentTeams.value = await $fetch(
+                tournamentTeams.value = await apiGet(
                     `https://api.timeofthestars.ru/championships/${tournamentId}/teams`
                 )
             } catch (err) {

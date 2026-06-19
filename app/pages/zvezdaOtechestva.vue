@@ -389,7 +389,7 @@ const winnerTeam = computed(
 
 onMounted(async () => {
     try {
-        const tournaments = await $fetch(
+        const tournaments = await apiGet(
             `https://api.timeofthestars.ru/championships/`
         )
         turnirdata.value = tournaments
@@ -397,13 +397,13 @@ onMounted(async () => {
         if (tournaments.length > 0) {
             const tournamentId = tournaments[0].id
 
-            teamData.value = await $fetch(
+            teamData.value = await apiGet(
                 `https://api.timeofthestars.ru/championships/${tournamentId}/teams`
             )
-            gameData.value = await $fetch(
+            gameData.value = await apiGet(
                 `https://api.timeofthestars.ru/championships/${tournamentId}/games`
             )
-            playersData.value = await $fetch(
+            playersData.value = await apiGet(
                 `https://api.timeofthestars.ru/championships/${tournamentId}/players-stats`
             )
         }

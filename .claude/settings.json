@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep -rn '\\\\$fetch' app/)"
+    ]
+  }
+}

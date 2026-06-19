@@ -576,8 +576,8 @@ const { data: playerData, error } = await useAsyncData(
     `player-${playerId}`,
     async () => {
         try {
-            const res = await $fetch(
-                `https://api.timeofthestars.ru/api/players/${playerId}`
+            const res = await apiGet(
+                `https://api.timeofthestars.ru/players/${playerId}`
             )
             return res
         } catch (err) {

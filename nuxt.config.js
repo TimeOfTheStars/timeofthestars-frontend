@@ -12,8 +12,17 @@ export default defineNuxtConfig({
     sitemap: {
         hostname: 'https://timeofthestars.ru',
         gzip: true,
-        async routes() {
-            const axios = require('axios')
+        routes() {
+            // Бэкенд отключён — маршруты берём из локального снимка API.
+            const { readFileSync } = require('node:fs')
+            const { resolve } = require('node:path')
+            const snap = JSON.parse(
+                readFileSync(
+                    resolve(process.cwd(), 'data/api-snapshot.json'),
+                    'utf8'
+                )
+            )
+
             const staticRoutes = [
                 '/',
                 '/schedule',
@@ -22,17 +31,12 @@ export default defineNuxtConfig({
                 '/teamsPage',
             ]
 
-            const players = await axios.get(
-                'https://api.timeofthestars.ru/api/players'
+            const playerRoutes = Object.keys(snap).filter(k =>
+                /^\/players\/\d+$/.test(k)
             )
-            const playerRoutes = players.data.data.map(
-                player => `/players/${player.id}`
+            const teamRoutes = (snap['/teams/'] || []).map(
+                team => `/teams/${team.id}`
             )
-
-            const teams = await axios.get(
-                'https://api.timeofthestars.ru/api/teams'
-            )
-            const teamRoutes = teams.data.data.map(team => `/teams/${team.id}`)
 
             return staticRoutes.concat(playerRoutes, teamRoutes)
         },

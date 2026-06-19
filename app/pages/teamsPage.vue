@@ -71,5 +71,5 @@ useHead({
     ],
 })
 
-const { data: turnirdata } = useFetch('https://api.timeofthestars.ru/teams/')
+const turnirdata = apiData('https://api.timeofthestars.ru/teams/') || []
 </script>

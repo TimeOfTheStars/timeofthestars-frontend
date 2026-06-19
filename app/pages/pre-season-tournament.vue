@@ -417,7 +417,7 @@ function formatDateToRussian(dateString) {
 // Загрузка списка турниров
 onMounted(async () => {
     try {
-        const tournaments = await $fetch(
+        const tournaments = await apiGet(
             `https://api.timeofthestars.ru/tournaments/`,
         )
         turnirdata.value = tournaments ?? []
@@ -436,10 +436,10 @@ watch(
             return
         }
         try {
-            teamData.value = await $fetch(
+            teamData.value = await apiGet(
                 `https://api.timeofthestars.ru/tournaments/${tournamentId}/teams`,
             )
-            gameData.value = await $fetch(
+            gameData.value = await apiGet(
                 `https://api.timeofthestars.ru/tournaments/${tournamentId}/games`,
             )
         } catch (error) {

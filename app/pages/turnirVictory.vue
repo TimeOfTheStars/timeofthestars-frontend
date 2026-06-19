@@ -280,8 +280,8 @@ const { data: turnirdata } = await useAsyncData(
     'turnir-tournaments',
     async () => {
         try {
-            const res = await $fetch(
-                'https://api.timeofthestars.ru/api/tournaments'
+            const res = await apiGet(
+                'https://api.timeofthestars.ru/tournaments/'
             )
             return Array.isArray(res) ? res : []
         } catch (err) {

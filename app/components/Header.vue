@@ -320,9 +320,7 @@ const closeAllDropdowns = () => {
     activeDropdown.value = ''
 }
 
-const { data: tournamentsdata, error } = useFetch(
-    'https://api.timeofthestars.ru/tournaments/'
-)
+const tournamentsdata = apiData('https://api.timeofthestars.ru/tournaments/') || []
 
 const championships = [
     {

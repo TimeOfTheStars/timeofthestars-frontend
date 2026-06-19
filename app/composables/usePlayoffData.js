@@ -130,20 +130,20 @@ export function usePlayoffData(options) {
 
             if (cid != null) {
                 try {
-                    const withQuery = await $fetch(`${API_BASE}/games/`, {
+                    const withQuery = await apiGet(`${API_BASE}/games/`, {
                         query: { championship_id: cid },
                     })
                     const arr = Array.isArray(withQuery) ? withQuery : []
                     if (arr.length > 0) {
                         rawGames = arr
                     } else {
-                        rawGames = await $fetch(
+                        rawGames = await apiGet(
                             `${API_BASE}/championships/${cid}/games`
                         )
                     }
                 } catch {
                     try {
-                        rawGames = await $fetch(
+                        rawGames = await apiGet(
                             `${API_BASE}/championships/${cid}/games`
                         )
                     } catch {
@@ -154,7 +154,7 @@ export function usePlayoffData(options) {
                 // Эндпоинт /games/?tournament_id=… игнорирует фильтр и
                 // возвращает все игры, поэтому берём игры турнира напрямую.
                 try {
-                    rawGames = await $fetch(
+                    rawGames = await apiGet(
                         `${API_BASE}/tournaments/${tid}/games`
                     )
                 } catch {
@@ -162,7 +162,7 @@ export function usePlayoffData(options) {
                 }
             } else {
                 try {
-                    rawGames = await $fetch(`${API_BASE}/games/`)
+                    rawGames = await apiGet(`${API_BASE}/games/`)
                 } catch {
                     rawGames = []
                 }
@@ -182,7 +182,7 @@ export function usePlayoffData(options) {
 
             let teamsList = []
             try {
-                teamsList = await $fetch(`${API_BASE}/teams/`)
+                teamsList = await apiGet(`${API_BASE}/teams/`)
             } catch {
                 teamsList = []
             }

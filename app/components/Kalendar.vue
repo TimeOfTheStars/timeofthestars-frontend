@@ -1069,7 +1069,7 @@ watch(
         if (useExternal) {
             games.value = [...external]
             try {
-                teams.value = await $fetch(
+                teams.value = await apiGet(
                     'https://api.timeofthestars.ru/teams/'
                 )
             } catch (error) {
@@ -1088,7 +1088,7 @@ watch(
         const endpoint = props.dataType + 's'
 
         try {
-            games.value = await $fetch(
+            games.value = await apiGet(
                 `https://api.timeofthestars.ru/${endpoint}/${id}/games`
             )
         } catch (error) {
@@ -1096,7 +1096,7 @@ watch(
             games.value = []
         }
         try {
-            teams.value = await $fetch(
+            teams.value = await apiGet(
                 `https://api.timeofthestars.ru/${endpoint}/${id}/teams`
             )
         } catch (error) {

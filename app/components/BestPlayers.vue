@@ -338,10 +338,10 @@ const teamsData = ref<Team[]>([])
 onMounted(async () => {
     try {
         const [players, teams] = await Promise.all([
-            $fetch<Player[]>(
+            apiGet(
                 `https://api.timeofthestars.ru/championships/${props.championshipId}/players`
             ),
-            $fetch<Team[]>(
+            apiGet(
                 `https://api.timeofthestars.ru/championships/${props.championshipId}/teams`
             ),
         ])

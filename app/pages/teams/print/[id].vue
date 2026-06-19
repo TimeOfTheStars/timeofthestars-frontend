@@ -78,16 +78,16 @@ const { data } = await useAsyncData(
         if (!basePath) {
             basePath = championshipsUrl
             try {
-                const championshipTeams = await $fetch(`${championshipsUrl}/teams`)
+                const championshipTeams = await apiGet(`${championshipsUrl}/teams`)
                 const inChampionship = Array.isArray(championshipTeams) && championshipTeams.some(t => t.id === teamId.value)
                 if (!inChampionship) {
-                    const tournaments = await $fetch(`${apiBase}/tournaments/`)
+                    const tournaments = await apiGet(`${apiBase}/tournaments/`)
                     const list = Array.isArray(tournaments) ? tournaments : []
                     for (const tour of list) {
                         const id = tour?.id ?? tour
                         if (id == null) continue
                         try {
-                            const tournamentTeams = await $fetch(`${apiBase}/tournaments/${id}/teams`)
+                            const tournamentTeams = await apiGet(`${apiBase}/tournaments/${id}/teams`)
                             if (Array.isArray(tournamentTeams) && tournamentTeams.some(t => t.id === teamId.value)) {
                                 basePath = `${apiBase}/tournaments/${id}`
                                 break
@@ -104,12 +104,12 @@ const { data } = await useAsyncData(
         let teamsList = []
         let playersList = []
         try {
-            teamsList = await $fetch(`${basePath}/teams`)
+            teamsList = await apiGet(`${basePath}/teams`)
         } catch {
             teamsList = []
         }
         try {
-            playersList = await $fetch(`${basePath}/players`)
+            playersList = await apiGet(`${basePath}/players`)
         } catch {
             playersList = []
         }

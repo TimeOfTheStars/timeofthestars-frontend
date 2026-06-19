@@ -1285,7 +1285,7 @@ const { data, error } = await useAsyncData(
         const tid = teamId.value
 
         try {
-            const championships = await $fetch(
+            const championships = await apiGet(
                 `${apiBase}/championships/`,
             ).catch(() => [])
             const championshipsList = Array.isArray(championships)
@@ -1295,7 +1295,7 @@ const { data, error } = await useAsyncData(
                 const id = c?.id ?? c
                 if (id == null) continue
                 try {
-                    const teams = await $fetch(
+                    const teams = await apiGet(
                         `${apiBase}/championships/${id}/teams`,
                     )
                     if (Array.isArray(teams) && teams.some(t => t.id === tid)) {
@@ -1310,17 +1310,17 @@ const { data, error } = await useAsyncData(
                         let playersList = []
                         let gamesList = []
                         try {
-                            teamsList = await $fetch(`${basePath}/teams`)
+                            teamsList = await apiGet(`${basePath}/teams`)
                         } catch {
                             teamsList = []
                         }
                         try {
-                            playersList = await $fetch(`${basePath}/players`)
+                            playersList = await apiGet(`${basePath}/players`)
                         } catch {
                             playersList = []
                         }
                         try {
-                            gamesList = await $fetch(`${basePath}/games`)
+                            gamesList = await apiGet(`${basePath}/games`)
                         } catch {
                             gamesList = []
                         }
@@ -1331,7 +1331,7 @@ const { data, error } = await useAsyncData(
                 }
             }
 
-            const tournaments = await $fetch(`${apiBase}/tournaments/`).catch(
+            const tournaments = await apiGet(`${apiBase}/tournaments/`).catch(
                 () => [],
             )
             const tournamentsList = Array.isArray(tournaments)
@@ -1341,7 +1341,7 @@ const { data, error } = await useAsyncData(
                 const id = t?.id ?? t
                 if (id == null) continue
                 try {
-                    const teams = await $fetch(
+                    const teams = await apiGet(
                         `${apiBase}/tournaments/${id}/teams`,
                     )
                     if (
@@ -1359,17 +1359,17 @@ const { data, error } = await useAsyncData(
                         let playersList = []
                         let gamesList = []
                         try {
-                            teamsList = await $fetch(`${basePath}/teams`)
+                            teamsList = await apiGet(`${basePath}/teams`)
                         } catch {
                             teamsList = []
                         }
                         try {
-                            playersList = await $fetch(`${basePath}/players`)
+                            playersList = await apiGet(`${basePath}/players`)
                         } catch {
                             playersList = []
                         }
                         try {
-                            gamesList = await $fetch(`${basePath}/games`)
+                            gamesList = await apiGet(`${basePath}/games`)
                         } catch {
                             gamesList = []
                         }
@@ -1395,17 +1395,17 @@ const { data, error } = await useAsyncData(
             let playersList = []
             let gamesList = []
             try {
-                teamsList = await $fetch(`${basePath}/teams`)
+                teamsList = await apiGet(`${basePath}/teams`)
             } catch {
                 teamsList = []
             }
             try {
-                playersList = await $fetch(`${basePath}/players`)
+                playersList = await apiGet(`${basePath}/players`)
             } catch {
                 playersList = []
             }
             try {
-                gamesList = await $fetch(`${basePath}/games`)
+                gamesList = await apiGet(`${basePath}/games`)
             } catch {
                 gamesList = []
             }

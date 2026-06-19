@@ -56,26 +56,26 @@ const gameTournamentNames = ref({})
 
 onMounted(async () => {
     try {
-        allGames.value = await $fetch(
+        allGames.value = await apiGet(
             'https://api.timeofthestars.ru/games/'
         )
         const map = {}
-        const championships = await $fetch(
+        const championships = await apiGet(
             'https://api.timeofthestars.ru/championships/'
         ).catch(() => [])
         for (const c of championships) {
-            const games = await $fetch(
+            const games = await apiGet(
                 `https://api.timeofthestars.ru/championships/${c.id}/games`
             ).catch(() => [])
             for (const g of games) {
                 if (g && g.id != null) map[g.id] = c.name
             }
         }
-        const tournaments = await $fetch(
+        const tournaments = await apiGet(
             'https://api.timeofthestars.ru/tournaments/'
         ).catch(() => [])
         for (const t of tournaments) {
-            const games = await $fetch(
+            const games = await apiGet(
                 `https://api.timeofthestars.ru/tournaments/${t.id}/games`
             ).catch(() => [])
             for (const g of games) {

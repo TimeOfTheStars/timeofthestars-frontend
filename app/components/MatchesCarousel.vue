@@ -10,7 +10,7 @@ const turnirData = ref([])
 
 onMounted(async () => {
     try {
-        turnirData.value = await $fetch(
+        turnirData.value = await apiGet(
             `https://api.timeofthestars.ru/championships/`
         )
         if (!Array.isArray(turnirData.value)) turnirData.value = []
